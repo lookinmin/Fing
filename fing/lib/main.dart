@@ -18,25 +18,32 @@ class MyApp extends StatelessWidget {
 }
 
 class MainPage extends StatelessWidget {
+  const MainPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AddressSearch(),
+      body: Column(
+        children: [
+          Flexible(flex: 2, child: FestivalSearch()),
+          Expanded(child: Text("Asfasdf"))
+        ],
+      ),
       bottomNavigationBar: BottomAppBar(
-        child: MyWidget(),
+        child: BottomMenu(),
       ),
     ); // TODO: implement build
   }
 }
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({Key? key}) : super(key: key);
+class BottomMenu extends StatefulWidget {
+  const BottomMenu({Key? key}) : super(key: key);
 
   @override
-  State<MyWidget> createState() => _MyWidgetState();
+  State<BottomMenu> createState() => _BottomMenu();
 }
 
-class _MyWidgetState extends State<MyWidget> {
+class _BottomMenu extends State<BottomMenu> {
   var orange = Color.fromARGB(255, 255, 126, 0);
   var black = Color.fromARGB(255, 0, 0, 0);
   List<bool> isClick = [true, true, true, true, true];
@@ -153,6 +160,7 @@ class _MyWidgetState extends State<MyWidget> {
     );
   }
 }
+
 // class BottomMenu extends StatelessWidget {
 //   const BottomMenu({Key? key}) : super(key: key);
 //   var orange = const Color.fromARGB(
@@ -209,8 +217,8 @@ class _MyWidgetState extends State<MyWidget> {
 //   }
 // }
 
-class AddressSearch extends StatelessWidget {
-  const AddressSearch({Key? key}) : super(key: key);
+class FestivalSearch extends StatelessWidget {
+  const FestivalSearch({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
