@@ -34,7 +34,7 @@ class Root extends StatefulWidget {
       body: Column(
         children: [
           Flexible(flex: 2, child: FestivalSearch()),
-          Expanded(flex: 8, child: AddressMap())
+          Expanded(child: Text("Asfasdf"))
         ],
       ),
       // bottomNavigationBar: BottomAppBar(
