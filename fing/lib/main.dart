@@ -70,7 +70,7 @@ class _BottomMenu extends State<BottomMenu> {
                   color: isClick[0] ? black : orange),
               Text('  홈  ',
                   style: TextStyle(
-                      color: isClick[1] ? black : orange,
+                      color: isClick[0] ? black : orange,
                       fontSize: 11,
                       fontWeight: FontWeight.w700))
             ]),
@@ -108,7 +108,7 @@ class _BottomMenu extends State<BottomMenu> {
                   color: isClick[2] ? black : orange),
               Text(' 내주변 ',
                   style: TextStyle(
-                      color: isClick[1] ? black : orange,
+                      color: isClick[2] ? black : orange,
                       fontSize: 11,
                       fontWeight: FontWeight.w700))
             ]),
@@ -128,7 +128,7 @@ class _BottomMenu extends State<BottomMenu> {
               Text(
                 '  찜  ',
                 style: TextStyle(
-                    color: isClick[1] ? black : orange,
+                    color: isClick[3] ? black : orange,
                     fontSize: 11,
                     fontWeight: FontWeight.w700),
               )
@@ -149,7 +149,7 @@ class _BottomMenu extends State<BottomMenu> {
               Text(
                 '마이페이지',
                 style: TextStyle(
-                    color: isClick[1] ? black : orange,
+                    color: isClick[4] ? black : orange,
                     fontSize: 11,
                     fontWeight: FontWeight.w700),
               )
