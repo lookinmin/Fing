@@ -26,7 +26,7 @@ class MainPage extends StatelessWidget {
       body: Column(
         children: [
           Flexible(flex: 2, child: FestivalSearch()),
-          Expanded(child: Text("Asfasdf"))
+          Expanded(child: Text("Test-Main"))
         ],
       ),
       bottomNavigationBar: BottomAppBar(
