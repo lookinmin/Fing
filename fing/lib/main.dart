@@ -1,3 +1,4 @@
+import 'package:fing/MainPage/TopMain.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,7 +27,10 @@ class MainPage extends StatelessWidget {
       body: Column(
         children: [
           Flexible(flex: 2, child: FestivalSearch()),
-          Expanded(child: Text("Asfasdf"))
+          Container(
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.black)),
+              child: Expanded(child: TopMain()))
         ],
       ),
       bottomNavigationBar: BottomAppBar(
