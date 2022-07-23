@@ -162,62 +162,6 @@ class _BottomMenu extends State<BottomMenu> {
   }
 }
 
-// class BottomMenu extends StatelessWidget {
-//   const BottomMenu({Key? key}) : super(key: key);
-//   var orange = const Color.fromARGB(
-//     255,
-//     255,
-//     126,
-//     0,
-//   );
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: 70,
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         children: [
-//           Column(
-//             children: [
-//               IconButton(onPressed: () {}, icon: Icon(Icons.home_outlined)),
-//               Text('  홈  ')
-//             ],
-//           ),
-//           Column(children: [
-//             IconButton(onPressed: () {}, icon: Icon(Icons.place_outlined)),
-//             Text(' 지역 ')
-//           ]),
-//           Column(children: [
-//             IconButton(onPressed: () {}, icon: Icon(Icons.map_outlined)),
-//             Text(' 내주변 ')
-//           ]),
-//           Column(children: [
-//             IconButton(
-//               onPressed: () {},
-//               icon: Icon(Icons.favorite_outline),
-//               color: Color.fromARGB(
-//                 255,
-//                 255,
-//                 126,
-//                 0,
-//               ),
-//             ),
-//             Text(
-//               '  찜  ',
-//               style: TextStyle(color: black),
-//             )
-//           ]),
-//           Column(children: [
-//             IconButton(onPressed: () {}, icon: Icon(Icons.person_outline)),
-//             Text('마이페이지')
-//           ]),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class FestivalSearch extends StatelessWidget {
   const FestivalSearch({Key? key}) : super(key: key);
 
