@@ -27,14 +27,10 @@ class MainPage extends StatelessWidget {
       body: Column(
         children: [
           Flexible(flex: 2, child: FestivalSearch()),
-<<<<<<< HEAD
           Container(
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.black)),
               child: Expanded(child: TopMain()))
-=======
-          Expanded(child: Text("Branch Test"))
->>>>>>> 06db288d48d771f5fd363100c8e2895cfff7c59a
         ],
       ),
       bottomNavigationBar: BottomAppBar(
