@@ -12,7 +12,7 @@ class TopMain extends StatelessWidget {
     'FestImg4',
     'FestImg5'
   ];
-  final List<String> festivalList = [
+  List<String> festivalList = [
     'festivalList1',
     'festivalList2',
     'festivalList3',
@@ -53,7 +53,7 @@ class FestivalRanking extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.w900,
-                  color: Color.fromARGB(255, 211, 49, 84)),
+                  color: Color.fromARGB(255, 226, 36, 115)),
             )),
         Expanded(
             flex: 8,
@@ -66,10 +66,10 @@ class FestivalRanking extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.4),
-                      spreadRadius: 0,
-                      blurRadius: 2,
-                      offset: Offset(0, 7), // changes position of shadow
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 4,
+                      offset: Offset(0, 5), // changes position of shadow
                     )
                   ]),
               child: Row(
@@ -86,13 +86,17 @@ class FestivalRanking extends StatelessWidget {
                           Flexible(
                               flex: 1,
                               child: IconButton(
+                                  iconSize: 20,
                                   onPressed: () => controller.previousPage(
                                       duration: Duration(milliseconds: 300),
                                       curve: Curves.linear),
-                                  icon: Icon(Icons.arrow_drop_up))),
+                                  icon: Icon(
+                                    Icons.arrow_drop_up,
+                                  ))),
                           Flexible(
-                              flex: 5,
+                              flex: 4,
                               child: IconButton(
+                                  iconSize: 20,
                                   onPressed: () => controller.nextPage(
                                       duration: Duration(milliseconds: 300),
                                       curve: Curves.linear),
@@ -155,7 +159,9 @@ class FestivalCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.black))),
       child: CarouselSlider(
         options: CarouselOptions(
           height: 200.0,

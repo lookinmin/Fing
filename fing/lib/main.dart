@@ -27,10 +27,7 @@ class MainPage extends StatelessWidget {
       body: Column(
         children: [
           Flexible(flex: 2, child: FestivalSearch()),
-          Container(
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
-              child: Expanded(child: TopMain()))
+          Expanded(flex: 8, child: TopMain())
         ],
       ),
       bottomNavigationBar: BottomAppBar(
