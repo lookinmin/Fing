@@ -1,4 +1,5 @@
 import 'package:fing/MainPage/TopMain.dart';
+import 'package:fing/MainPage/bottomMain.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,7 +28,8 @@ class MainPage extends StatelessWidget {
       body: Column(
         children: [
           Flexible(flex: 2, child: FestivalSearch()),
-          Expanded(flex: 8, child: TopMain())
+          Expanded(flex: 6, child: TopMain()),
+          Expanded(flex: 6, child: BottomMain()),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -45,7 +47,7 @@ class BottomMenu extends StatefulWidget {
 }
 
 class _BottomMenu extends State<BottomMenu> {
-  var orange = Color.fromARGB(255, 255, 126, 0);
+  var orange = Color.fromRGBO(255, 126, 0, 1.0);
   var black = Color.fromARGB(255, 0, 0, 0);
   List<bool> isClick = [true, true, true, true, true];
   Widget build(BuildContext context) {
