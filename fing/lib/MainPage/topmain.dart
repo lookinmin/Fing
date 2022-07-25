@@ -22,16 +22,23 @@ class TopMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FestivalCarousel(festivalImg: festivalImg),
-        FestivalRanking(festivalList: festivalList)
-      ],
+    return Container(
+      decoration:
+          BoxDecoration(border: Border.all(color: Colors.blue, width: 3)),
+      child: Column(
+        children: [
+          Flexible(
+            flex: 6,
+            child: FestivalCarousel(festivalImg: festivalImg),
+          ),
+          Expanded(flex: 2, child: FestivalRanking(festivalList: festivalList))
+        ],
+      ),
     );
   }
 }
 
-//메인 페이지 상단 Hot Festival Box
+//메인 페이지 상단 Hot Festival 전체 Box
 class FestivalRanking extends StatelessWidget {
   FestivalRanking({
     Key? key,
@@ -44,20 +51,22 @@ class FestivalRanking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Flexible(
-            flex: 2,
-            fit: FlexFit.tight,
-            child: Text(
-              'Hot\nFestival',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  color: Color.fromARGB(255, 226, 36, 115)),
-            )),
-        FestivalRankingBox(festivalList: festivalList, controller: controller)
-      ],
+    return Container(
+      child: Row(
+        children: [
+          Flexible(
+              flex: 2,
+              fit: FlexFit.tight,
+              child: Text(
+                'Hot\nFestival',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    color: Color.fromARGB(255, 226, 36, 115)),
+              )),
+          FestivalRankingBox(festivalList: festivalList, controller: controller)
+        ],
+      ),
     );
   }
 }
@@ -78,7 +87,7 @@ class FestivalRankingBox extends StatelessWidget {
     return Expanded(
         flex: 8,
         child: Container(
-          margin: EdgeInsets.fromLTRB(0, 10, 10, 10),
+          margin: EdgeInsets.fromLTRB(0, 10, 10, 0),
           padding: EdgeInsets.symmetric(horizontal: 10),
           height: 40,
           decoration: BoxDecoration(
@@ -130,7 +139,7 @@ class FestivalRankingBox extends StatelessWidget {
   }
 }
 
-//Hot Festival 랭킹 텍스트
+//Hot Festival 랭킹 텍스트 carousel
 class FestivalList extends StatelessWidget {
   FestivalList({
     Key? key,

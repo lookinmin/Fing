@@ -26,7 +26,13 @@ class CategoryBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(color: Color.fromARGB(255, 243, 243, 243)),
+      decoration: BoxDecoration(
+          color: Color.fromARGB(255, 243, 243, 243),
+          border: Border(
+              bottom: BorderSide(
+            color: Colors.grey,
+            width: 2.0,
+          ))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -207,14 +213,7 @@ class GoodsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 500,
       padding: EdgeInsets.fromLTRB(50, 10, 50, 0),
-      decoration: BoxDecoration(
-          border: Border(
-              top: BorderSide(
-        color: Colors.grey,
-        width: 2.0,
-      ))),
       child: OutlinedButton(
         onPressed: () {
           Navigator.push(

@@ -27,9 +27,15 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Flexible(flex: 2, child: FestivalSearch()),
-          Expanded(flex: 6, child: TopMain()),
-          Expanded(flex: 6, child: BottomMain()),
+          Flexible(flex: 1, fit: FlexFit.tight, child: FestivalSearch()),
+          Expanded(
+              flex: 9,
+              child: Column(
+                children: [
+                  Flexible(flex: 5, child: TopMain()),
+                  Flexible(flex: 5, fit: FlexFit.tight, child: BottomMain()),
+                ],
+              ))
         ],
       ),
       bottomNavigationBar: BottomAppBar(
