@@ -32,7 +32,7 @@ class MainPage extends StatelessWidget {
               flex: 9,
               child: Column(
                 children: [
-                  Flexible(flex: 5, child: TopMain()),
+                  Flexible(flex: 5, fit: FlexFit.loose, child: TopMain()),
                   Flexible(flex: 5, fit: FlexFit.tight, child: BottomMain()),
                 ],
               ))
