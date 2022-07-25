@@ -1,4 +1,5 @@
 import 'package:fing/MainPage/mainpage.dart';
+import 'package:fing/category/example.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,22 +19,50 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MainPage extends StatelessWidget {
-  const MainPage({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  MainPage({Key? key}) : super(key: key);
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [MainTopBottom(), SplashRoute()];
+
+  void _onTap(int index) {
+    pageController.jumpToPage(index);
+  }
+
+  void onPageChanged(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  final pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Flexible(flex: 1, fit: FlexFit.tight, child: FestivalSearch()),
-          Expanded(flex: 9, child: MainTopBottom())
-        ],
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: BottomMenu(),
-      ),
-    ); // TODO: implement build
+        body: Column(
+          children: [
+            Flexible(flex: 1, fit: FlexFit.tight, child: FestivalSearch()),
+            PageView(
+              controller: pageController,
+              onPageChanged: onPageChanged,
+              children: _pages,
+              physics: NeverScrollableScrollPhysics(),
+            )
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          onTap: _onTap,
+          currentIndex: _currentIndex,
+          items: [_BottomMenu],
+        )); // TODO: implement build
+    throw UnimplementedError();
   }
 }
 
