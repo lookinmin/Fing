@@ -72,7 +72,6 @@ class FestivalRankingBox extends StatelessWidget {
   }) : super(key: key);
 
   final List<String> festivalList;
-  CarouselController controller = CarouselController();
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +96,7 @@ class FestivalRankingBox extends StatelessWidget {
   }
 }
 
+//Hot Festival 랭킹 텍스트 carousel
 class FestivalRankCarousel extends StatelessWidget {
   FestivalRankCarousel({
     Key? key,
@@ -140,64 +140,24 @@ class FestivalRankCarousel extends StatelessWidget {
             Flexible(
                 flex: 1,
                 child: IconButton(
-                    iconSize: 20,
-                    onPressed: () {},
-                    // onPressed: () => controller.previousPage(
-                    //     duration: Duration(milliseconds: 300),
-                    //     curve: Curves.linear),
+                    iconSize: 25,
+                    onPressed: () => controller.previousPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.linear),
                     icon: Icon(
                       Icons.arrow_drop_up,
                     ))),
-            Flexible(
+            Expanded(
                 flex: 4,
                 child: IconButton(
-                    iconSize: 20,
-                    onPressed: () {},
-                    // onPressed: () => controller.nextPage(
-                    //     duration: Duration(milliseconds: 300),
-                    //     curve: Curves.linear),
+                    iconSize: 25,
+                    onPressed: () => controller.nextPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.linear),
                     icon: Icon(Icons.arrow_drop_down)))
           ],
         ))
       ],
-    );
-  }
-}
-
-//Hot Festival 랭킹 텍스트 carousel
-class FestivalList extends StatelessWidget {
-  FestivalList({
-    Key? key,
-    required this.festivalList,
-    required this.controller,
-  }) : super(key: key);
-
-  final List<String> festivalList;
-  final CarouselController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return CarouselSlider(
-      carouselController: controller,
-      options: CarouselOptions(
-          autoPlay: true,
-          autoPlayInterval: Duration(seconds: 3),
-          autoPlayAnimationDuration: Duration(milliseconds: 1000),
-          autoPlayCurve: Curves.fastOutSlowIn,
-          scrollDirection: Axis.vertical),
-      items: festivalList.map((i) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                child: Text(
-                  i,
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
-                ));
-          },
-        );
-      }).toList(),
     );
   }
 }

@@ -213,7 +213,7 @@ class GoodsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(50, 10, 50, 0),
+      padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
       child: OutlinedButton(
         onPressed: () {
           Navigator.push(
