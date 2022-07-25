@@ -1,5 +1,4 @@
-import 'package:fing/MainPage/TopMain.dart';
-import 'package:fing/MainPage/bottomMain.dart';
+import 'package:fing/MainPage/mainpage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,14 +27,7 @@ class MainPage extends StatelessWidget {
       body: Column(
         children: [
           Flexible(flex: 1, fit: FlexFit.tight, child: FestivalSearch()),
-          Expanded(
-              flex: 9,
-              child: Column(
-                children: [
-                  Flexible(flex: 5, child: TopMain()),
-                  Flexible(flex: 5, fit: FlexFit.tight, child: BottomMain()),
-                ],
-              ))
+          Expanded(flex: 9, child: MainTopBottom())
         ],
       ),
       bottomNavigationBar: BottomAppBar(

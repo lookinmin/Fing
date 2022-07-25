@@ -22,18 +22,14 @@ class TopMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration:
-          BoxDecoration(border: Border.all(color: Colors.blue, width: 3)),
-      child: Column(
-        children: [
-          Flexible(
-            flex: 6,
-            child: FestivalCarousel(festivalImg: festivalImg),
-          ),
-          Expanded(flex: 2, child: FestivalRanking(festivalList: festivalList))
-        ],
-      ),
+    return Column(
+      children: [
+        Flexible(
+          flex: 6,
+          child: FestivalCarousel(festivalImg: festivalImg),
+        ),
+        Expanded(flex: 2, child: FestivalRanking(festivalList: festivalList))
+      ],
     );
   }
 }
@@ -47,95 +43,124 @@ class FestivalRanking extends StatelessWidget {
 
   final List<String> festivalList;
 
-  CarouselController controller = CarouselController();
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          Flexible(
-              flex: 2,
-              fit: FlexFit.tight,
-              child: Text(
-                'Hot\nFestival',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    color: Color.fromARGB(255, 226, 36, 115)),
-              )),
-          FestivalRankingBox(festivalList: festivalList, controller: controller)
-        ],
-      ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Flexible(
+            flex: 2,
+            fit: FlexFit.tight,
+            child: Text(
+              'Hot\nFestival',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  color: Color.fromARGB(255, 226, 36, 115)),
+            )),
+        FestivalRankingBox(festivalList: festivalList)
+      ],
     );
   }
 }
 
-//Hot Festival 랭킹 박스
+//Hot Festival 랭킹 carousel 포함한 박스
 class FestivalRankingBox extends StatelessWidget {
-  const FestivalRankingBox({
+  FestivalRankingBox({
     Key? key,
     required this.festivalList,
-    required this.controller,
   }) : super(key: key);
 
   final List<String> festivalList;
-  final CarouselController controller;
+  CarouselController controller = CarouselController();
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
         flex: 8,
         child: Container(
-          margin: EdgeInsets.fromLTRB(0, 10, 10, 0),
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          height: 40,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 2,
-                  blurRadius: 4,
-                  offset: Offset(0, 5), // changes position of shadow
-                )
-              ]),
-          child: Row(
-            children: [
-              Expanded(
-                  flex: 8,
-                  child: FestivalList(
-                      festivalList: festivalList, controller: controller)),
-              Flexible(
-                  flex: 1,
-                  fit: FlexFit.tight,
-                  //랭킹 carousel 버튼
-                  child: Column(
-                    children: [
-                      Flexible(
-                          flex: 1,
-                          child: IconButton(
-                              iconSize: 20,
-                              onPressed: () => controller.previousPage(
-                                  duration: Duration(milliseconds: 300),
-                                  curve: Curves.linear),
-                              icon: Icon(
-                                Icons.arrow_drop_up,
-                              ))),
-                      Flexible(
-                          flex: 4,
-                          child: IconButton(
-                              iconSize: 20,
-                              onPressed: () => controller.nextPage(
-                                  duration: Duration(milliseconds: 300),
-                                  curve: Curves.linear),
-                              icon: Icon(Icons.arrow_drop_down)))
-                    ],
-                  ))
-            ],
-          ),
-        ));
+            margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            height: 50,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                    offset: Offset(0, 5), // changes position of shadow
+                  )
+                ]),
+            child: FestivalRankCarousel(festivalList: festivalList)));
+  }
+}
+
+class FestivalRankCarousel extends StatelessWidget {
+  FestivalRankCarousel({
+    Key? key,
+    required this.festivalList,
+  }) : super(key: key);
+  final List<String> festivalList;
+  CarouselController controller = CarouselController();
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Flexible(
+            flex: 8,
+            fit: FlexFit.tight,
+            child: CarouselSlider(
+              carouselController: controller,
+              options: CarouselOptions(
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 3),
+                  autoPlayAnimationDuration: Duration(milliseconds: 1000),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  scrollDirection: Axis.vertical),
+              items: festivalList.map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        child: Text(
+                          i,
+                          style: TextStyle(
+                              fontSize: 16.0, fontWeight: FontWeight.w600),
+                        ));
+                  },
+                );
+              }).toList(),
+            )),
+        Expanded(
+            child: Column(
+          children: [
+            Flexible(
+                flex: 1,
+                child: IconButton(
+                    iconSize: 20,
+                    onPressed: () {},
+                    // onPressed: () => controller.previousPage(
+                    //     duration: Duration(milliseconds: 300),
+                    //     curve: Curves.linear),
+                    icon: Icon(
+                      Icons.arrow_drop_up,
+                    ))),
+            Flexible(
+                flex: 4,
+                child: IconButton(
+                    iconSize: 20,
+                    onPressed: () {},
+                    // onPressed: () => controller.nextPage(
+                    //     duration: Duration(milliseconds: 300),
+                    //     curve: Curves.linear),
+                    icon: Icon(Icons.arrow_drop_down)))
+          ],
+        ))
+      ],
+    );
   }
 }
 
