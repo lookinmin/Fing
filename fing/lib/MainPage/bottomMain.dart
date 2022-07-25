@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../category/example.dart';
 
 void main() => runApp(BottomMain());
 
@@ -215,7 +216,12 @@ class GoodsButton extends StatelessWidget {
         width: 2.0,
       ))),
       child: OutlinedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              //화면전환
+              context,
+              MaterialPageRoute(builder: (context) => SplashRoute()));
+        },
         // ignore: sort_child_properties_last
         child: SizedBox(
           width: 400,
