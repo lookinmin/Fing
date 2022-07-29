@@ -46,7 +46,7 @@ class CategoryBtn extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 222, 236, 255),
                       borderRadius: BorderRadius.circular(100)),
-                  child: Icon(Icons.music_note),
+                  child: imgSet(1),
                 ),
                 Text(
                   "Music",
@@ -66,7 +66,7 @@ class CategoryBtn extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 222, 236, 255),
                       borderRadius: BorderRadius.circular(100)),
-                  child: Icon(Icons.dining),
+                  child: imgSet(2),
                 ),
                 Text(
                   "Food",
@@ -86,7 +86,7 @@ class CategoryBtn extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 222, 236, 255),
                       borderRadius: BorderRadius.circular(100)),
-                  child: Icon(Icons.forest),
+                  child: imgSet(3),
                 ),
                 Text(
                   "Natural",
@@ -106,7 +106,7 @@ class CategoryBtn extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 222, 236, 255),
                       borderRadius: BorderRadius.circular(100)),
-                  child: Icon(Icons.gps_fixed),
+                  child: imgSet(4),
                 ),
                 Text(
                   "Region",
@@ -124,14 +124,13 @@ class CategoryBtn extends StatelessWidget {
               Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 222, 236, 255),
-                        borderRadius: BorderRadius.circular(100)),
-                    child: Icon(Icons.local_florist),
-                  ),
+                      margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                      width: 70,
+                      height: 70,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 222, 236, 255),
+                          borderRadius: BorderRadius.circular(100)),
+                      child: imgSet(5)),
                   Text(
                     "Spring",
                     style: TextStyle(
@@ -150,7 +149,7 @@ class CategoryBtn extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Color.fromARGB(255, 222, 236, 255),
                         borderRadius: BorderRadius.circular(100)),
-                    child: Icon(Icons.beach_access),
+                    child: imgSet(6),
                   ),
                   Text(
                     "Summer",
@@ -170,7 +169,7 @@ class CategoryBtn extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Color.fromARGB(255, 222, 236, 255),
                         borderRadius: BorderRadius.circular(100)),
-                    child: Icon(Icons.park),
+                    child: imgSet(7),
                   ),
                   Text(
                     "Fall",
@@ -190,7 +189,7 @@ class CategoryBtn extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Color.fromARGB(255, 222, 236, 255),
                         borderRadius: BorderRadius.circular(100)),
-                    child: Icon(Icons.ac_unit),
+                    child: imgSet(8),
                   ),
                   Text(
                     "Winter",
@@ -206,6 +205,29 @@ class CategoryBtn extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+Widget imgSet(int id) {
+  switch (id) {
+    case 1:
+      return Image.asset('images/music.png');
+    case 2:
+      return Image.asset('images/food.png');
+    case 3:
+      return Image.asset('images/natural.png');
+    case 4:
+      return Image.asset('images/region.png');
+    case 5:
+      return Image.asset('images/spring.png');
+    case 6:
+      return Image.asset('images/summer.png');
+    case 7:
+      return Image.asset('images/fall.png');
+    case 8:
+      return Image.asset('images/winter.png');
+    default:
+      return Image.asset('images/mark.jpg');
   }
 }
 
