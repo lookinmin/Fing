@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:fing/login/intro_page.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -12,7 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "FING",
-      home: MainPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Intro(),
+      },
     );
   }
 }
