@@ -19,7 +19,7 @@ class _AddressMapState extends State<AddressMap> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Flexible(flex: 1, fit: FlexFit.tight, child: NowAddressText()),
+        Flexible(flex: 2, fit: FlexFit.tight, child: NowAddressText()),
         Expanded(flex: 12, child: NowAddressMap())
       ],
     );
@@ -49,9 +49,8 @@ class _NowAddressMapState extends State<NowAddressMap> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 200,
-      height: 100,
+    return Container(
+      padding: EdgeInsets.all(10),
       child: KakaoMap(
         onMapCreated: onMapCreated,
         initialCameraPosition: _initPosition,
@@ -77,11 +76,10 @@ class _NowAddressTextState extends State<NowAddressText> {
         children: [
           Container(
             margin: EdgeInsets.only(right: 5),
-            child: Expanded(
-                child: Icon(
+            child: Icon(
               Icons.location_on_outlined,
-              size: 30,
-            )),
+              size: 20,
+            ),
           ),
           Flexible(
               flex: 5,
