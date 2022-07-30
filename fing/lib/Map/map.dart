@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:kakao_flutter_sdk/kakao_flutter_sdk_common.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'dart:convert';
+// import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
   AddressMap();
@@ -22,6 +23,11 @@ class AddressMap extends StatefulWidget {
 class _AddressMapState extends State<AddressMap> {
   double initLng = 127.459223;
   double initLat = 36.6283933;
+
+  // late WebViewController _mapController;
+  // final double _lat = 33.450701;
+  // final double _lng = 126.570667;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -60,7 +66,7 @@ class _AddressMapState extends State<AddressMap> {
             )),
         //NowAddressText()
         Expanded(
-            flex: 12,
+            flex: 10,
             child: KakaoMapView(
               width: size.width,
               height: size.height, //예제 코드는 400
@@ -71,37 +77,14 @@ class _AddressMapState extends State<AddressMap> {
               showZoomControl: true,
               // markerImageURL:
               //     'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
-              draggableMarker: true,
-              polyline: KakaoFigure(
-                path: [
-                  KakaoLatLng(lat: 33.45080604081833, lng: 126.56900858718982),
-                  KakaoLatLng(lat: 33.450766588506054, lng: 126.57263147947938),
-                  KakaoLatLng(lat: 33.45162008091554, lng: 126.5713226693152)
-                ],
-                strokeColor: Colors.blue,
-                strokeWeight: 2.5,
-                strokeColorOpacity: 0.9,
-              ),
-              polygon: KakaoFigure(
-                path: [
-                  KakaoLatLng(lat: 33.45086654081833, lng: 126.56906858718982),
-                  KakaoLatLng(lat: 33.45010890948828, lng: 126.56898629127468),
-                  KakaoLatLng(lat: 33.44979857909499, lng: 126.57049357211622),
-                  KakaoLatLng(lat: 33.450137483918496, lng: 126.57202991943016),
-                  KakaoLatLng(lat: 33.450706188506054, lng: 126.57223147947938),
-                  KakaoLatLng(lat: 33.45164068091554, lng: 126.5713126693152)
-                ],
-                polygonColor: Colors.red,
-                polygonColorOpacity: 0.3,
-                strokeColor: Colors.deepOrange,
-                strokeWeight: 2.5,
-                strokeColorOpacity: 0.9,
-                strokeStyle: StrokeStyle.shortdashdot,
-              ),
+              // mapType: MapType.BICYCLE,
+              // mapController: (controller) {
+              //   _mapController = controller;
+              // },
               onTapMarker: (message) {
                 //event callback when the marker is tapped
-                // ScaffoldMessenger.of(context)
-                //     .showSnackBar(SnackBar(content: Text(message.message)));
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(message.message)));
                 // KakaoLatLng latLng =
                 //     KakaoLatLng.fromJson(jsonDecode(message.message));
                 // debugPrint('[idle] ${latLng.lat}, ${latLng.lng}');
@@ -156,7 +139,51 @@ kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
               //       yAnchor: 1
               //   });
               //   '''
-            ))
+            )),
+        //   Container(
+        //     decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+        //     child: Flexible(
+        //       flex: 3,
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //         children: [
+        //           InkWell(
+        //             onTap: () {
+        //               _mapController.runJavascript('''
+        // addMarker(new kakao.maps.LatLng($_lat + 0.0003, $_lng + 0.0003));
+
+        // function addMarker(position) {
+        //     let testMarker = new kakao.maps.Marker({position: position});
+
+        //     testMarker.setMap(map);
+        // }
+        //                   ''');
+        //             },
+        //             child: CircleAvatar(
+        //               backgroundColor: Colors.amber,
+        //               child: const Icon(
+        //                 Icons.pin_drop,
+        //                 color: Colors.white,
+        //               ),
+        //             ),
+        //           ),
+        //           InkWell(
+        //             onTap: () async {
+        //               await _mapController.reload();
+        //               debugPrint('[refresh] done');
+        //             },
+        //             child: CircleAvatar(
+        //               backgroundColor: Colors.green,
+        //               child: const Icon(
+        //                 Icons.refresh,
+        //                 color: Colors.white,
+        //               ),
+        //             ),
+        //           )
+        //         ],
+        //       ),
+        //     ),
+        //   )
       ],
     );
   }

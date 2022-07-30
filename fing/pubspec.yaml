@@ -37,7 +37,6 @@ dependencies:
   # flutter_kakao_map: ^0.0.4
   location: ^4.4.0
   kakaomap_webview: ^0.6.2
-  url_launcher: ^6.1.5
 
 dev_dependencies:
   flutter_test:
