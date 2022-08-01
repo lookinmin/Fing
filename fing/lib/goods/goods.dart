@@ -16,11 +16,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "FING",
-      initialRoute: '/',
       routes: {
-        '/' : (BuildContext context) => GoodsPage(),
-        '/goods_tumbler':(BuildContext context) => goods_tumbler(),
-        '/goods_echobag' : (BuildContext context) => goods_echobag()
+        '/goods_tumbler': (BuildContext context) => goods_tumbler(),
+        '/goods_echobag': (BuildContext context) => goods_echobag()
       },
     );
   }
@@ -31,17 +29,14 @@ class ProductModel {
   final String imageUrl;
   final String title;
   final String desc1;
-  final String router1;
+  final Widget router1;
 }
 
 const productList = [
-  ProductModel("images/echobag.png", "Fing Echobag", "KRW 15,000","/goods_echobag"),
   ProductModel(
-    "images/tumbler.png",
-    "Fing Tumbler",
-    "KRW 8,000",
-    "/goods_tumbler"
-  ),
+      "images/echobag.png", "Fing Echobag", "KRW 15,000", goods_echobag()),
+  ProductModel(
+      "images/tumbler.png", "Fing Tumbler", "KRW 8,000", goods_tumbler()),
 ];
 
 class GoodsPage extends StatelessWidget {
@@ -89,7 +84,7 @@ class GoodsTop extends StatelessWidget {
 
 class GoodsMenu extends StatelessWidget {
   const GoodsMenu({Key? key}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -147,7 +142,13 @@ class GoodsMenu extends StatelessWidget {
                                         children: [
                                           RaisedButton(
                                             onPressed: () {
-                                              Navigator.pushNamed(context, productList[index].router1);
+                                              Navigator.push(
+                                                  //화면전환
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          productList[index]
+                                                              .router1));
                                             },
 
                                             color:
