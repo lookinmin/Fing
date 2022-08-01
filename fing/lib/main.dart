@@ -1,6 +1,8 @@
 import 'package:fing/MainPage/mainpage.dart';
 import 'package:fing/category/example.dart';
 import 'package:flutter/material.dart';
+import 'Map/map.dart';
+
 import 'package:fing/login/intro_page.dart';
 void main() => runApp(const MyApp());
 
@@ -11,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "FING",
       initialRoute: '/',
       routes: {
@@ -32,7 +35,7 @@ class Root extends StatefulWidget {
       body: Column(
         children: [
           Flexible(flex: 2, child: FestivalSearch()),
-          Expanded(child: Text("feature-goods"))
+          Expanded(flex: 8, child: AddressMap())
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -142,6 +145,7 @@ class _RootState extends State<Root> {
   }
 }
 
+
 class Setting extends StatelessWidget {
   const Setting({Key? key}) : super(key: key);
 
@@ -172,7 +176,7 @@ class FestivalSearch extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(flex: 1, child: logo()),
+          Expanded(flex: 1, child: Icon(Icons.abc)), //여기에 로고 들어감
           Expanded(
             flex: 5,
             child: Container(
@@ -215,8 +219,10 @@ class FestivalSearch extends StatelessWidget {
   }
 }
 
-Widget logo() {
-  return Image.asset(
-    'images/mark.jpg',
-  );
-}
+// Widget logo() {
+//   return Image.asset(
+//     'images/mark.jpg',
+//   );
+// }
+
+
