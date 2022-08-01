@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'Map/map.dart';
 
 import 'package:fing/login/intro_page.dart';
-void main() => runApp(const MyApp());
 
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -27,7 +27,6 @@ class Root extends StatefulWidget {
   const Root({Key? key}) : super(key: key);
 
   @override
-
   State<Root> createState() => _RootState();
 
   Widget build(BuildContext context) {
@@ -38,19 +37,18 @@ class Root extends StatefulWidget {
           Expanded(flex: 8, child: AddressMap())
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: BottomMenu(),
-      ),
+      // bottomNavigationBar: BottomAppBar(
+      //   child: BottomMenu(),
+      // ),
     ); // TODO: implement build
   }
-
 }
 
 class _RootState extends State<Root> {
   int _currentIndex = 0;
   final _pages = const [
     MainTopBottom(),
-    SplashRoute(),
+    AddressMap(),
     Setting(),
     Setting(),
     Setting()
@@ -145,7 +143,6 @@ class _RootState extends State<Root> {
   }
 }
 
-
 class Setting extends StatelessWidget {
   const Setting({Key? key}) : super(key: key);
 
@@ -176,7 +173,7 @@ class FestivalSearch extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(flex: 1, child: Icon(Icons.abc)), //여기에 로고 들어감
+          Expanded(flex: 1, child: logo()), //여기에 로고 들어감
           Expanded(
             flex: 5,
             child: Container(
@@ -219,10 +216,8 @@ class FestivalSearch extends StatelessWidget {
   }
 }
 
-// Widget logo() {
-//   return Image.asset(
-//     'images/mark.jpg',
-//   );
-// }
-
-
+Widget logo() {
+  return Image.asset(
+    'images/mark.jpg',
+  );
+}
