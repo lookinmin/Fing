@@ -1,9 +1,9 @@
 import 'package:fing/MainPage/mainpage.dart';
 import 'package:fing/category/example.dart';
 import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-
+import 'package:fing/login/intro_page.dart';
 void main() => runApp(const MyApp());
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -11,10 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo', home: const Root(),
-      //  routes: {
-      //   '/second': (context) => const MainTopBottom(),
-      // }
+      title: "FING",
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Intro(),
+      },
     );
   }
 }
