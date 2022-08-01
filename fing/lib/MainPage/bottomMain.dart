@@ -1,3 +1,4 @@
+import 'package:fing/goods/goods.dart';
 import 'package:flutter/material.dart';
 import '../category/example.dart';
 
@@ -241,7 +242,7 @@ class GoodsButton extends StatelessWidget {
           Navigator.push(
               //화면전환
               context,
-              MaterialPageRoute(builder: (context) => SplashRoute()));
+              MaterialPageRoute(builder: (context) => GoodsPage()));
         },
         // ignore: sort_child_properties_last
         child: SizedBox(
