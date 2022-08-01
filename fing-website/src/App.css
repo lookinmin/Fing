@@ -1,38 +1,39 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: 'yg-jalnan';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.mainPage{
   display: flex;
-  flex-direction: column;
+  flex-flow: column wrap;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 900px;
+  background-color: rgb(255,125,0);
+}
+
+#logo{
+  justify-self: start;
+  align-self: flex-start;
+  margin: 0 !important;
+  padding-left: 3rem;
+  font-size: 3rem;
+}
+
+.top{
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-end;
+  position: absolute;
+  top: 30%;
+  left: 45%;
+
+}
+
+.mainPage h2{
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  font-family: 'yg-jalnan';
+  font-size: 4rem;
+  margin-bottom: 10px !important;
 }
