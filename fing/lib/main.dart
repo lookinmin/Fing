@@ -23,7 +23,23 @@ class Root extends StatefulWidget {
   const Root({Key? key}) : super(key: key);
 
   @override
+
   State<Root> createState() => _RootState();
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Flexible(flex: 2, child: FestivalSearch()),
+          Expanded(child: Text("feature-goods"))
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: BottomMenu(),
+      ),
+    ); // TODO: implement build
+  }
+
 }
 
 class _RootState extends State<Root> {
