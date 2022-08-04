@@ -5,12 +5,48 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.home{
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.toDownload{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  padding-right: 2rem;
+  background-color: rgb(255, 126, 0);
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.toDownload h2{
+  color: white;
+  font-family: 'yg-jalnan';
+  font-size: 1.8rem;
+}
+
+#goPS{
+  margin-left: 1rem;
+}
+
 .mainPage{
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  height: 900px;
-  background-color: rgb(255,125,0);
+  height: 1100px;
+  background-image: url("../public/img/mainBack.jpg");
 }
 
 #logo{
@@ -19,16 +55,16 @@
   margin: 0 !important;
   padding-left: 3rem;
   font-size: 3rem;
+  padding-top: 1rem;
+  position: fixed;
 }
 
 .top{
   display: flex;
   flex-flow: column wrap;
   align-items: flex-end;
-  position: absolute;
-  top: 30%;
-  left: 45%;
-
+  margin-top: 10rem;
+  margin-left: 10rem;
 }
 
 .mainPage h2{
@@ -36,4 +72,31 @@
   font-family: 'yg-jalnan';
   font-size: 4rem;
   margin-bottom: 10px !important;
+  margin-left: 4rem;
+}
+
+
+.exOne{
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  width: max-content;
+  margin-left: 30%;
+}
+
+.exOne h2{
+  font-family: 'GmarketSansMedium';
+  font-size: 2.4rem;
+}
+
+.exOne h3{
+  font-family: 'GmarketSansMedium';
+  font-size: 1.5rem;
+  color: gray;
+}
+
+.t1{
+  color: rgb(255, 126, 0);
 }
