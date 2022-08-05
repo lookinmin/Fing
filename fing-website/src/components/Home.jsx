@@ -1,4 +1,5 @@
 import React from 'react'
+import { Footer } from './Footer'
 
 export const Home = () => {
   return (
@@ -45,7 +46,12 @@ export const Home = () => {
 
       </div>
 
+
+     <Footer></Footer>
+
     </div>
+
+    
     
 
   )
