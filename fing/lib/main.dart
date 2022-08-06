@@ -2,7 +2,7 @@ import 'package:fing/MainPage/mainpage.dart';
 import 'package:fing/category/example.dart';
 import 'package:flutter/material.dart';
 import 'Map/map.dart';
-
+import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
 
 void main() => runApp(const MyApp());
@@ -50,7 +50,7 @@ class _RootState extends State<Root> {
     MainTopBottom(),
     AddressMap(),
     Setting(),
-    Setting(),
+    LikedPage(),
     Setting()
   ];
 
