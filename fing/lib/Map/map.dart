@@ -75,9 +75,10 @@ class _AddressMapState extends State<AddressMap> {
               customScript: """
 
 
+console.log("js console log");
 
 var markers = [];
-
+console.log("console.log2");
     function addMarker(position) {
 
       var marker = new kakao.maps.Marker({position: position});
