@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:fing/mypage/recent.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MyPageMain());
 
-class MyApp extends StatelessWidget {
+class MyPageMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: '/',
-      routes: {
-        '/':(context) => MyPage(),
-        '/recent':(context) => recent()
-      },
+      routes: {'/': (context) => MyPage(), '/recent': (context) => recent()},
     );
   }
 }
 
 class MyPage extends StatefulWidget {
-
   @override
   State<MyPage> createState() => _MyPageState();
 }
@@ -27,7 +23,8 @@ class _MyPageState extends State<MyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: Icon(Icons.book,
+          leading: Icon(
+            Icons.book,
             color: Colors.orange,
             size: 25.0,
           ),
@@ -45,8 +42,7 @@ class _MyPageState extends State<MyPage> {
           backgroundColor: Colors.white,
           actions: [
             IconButton(
-                onPressed: () {
-                },
+                onPressed: () {},
                 icon: Icon(
                   Icons.settings,
                   color: Colors.black,
@@ -63,7 +59,9 @@ class _MyPageState extends State<MyPage> {
                   ListTile(
                     title: Text(
                       '나의 Fing',
-                      style: TextStyle(fontWeight: FontWeight.bold, ),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     tileColor: Colors.grey[300],
                   ),
@@ -91,15 +89,13 @@ class _MyPageState extends State<MyPage> {
                     trailing: Icon(Icons.add),
                   ),
                   Divider(
-                height: 60.0,
-                color: Colors.grey[500],
-                thickness: 0.5,
-                endIndent: 15.0,
-              ),
+                    height: 60.0,
+                    color: Colors.grey[500],
+                    thickness: 0.5,
+                    endIndent: 15.0,
+                  ),
                 ],
               ),
-
-
               Column(
                 children: [
                   ListTile(
@@ -127,14 +123,13 @@ class _MyPageState extends State<MyPage> {
                     trailing: Icon(Icons.add),
                   ),
                   Divider(
-                height: 60.0,
-                color: Colors.grey[500],
-                thickness: 0.5,
-                endIndent: 15.0,
-              ),
+                    height: 60.0,
+                    color: Colors.grey[500],
+                    thickness: 0.5,
+                    endIndent: 15.0,
+                  ),
                 ],
               ),
-
               ListTile(
                 leading: Icon(Icons.home),
                 title: Text('설정'),
