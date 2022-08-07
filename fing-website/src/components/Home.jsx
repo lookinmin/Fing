@@ -1,6 +1,7 @@
 import React from 'react'
 import { Footer } from './Footer'
 import { Menu } from './Menu'
+import { MdRoom } from 'react-icons/md';
 import { IoAnalyticsOutline,IoPartlySunnyOutline, IoHeartOutline, IoLocationOutline } from "react-icons/io5";
 
 export const Home = () => {
@@ -10,7 +11,7 @@ export const Home = () => {
         <h2 id='logo'>Fing</h2>
         <div className="top">
           <h2>페스티벌이 궁금해?</h2>
-          <h2>Fing 찍어<IoLocationOutline size="50"/></h2>
+          <h2>Fing 찍어<MdRoom size="50"/></h2>
         </div>
       </div>
 
@@ -24,7 +25,7 @@ export const Home = () => {
 
       <div className="txtsBox">
         <h2 id='y1'>페스티벌은?</h2>
-        <h2 id='y2'>Let's <span className='t1'>Fing</span><IoLocationOutline size="50" color= 'rgb(255, 126, 0)'/></h2>
+        <h2 id='y2'>Let's <span className='t1'>Fing</span><MdRoom size="50" color= 'rgb(255, 126, 0)'/></h2>
       </div>
 
       <div className="itemsList">

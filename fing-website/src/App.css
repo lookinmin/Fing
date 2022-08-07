@@ -21,6 +21,13 @@
 
 @import url(https://fonts.googleapis.com/css?family=Lato);
 
+@font-face {
+  font-family: 'LeferiPoint-BlackA';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-BlackA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 .home{
   display: flex;
@@ -83,8 +90,6 @@ a:hover::after {
   transform-origin: left;
 }
 
-
-
 .toDownload{
   display: flex;
   flex-flow: row nowrap;
@@ -126,23 +131,24 @@ a:hover::after {
   margin: 0 !important;
   padding-left: 3rem;
   font-size: 3rem;
-  padding-top: 1rem;
+  padding-top: 2rem;
   position: fixed;
 }
 
 .top{
   display: flex;
   flex-flow: column wrap;
-  align-items: flex-end;
-  margin-top: 10rem;
-  margin-left: 10rem;
+  align-items: center;
+  position: absolute;
+  top: 30%;
 }
 
 .mainPage h2{
   color: white;
-  font-family: 'yg-jalnan';
-  font-size: 4rem;
-  margin-bottom: 10px !important;
+  font-family: 'LeferiPoint-BlackA';
+  font-size: 5rem;
+  margin-bottom: 30px !important;
+  margin-top: 0 !important;
   margin-left: 4rem;
 }
 

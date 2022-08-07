@@ -15,7 +15,7 @@ export const Footer = () => {
 
       <div className="txts">
         <div className="div1">
-          <p><span className='TT'>Address.</span>충청북도 청주시 서원구 충대로 1 충북대학교 S1-4 107호</p>
+          <p><span className='TT'>Address.</span>충청북도 청주시 서원구 충대로 1 충북대학교 S1-4 116호</p>
           <p><span className='TT'>Team.</span>2022 관광데이터 활용 공모전 본선 진출팀 팀 : Fing-Fong</p>
           <p><span className='TT'>Leader.</span>조민수</p>
           <p>@ Copyright 2022 Fing All rights reserved</p>
