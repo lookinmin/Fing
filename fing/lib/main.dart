@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'Map/map.dart';
 
 import 'package:fing/login/intro_page.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -34,7 +38,8 @@ class Root extends StatefulWidget {
       body: Column(
         children: [
           Flexible(flex: 2, child: FestivalSearch()),
-          Expanded(flex: 8, child: AddressMap())
+          Text('임시')
+          // Expanded(flex: 8, child: MainTopBottom())
         ],
       ),
       // bottomNavigationBar: BottomAppBar(
@@ -46,8 +51,9 @@ class Root extends StatefulWidget {
 
 class _RootState extends State<Root> {
   int _currentIndex = 0;
-  final _pages = const [
-    MainTopBottom(),
+  final _pages = [
+    // MainTopBottom(),
+    Setting(),
     AddressMap(),
     Setting(),
     Setting(),
@@ -55,6 +61,8 @@ class _RootState extends State<Root> {
   ];
 
   late List<GlobalKey<NavigatorState>> _navigatorKeyList;
+
+  static get data => null;
 
   @override
   void initState() {
