@@ -29,12 +29,11 @@ class District {
   District(this.name, this.num);
 }
 
-class Coords {
-  double lat;
-  double lng;
-  Coords(this.lat, this.lng);
-}
-
+// class Coords {
+//   double lat;
+//   double lng;
+//   Coords(this.lat, this.lng);
+// }
 class AddressMap extends StatefulWidget {
   const AddressMap({Key? key}) : super(key: key);
   @override
@@ -185,7 +184,7 @@ class _AddressMapState extends State<AddressMap> {
                         .showSnackBar(SnackBar(content: Text(message.message)));
                   },
                   customScript: '''
- var gangwonPath = [];
+                    var gangwonPath = [];
                     for (let i = 0, len = ${gangwon.length}; i < len; i++) {
                         gangwonPath.push(new kakao.maps.LatLng($gangwon[i][1], $gangwon[i][0]))
                     }
@@ -203,6 +202,429 @@ class _AddressMapState extends State<AddressMap> {
                     // kakao.maps.event.addListener(gangwonPolygon, 'click', function (mouseEvent) {
                     //     console.log(districtName[0][0], districtName[0][1]);
                     // });     
+                    //강원---------------------------------------------------------------------------------------
+
+                    var gyeongiPath1 = [];
+                    var gyeongiPath2 = [];
+                    for (let i = 0, len = ${gyeongi1.length}; i < len; i++) {
+                        gyeongiPath1.push(new kakao.maps.LatLng($gyeongi1[i][1], $gyeongi1[i][0]))
+                    }
+                    for (let i = 0, len = ${gyeongi2.length}; i < len; i++) {
+                        gyeongiPath2.push(new kakao.maps.LatLng($gyeongi2[i][1], $gyeongi2[i][0]))
+                    }
+                    var gyeongiPolygon = new kakao.maps.Polygon({
+                        path: [gyeongiPath1, gyeongiPath2], // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    gyeongiPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(gyeongiPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[1][0], districtName[1][1]);
+                    });
+                
+                //경기---------------------------------------------------------------------------------------
+                    
+                    var gyungnamPath1 = [];
+                    var gyungnamPath2 = [];
+                    var gyungnamPath3 = [];
+                    var gyungnamPath4 = [];
+                    for (let i = 0, len = ${gyungnam1.length}; i < len; i++) {
+                        gyungnamPath1.push(new kakao.maps.LatLng($gyungnam1[i][1], $gyungnam1[i][0]))
+                    }
+                    for (let i = 0, len = ${gyungnam2.length}; i < len; i++) {
+                        gyungnamPath2.push(new kakao.maps.LatLng($gyungnam2[i][1], $gyungnam2[i][0]))
+                    }
+                    for (let i = 0, len = ${gyungnam3.length}; i < len; i++) {
+                        gyungnamPath3.push(new kakao.maps.LatLng($gyungnam3[i][1], $gyungnam3[i][0]))
+                    }
+                    for (let i = 0, len = ${gyungnam4.length}; i < len; i++) {
+                        gyungnamPath4.push(new kakao.maps.LatLng($gyungnam4[i][1], $gyungnam4[i][0]))
+                    }
+                    var gyungnamPolygon = new kakao.maps.Polygon({
+                        path: [gyungnamPath1, gyungnamPath2, gyungnamPath3, gyungnamPath4], // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    gyungnamPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(gyungnamPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[2][0], districtName[2][1]);
+                    });
+                //경남---------------------------------------------------------------------------------------
+
+                    var gyungbukPath1 = [];
+                    var gyungbukPath2 = [];
+                    for (let i = 0, len = ${gyungbuk1.length}; i < len; i++) {
+                        gyungbukPath1.push(new kakao.maps.LatLng($gyungbuk1[i][1], $gyungbuk1[i][0]))
+                    }
+                    for (let i = 0, len = ${gyungbuk2.length}; i < len; i++) {
+                        gyungbukPath2.push(new kakao.maps.LatLng($gyungbuk2[i][1], $gyungbuk2[i][0]))
+                    }
+                    var gyungbukPolygon = new kakao.maps.Polygon({
+                        path: [gyungbukPath1, gyungbukPath2], // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    gyungbukPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(gyungbukPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[3][0], districtName[3][1]);
+                    });
+                //경북---------------------------------------------------------------------------------------
+
+                    var kwangjuPath = [];
+                    for (let i = 0, len = ${kwangju.length}; i < len; i++) {
+                        kwangjuPath.push(new kakao.maps.LatLng($kwangju[i][1], $kwangju[i][0]))
+                    }
+                    var kwangjuPolygon = new kakao.maps.Polygon({
+                        path: kwangjuPath, // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    kwangjuPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(kwangjuPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[4][0], districtName[4][1]);
+                    });     
+                }
+                //광주---------------------------------------------------------------------------------------
+
+                     var daeguPath = [];
+                    for (let i = 0, len = ${daegu.length}; i < len; i++) {
+                        daeguPath.push(new kakao.maps.LatLng($daegu[i][1], $daegu[i][0]))
+                    }
+                    var daeguPolygon = new kakao.maps.Polygon({
+                        path: daeguPath, // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    daeguPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(daeguPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[5][0], districtName[5][1]);
+                    });     
+                }
+                //대구---------------------------------------------------------------------------------------
+
+                    var daejeonPath = [];
+                    for (let i = 0, len = ${daejeon.length}; i < len; i++) {
+                        daejeonPath.push(new kakao.maps.LatLng($daejeon[i][1], $daejeon[i][0]))
+                    }
+                    var daejeonPolygon = new kakao.maps.Polygon({
+                        path: daejeonPath, // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    daejeonPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(daejeonPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[6][0], districtName[6][1]);
+                    });     
+                }
+                //대전---------------------------------------------------------------------------------------
+
+                    var busanPath1 = [];
+                    var busanPath2 = [];
+                    var busanPath3 = [];
+                    for (let i = 0, len = ${busan1.length}; i < len; i++) {
+                        busanPath1.push(new kakao.maps.LatLng($busan1[i][1], $busan1[i][0]))
+                    }
+                    for (let i = 0, len = ${busan2.length}; i < len; i++) {
+                        busanPath2.push(new kakao.maps.LatLng($busan2[i][1], $busan2[i][0]))
+                    }
+                    for (let i = 0, len = ${busan3.length}; i < len; i++) {
+                        busanPath3.push(new kakao.maps.LatLng($busan3[i][1], $busan3[i][0]))
+                    }
+                    var busanPolygon = new kakao.maps.Polygon({
+                        path: [busanPath1, busanPath2, busanPath3], // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    busanPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(busanPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[7][0], districtName[7][1]);
+                    });
+                //부산---------------------------------------------------------------------------------------
+ 
+                    var seoulPath = [];
+                    for (let i = 0, len = ${seoul.length}; i < len; i++) {
+                        seoulPath.push(new kakao.maps.LatLng($seoul[i][1], $seoul[i][0]))
+                    }
+                    var seoulPolygon = new kakao.maps.Polygon({
+                        path: seoulPath, // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    seoulPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(seoulPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[8][0], districtName[8][1]);
+                    });     
+                }
+                //서울---------------------------------------------------------------------------------------
+
+                    var sejongPath = [];
+                    for (let i = 0, len = ${sejong.length}; i < len; i++) {
+                        sejongPath.push(new kakao.maps.LatLng($sejong[i][1], $sejong[i][0]))
+                    }
+                    var sejongPolygon = new kakao.maps.Polygon({
+                        path: sejongPath, // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    sejongPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(sejongPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[9][0], districtName[9][1]);
+                    });     
+                }
+                //세종---------------------------------------------------------------------------------------
+
+                    var ulsanPath = [];
+                    for (let i = 0, len = ${ulsan.length}; i < len; i++) {
+                        ulsanPath.push(new kakao.maps.LatLng($ulsan[i][1], $ulsan[i][0]))
+                    }
+                    var ulsanPolygon = new kakao.maps.Polygon({
+                        path: ulsanPath, // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    ulsanPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(ulsanPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[10][0], districtName[10][1]);
+                    });     
+                }
+                //울산---------------------------------------------------------------------------------------     
+
+                    var incheonPath1 = [];
+                    var incheonPath2 = [];
+                    var incheonPath3 = [];
+                    var incheonPath4 = [];
+                    for (let i = 0, len = ${incheon1.length}; i < len; i++) {
+                        incheonPath1.push(new kakao.maps.LatLng($incheon1[i][1], $incheon1[i][0]))
+                    }
+                    for (let i = 0, len = ${incheon2.length}; i < len; i++) {
+                        incheonPath2.push(new kakao.maps.LatLng($incheon2[i][1], $incheon2[i][0]))
+                    }
+                    for (let i = 0, len = ${incheon3.length}; i < len; i++) {
+                        incheonPath3.push(new kakao.maps.LatLng($incheon3[i][1], $incheon3[i][0]))
+                    }
+                    for (let i = 0, len = ${incheon4.length}; i < len; i++) {
+                        incheonPath4.push(new kakao.maps.LatLng($incheon4[i][1], $incheon4[i][0]))
+                    }
+                    var incheonPolygon = new kakao.maps.Polygon({
+                        path: [incheonPath1, incheonPath2, incheonPath3, incheonPath4], // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    incheonPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(incheonPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[11][0], districtName[11][1]);
+                    });
+                }
+                //인천---------------------------------------------------------------------------------------
+
+                    var jeonnamPath1 = [];
+                    var jeonnamPath2 = [];
+                    var jeonnamPath3 = [];
+                    var jeonnamPath4 = [];
+                    var jeonnamPath5 = [];
+                    var jeonnamPath6 = [];
+                    var jeonnamPath7 = [];
+                    var jeonnamPath8 = [];
+                    var jeonnamPath9 = [];
+                    for (let i = 0, len = ${jeonnam1.length}; i < len; i++) {
+                        jeonnamPath1.push(new kakao.maps.LatLng($jeonnam1[i][1], $jeonnam1[i][0]))
+                    }
+                    for (let i = 0, len = ${jeonnam2.length}; i < len; i++) {
+                        jeonnamPath2.push(new kakao.maps.LatLng($jeonnam2[i][1], $jeonnam2[i][0]))
+                    }
+                    for (let i = 0, len = ${jeonnam3.length}; i < len; i++) {
+                        jeonnamPath3.push(new kakao.maps.LatLng($jeonnam3[i][1], $jeonnam3[i][0]))
+                    }
+                    for (let i = 0, len = ${jeonnam4.length}; i < len; i++) {
+                        jeonnamPath4.push(new kakao.maps.LatLng($jeonnam4[i][1], $jeonnam4[i][0]))
+                    }
+                    for (let i = 0, len = ${jeonnam5.length}; i < len; i++) {
+                        jeonnamPath5.push(new kakao.maps.LatLng($jeonnam5[i][1], $jeonnam5[i][0]))
+                    }
+                    for (let i = 0, len = ${jeonnam6.length}; i < len; i++) {
+                        jeonnamPath6.push(new kakao.maps.LatLng($jeonnam6[i][1], $jeonnam6[i][0]))
+                    }
+                    for (let i = 0, len = ${jeonnam7.length}; i < len; i++) {
+                        jeonnamPath7.push(new kakao.maps.LatLng($jeonnam7[i][1], $jeonnam7[i][0]))
+                    }
+                    for (let i = 0, len = ${jeonnam8.length}; i < len; i++) {
+                        jeonnamPath8.push(new kakao.maps.LatLng($jeonnam8[i][1], $jeonnam8[i][0]))
+                    }
+                    for (let i = 0, len = ${jeonnam9.length}; i < len; i++) {
+                        jeonnamPath9.push(new kakao.maps.LatLng($jeonnam9[i][1], $jeonnam9[i][0]))
+                    }
+                    var jeonnamPolygon = new kakao.maps.Polygon({
+                        path: [jeonnamPath1, jeonnamPath2, jeonnamPath3,
+                            jeonnamPath4, jeonnamPath5, jeonnamPath6
+                            , jeonnamPath7, jeonnamPath8, jeonnamPath9], // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    jeonnamPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(jeonnamPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[12][0], districtName[12][1]);
+                    });
+                }
+                //전남---------------------------------------------------------------------------------------
+
+                    var jeonBukPath = [];
+                    for (let i = 0, len = ${jeonbuk.length}; i < len; i++) {
+                        jeonBukPath2.push(new kakao.maps.LatLng($jeonbuk[i][1], $jeonbuk[i][0]))
+                    }
+                    var jeonBukPolygon = new kakao.maps.Polygon({
+                        path: jeonBukPath2, // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    jeonBukPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(jeonBukPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[13][0], districtName[13][1]);
+                    });
+                }
+                //전북---------------------------------------------------------------------------------------
+
+                    var jejuPath = [];
+                    for (let i = 0, len = ${jeju.length}; i < len; i++) {
+                        jejuPath.push(new kakao.maps.LatLng($jeju[i][1], $jeju[i][0]))
+                    }
+                    var jejuPolygon = new kakao.maps.Polygon({
+                        path: jejuPath, // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    jejuPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(jejuPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[14][0], districtName[14][1]);
+                    });                    
+                }
+                //제주---------------------------------------------------------------------------------------
+
+                    var chungnamPath1 = [];
+                    var chungnamPath2 = [];
+                    for (let i = 0, len = ${chungnam1.length}; i < len; i++) {
+                        chungnamPath1.push(new kakao.maps.LatLng($chungnam1[i][1], $chungnam1[i][0]))
+                    }
+                    for (let i = 0, len = ${chungnam2.length}; i < len; i++) {
+                        chungnamPath2.push(new kakao.maps.LatLng($chungnam2[i][1], $chungnam2[i][0]))
+                    }
+                    var chungnamPolygon = new kakao.maps.Polygon({
+                        path: [chungnamPath1, chungnamPath2], // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+                    chungnamPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(chungnamPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[15][0], districtName[15][1]);
+                    });
+                }
+                //충남---------------------------------------------------------------------------------------
+
+                    var chungbukPath = [];
+                    for (let i = 0, len = ${chungbuk.length}; i < len; i++) {
+                        chungbukPath.push(new kakao.maps.LatLng($chungbuk[i][1], $chungbuk[i][0]))
+                    }
+                    var chungbukPolygon = new kakao.maps.Polygon({
+                        path: chungbukPath, // 그려질 다각형의 좌표 배열입니다
+                        strokeWeight: 3, // 선의 두께입니다
+                        strokeColor: '#006400', // 선의 색깔입니다
+                        strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid', // 선의 스타일입니다
+                        fillColor: '#CDECFA', // 채우기 색깔입니다
+                        fillOpacity: 0.7 // 채우기 불투명도 입니다
+                    });
+
+                    chungbukPolygon.setMap(map);
+
+                    kakao.maps.event.addListener(chungbukPolygon, 'click', function (mouseEvent) {
+                        console.log(districtName[16][0], districtName[16][1]);
+                    });
+                }
+                //충북---------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 ''',
                 ))
       ],
