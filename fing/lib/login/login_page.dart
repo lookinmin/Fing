@@ -1,15 +1,24 @@
 import 'package:fing/MainPage/mainpage.dart';
 import 'package:fing/main.dart';
 import 'package:flutter/material.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+
+
+void main() {
+  KakaoSdk.init(nativeAppKey: 'a3feadb74b79c4040c956d3c0e962c1f');
+  runApp(const Login());
+}
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
-
+  
   @override
   State<Login> createState() => _LoginState();
+
 }
 
 class _LoginState extends State<Login> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,14 +132,56 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
+            
+            RaisedButton(
+              onPressed: () async {
+                
+                  KakaoSdk.init(nativeAppKey: 'a3feadb74b79c4040c956d3c0e962c1f');
+                  User user = await UserApi.instance.me();
+                  if (await isKakaoTalkInstalled()) {
+                    try {
+                      await UserApi.instance.loginWithKakaoTalk();
+                      print('카카오톡으로 로그인 성공');
+                      print('회원번호: ${user.id}'
+                      '\n닉네임: ${user.kakaoAccount?.profile?.nickname}');
+                      Navigator.push(
                       //화면전환
                       context,
                       MaterialPageRoute(builder: (context) => Root()));
-                },
-                child: Text('click'))
+
+                    } catch (error) {
+                      print('카카오톡으로 로그인 실패 $error');
+                      // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
+                      try {
+                        await UserApi.instance.loginWithKakaoAccount();
+                        print('카카오계정으로 로그인 성공');
+                        await UserApi.instance.loginWithKakaoTalk();
+                        print('카카오톡으로 로그인 성공');
+                        print('회원번호: ${user.id}'
+                        '\n닉네임: ${user.kakaoAccount?.profile?.nickname}');
+                      } catch (error) {
+                        print('카카오계정으로 로그인 실패 $error');
+                      }
+                    }
+                  } 
+                  else{
+                    try {
+                      await UserApi.instance.loginWithKakaoAccount();
+                      print('카카오계정으로 로그인 성공');
+                      // await UserApi.instance.loginWithKakaoTalk();
+                      // print('카카오톡으로 로그인 성공');
+                      print('회원번호: ${user.id}'
+                      '\n닉네임: ${user.kakaoAccount?.profile?.nickname}');
+                      Navigator.push(
+                      //화면전환
+                      context,
+                      MaterialPageRoute(builder: (context) => Root()));
+                    } catch (error) {
+                      print('카카오계정으로 로그인 실패 $error');
+                    }
+                  }
+              }
+            )
           ],
         ),
       ),
