@@ -39,7 +39,7 @@
   flex-flow: column nowrap;
   position: absolute;
   right: 50px;
-  font-family: Lato, sans-serif;
+  font-family: 'GmarketSansMedium';
   top: 40px;
 }
 
@@ -74,7 +74,6 @@ a {
   position: relative;
   display: block;
   padding: 4px 0;
-  font-family: Lato, sans-serif;
   color: #ecf0f1;
   text-decoration: none;
   text-transform: uppercase;
@@ -158,6 +157,7 @@ a:hover::after {
   -webkit-transition-timing-function:ease;
   transition-duration:0.4s;
   transition-timing-function:ease;
+  font-family: 'LeferiPoint-BlackA';
 }
 
 .orange{
@@ -174,8 +174,8 @@ a:hover::after {
   align-items: center;
   position: absolute;
   top: 30%;
-  -webkit-animation: slide-in-bck-bottom 1.0s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	        animation: slide-in-bck-bottom 1.0s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: slide-in-bck-bottom 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-in-bck-bottom 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .mainPage h2{
@@ -242,11 +242,16 @@ a:hover::after {
 .exOne{
   display: flex;
   flex-flow: column nowrap;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 5rem;
   margin-bottom: 5rem;
   width: max-content;
   margin-left: 30%;
+}
+
+.homeImg{
+  visibility: hidden;
+  border-radius: 40px;
 }
 
 .exOne h2{
@@ -262,6 +267,11 @@ a:hover::after {
 
 .t1{
   color: rgb(255, 126, 0);
+  visibility: hidden;
+}
+
+.t2{
+  color: rgb(255, 126, 0);
 }
 
 
@@ -274,6 +284,7 @@ a:hover::after {
   padding-top: 3rem;
   padding-left: 20rem;
   padding-bottom: 1rem;
+  margin-top: 10rem;
 }
 
 .footer h2{
@@ -324,28 +335,50 @@ a:hover::after {
 }
 
 /*------------------------------------------ABOUT-------------------------------------------------*/
+
 .men1{
   height: 1050px;
   background-image: url("../public/img/pic1.jpg");
   background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aboutTxt{
+  font-family: 'GmarketSansMedium';
+  font-size: 2.5rem;
+  color: rgb(250, 170, 170);
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
 }
 
 .men2{
   height: 1050px;
   background-image: url("../public/img/pic2.jpg");
   background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .men3{
   height: 1050px;
   background-image: url("../public/img/pic3.jpg");
   background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .men4{
   height: 1050px;
   background-image: url("../public/img/pic4.jpg");
   background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
@@ -661,5 +694,3 @@ a:hover::after {
             animation-timing-function: ease-out;
   }
 }
-
-
