@@ -174,6 +174,7 @@ a:hover::after {
   align-items: center;
   position: absolute;
   top: 30%;
+  line-height: 10em;
   -webkit-animation: slide-in-bck-bottom 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	        animation: slide-in-bck-bottom 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
@@ -338,14 +339,14 @@ a:hover::after {
 
 .men1{
   height: 1050px;
-  background-image: url("../public/img/pic1.jpg");
+  background-image: url("../public/img/pic4.jpg");
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.aboutTxt{
+.aboutTxt1{
   font-family: 'GmarketSansMedium';
   font-size: 2.5rem;
   color: rgb(250, 170, 170);
@@ -354,18 +355,49 @@ a:hover::after {
   text-align: center;
 }
 
+.aboutTxt2{
+  font-family: 'GmarketSansMedium';
+  font-size: 2.5rem;
+  color: rgb(255, 218, 218);
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: left;
+  margin-left: 10vw;
+  padding-bottom: 15rem;
+}
+
+.aboutTxt3{
+  font-family: 'GmarketSansMedium';
+  font-size: 2.5rem;
+  color: rgb(250, 170, 170);
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+}
+
+.aboutTxt4{
+  font-family: 'GmarketSansMedium';
+  font-size: 2.5rem;
+  color: rgb(255, 218, 218);
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+  padding-top: 5rem;
+  line-height: 4em;
+}
+
 .men2{
   height: 1050px;
-  background-image: url("../public/img/pic2.jpg");
+  background-image: url("../public/img/pic6.jpg");
   background-size: cover;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content:flex-start;
 }
 
 .men3{
   height: 1050px;
-  background-image: url("../public/img/pic3.jpg");
+  background-image: url("../public/img/pic1.jpg");
   background-size: cover;
   display: flex;
   align-items: center;
@@ -374,7 +406,7 @@ a:hover::after {
 
 .men4{
   height: 1050px;
-  background-image: url("../public/img/pic4.jpg");
+  background-image: url("../public/img/pic7.jpg");
   background-size: cover;
   display: flex;
   align-items: center;

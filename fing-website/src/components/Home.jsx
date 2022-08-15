@@ -9,9 +9,6 @@ import { IoAnalyticsOutline,IoPartlySunnyOutline, IoHeartOutline } from "react-i
 
 
 export const Home = () => {
-
-
-
   const [scrollPosition, setScrollPosition] = useState(0);      //현재 스크롤 하는 부분이 어딘지 받아올 State
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -24,7 +21,6 @@ export const Home = () => {
     window.scrollTo({top: 0, behavior : "smooth"});
   }
    
-
   const target1 = useRef(null)
   const target2 = useRef(null)
   const target3 = useRef(null)
@@ -46,7 +42,7 @@ export const Home = () => {
   return (
     <div className="home">
       <div className='mainPage'>
-        <h2 id='logo' onClick={() => moveTop()} className={scrollPosition < 900 ? "white" : "orange"}>Fing</h2>
+        <h2 id='logo' onClick={() => moveTop()} className={scrollPosition < 1000 ? "white" : "orange"}>Fing</h2>
         <div className="top">
           <h2>페스티벌이 궁금해?</h2>
           <h2>Fing 찍어<MdRoom size="50"/></h2>
