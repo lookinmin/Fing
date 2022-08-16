@@ -7,7 +7,9 @@ import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
 import 'Mypage/mypage.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -36,7 +38,8 @@ class Root extends StatefulWidget {
       body: Column(
         children: [
           Flexible(flex: 2, child: FestivalSearch()),
-          Expanded(flex: 8, child: AddressMap())
+          Text('임시')
+          // Expanded(flex: 8, child: MainTopBottom())
         ],
       ),
       // bottomNavigationBar: BottomAppBar(
@@ -57,6 +60,8 @@ class _RootState extends State<Root> {
   ];
 
   late List<GlobalKey<NavigatorState>> _navigatorKeyList;
+
+  static get data => null;
 
   @override
   void initState() {
