@@ -1,11 +1,11 @@
 import 'package:fing/MainPage/mainpage.dart';
+import 'package:fing/Mypage/mypage.dart';
 import 'package:fing/category/example.dart';
 import 'package:flutter/material.dart';
 import 'Map/map.dart';
-
+import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart';
+import 'Mypage/mypage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,12 +52,11 @@ class Root extends StatefulWidget {
 class _RootState extends State<Root> {
   int _currentIndex = 0;
   final _pages = [
-    // MainTopBottom(),
-    Setting(),
+    MainTopBottom(),
     AddressMap(),
     Setting(),
-    Setting(),
-    Setting()
+    LikedPage(),
+    MyPageMain()
   ];
 
   late List<GlobalKey<NavigatorState>> _navigatorKeyList;
