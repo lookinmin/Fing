@@ -36,23 +36,23 @@ export const About = () => {
     
       if(450 > scrollTop && scrollTop > 0){
         const y1 = $(".men1").offset().top;
-        window.scrollTo({top : y1, behavior: "smooth"})
+        window.scrollTo({top : y1, behavior: "smooth"});
         console.log("일단해" + 11)
       }
       else if(1500 > scrollTop && scrollTop >= 450){
         const y2 = $(".men2").offset().top;
-        window.scrollTo({top : y2, behavior: "smooth"})
-        //$('body,html').animate({scrollTop:$(".men2").offset().top}, 5000);
+        window.scrollTo({top : y2, behavior: "smooth"});
+        //$('body,html').animate({scrollTop:$(".men2").offset().top}, 2000);
         console.log("일단해" + 22)
       }
       else if(2700 > scrollTop && scrollTop >= 1500){
         const y3 = $(".men3").offset().top;
-        window.scrollTo({top : y3, behavior: "smooth"})
+        window.scrollTo({top : y3, behavior: "smooth"});
         console.log("일단해" + 33)
       }
       else if(scrollTop >= 2700){
         const y4 = $(".men4").offset().top;
-        window.scrollTo({top : y4, behavior: "smooth"})
+        window.scrollTo({top : y4, behavior: "smooth"});
         console.log("일단해" + 44)
       }
     }
@@ -66,7 +66,7 @@ export const About = () => {
     let between = 16; // 이동 간격 시간
     let scroll = window.setInterval(function() {
       let pos = window.pageYOffset;
-      let step = 20; // 이동 크기 픽셀
+      let step = 15; // 이동 크기 픽셀
       if ( pos > 0 ) {
           window.scrollTo( 0, pos - step );
       } else {
@@ -81,7 +81,7 @@ export const About = () => {
 
   return (
     <div className='aboutDiv' onScroll={scr.handleScroll()}>
-      <h2 id='logo' onClick={() => moveTop()} className="white">Fing</h2>
+      <h2 id='logo' onClick={() => scrollToTop()} className="white">Fing</h2>
       <div className="men1" >
         <Menu/>
         <div className="aboutTxt1" id='target1' >

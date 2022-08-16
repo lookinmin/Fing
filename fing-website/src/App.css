@@ -136,7 +136,7 @@ a:hover::after {
   flex-flow: column wrap;
   align-items: center;
   height: 1100px;
-  background-image: url("../public/img/mainBack.jpg");
+  background-image: url("../public/img/pic4.jpg");
   background-size: cover;
 }
 
@@ -222,7 +222,6 @@ a:hover::after {
   left: 100px;
   font-family: 'yg-jalnan';
   font-size: 1.6rem;
-
 }
 
 .box{
@@ -275,17 +274,21 @@ a:hover::after {
   color: rgb(255, 126, 0);
 }
 
+.haddan{
+  background-color: #f4f4f4; 
+}
+
 
 /*-------------for Footer-----------*/
 
 .footer{
   display: flex;
   flex-flow: column wrap;
-  background-color: #ffd4d4;
-  padding-top: 3rem;
+  background-color: #696464;
+  padding-top: 5rem;
   padding-left: 20rem;
-  padding-bottom: 1rem;
-  margin-top: 10rem;
+  padding-bottom: 3rem;
+  color: #fff;
 }
 
 .footer h2{
@@ -311,6 +314,11 @@ a:hover::after {
   flex-flow: row nowrap;
   justify-content: space-between;
   width: 55%;
+
+}
+
+.footerLogo h2{
+  color: #fff !important;
 }
 
 
@@ -339,12 +347,40 @@ a:hover::after {
 
 .men1{
   height: 1050px;
-  background-image: url("../public/img/pic4.jpg");
+  background-image: url("../public/img/pic6.jpg");
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+.men2{
+  height: 1050px;
+  background-image: url("../public/img/mainBack.jpg");
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content:flex-start;
+}
+
+.men3{
+  height: 1050px;
+  background-image: url("../public/img/pic1.jpg");
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.men4{
+  height: 1050px;
+  background-image: url("../public/img/pic7.jpg");
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .aboutTxt1{
   font-family: 'GmarketSansMedium';
@@ -386,32 +422,6 @@ a:hover::after {
   line-height: 4em;
 }
 
-.men2{
-  height: 1050px;
-  background-image: url("../public/img/pic6.jpg");
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content:flex-start;
-}
-
-.men3{
-  height: 1050px;
-  background-image: url("../public/img/pic1.jpg");
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.men4{
-  height: 1050px;
-  background-image: url("../public/img/pic7.jpg");
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 
 
