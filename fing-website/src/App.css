@@ -380,11 +380,11 @@ a:hover::after {
 
 .men3{
   height: 1050px;
-  background-image: url("../public/img/pic1.jpg");
+  background-image: url("../public/img/opop.jpg");
   background-size: cover;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-start;
 }
 
 .men4{
@@ -400,41 +400,47 @@ a:hover::after {
 .aboutTxt1{
   font-family: 'GmarketSansMedium';
   font-size: 2.5rem;
-  color: rgb(250, 170, 170);
+  color: rgb(255, 244, 244);
   display: flex;
   flex-flow: column nowrap;
   text-align: center;
+  line-height: 1em;
+
 }
 
 .aboutTxt2{
   font-family: 'GmarketSansMedium';
   font-size: 2.5rem;
-  color: rgb(255, 218, 218);
+  color: rgb(255, 244, 244);
   display: flex;
   flex-flow: column nowrap;
   text-align: left;
   margin-left: 10vw;
   padding-bottom: 15rem;
+  line-height: 1em;
 }
 
 .aboutTxt3{
   font-family: 'GmarketSansMedium';
   font-size: 2.5rem;
-  color: rgb(250, 170, 170);
+  color: rgb(255, 244, 244);
   display: flex;
   flex-flow: column nowrap;
   text-align: center;
+  line-height: 1em;
+  margin-bottom: 8rem;
+  margin-left: 13rem;
 }
 
 .aboutTxt4{
   font-family: 'GmarketSansMedium';
   font-size: 2.5rem;
-  color: rgb(255, 218, 218);
+  color: rgb(255, 244, 244);
   display: flex;
   flex-flow: column nowrap;
   text-align: center;
   padding-top: 5rem;
-  line-height: 4em;
+  line-height: 2em;
 }
 
 
