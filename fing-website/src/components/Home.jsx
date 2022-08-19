@@ -4,8 +4,7 @@ import { MdRoom } from 'react-icons/md';
 import styles from './Home.module.css';
 import React, { useRef, useState, useEffect } from 'react';
 import { useIntersectionObserver } from './useIntersectionObserver.ts';
-import { IoAnalyticsOutline,IoPartlySunnyOutline, IoHeartOutline } from "react-icons/io5";
-
+import { IoAnalyticsOutline,IoPartlySunnyOutline, IoHeartOutline,IoLogoGooglePlaystore } from "react-icons/io5";
 
 
 export const Home = () => {
@@ -53,8 +52,8 @@ export const Home = () => {
 
       <div className="toDownload">
         <img src="./img/fingLogo.png" alt="fing" height="70px"/>
-        <h2>Fing Download</h2>
-        <img id='goPS' src="./img/playstore.png" alt="fing" height="30px"/>
+        <h2 style={{paddingRight : "15px"}}>Fing Download</h2>
+        <IoLogoGooglePlaystore color='#fff' size={40} />
       </div>
 
       <div className="exOne">

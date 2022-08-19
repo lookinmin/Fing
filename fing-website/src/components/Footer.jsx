@@ -1,4 +1,6 @@
 import React from 'react'
+import { IoLogoInstagram, IoLogoGooglePlaystore,IoLogoGithub } from "react-icons/io5";
+import { GrAppleAppStore } from "react-icons/gr";
 
 export const Footer = () => {
 
@@ -24,10 +26,10 @@ export const Footer = () => {
   return (
     <div className="footer">
       <div className="pageIcons">
-        <img className='icons' src="./img/instagram.png"  onClick={() => move(1)} alt="fing insta"  height="40px"/>
-        <img className='icons' src="./img/app-store.png"  onClick={() => move(2)} alt="fing insta" height="40px"/>
-        <img className='icons' src="./img/playstore.png"  onClick={() => move(3)} alt="fing insta" height="40px"/>
-        <img className='icons' src="./img/github.png" onClick={() => move(4)} alt="fing insta" height="40px"/>
+      <IoLogoInstagram color='#faf5e4' size={40} onClick={() => move(1)}/>
+        <GrAppleAppStore color='#faf5e4' size={40} onClick={() => move(2)}/>
+        <IoLogoGooglePlaystore color='#faf5e4' size={40} onClick={() => move(3)}/>  
+        <IoLogoGithub color='#faf5e4' size={40} onClick={() => move(4)}/>
       </div>
       <div className="footerLogo">
         <h2>Fing : Festival-ing</h2>

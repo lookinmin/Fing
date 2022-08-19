@@ -278,6 +278,15 @@ a:hover::after {
   background-color: #f4f4f4; 
 }
 
+/*------------------------------for goods---------------------------------------*/
+.goods{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 126, 0);
+}
+
 
 /*-------------for Footer-----------*/
 
@@ -301,7 +310,13 @@ a:hover::after {
   display: flex;
   flex-flow: row nowrap;
   margin-bottom: 1rem;
-
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: 1rem;
+  width: 300px;
+  align-items: baseline;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .pageIcons .icons{
@@ -318,7 +333,7 @@ a:hover::after {
 }
 
 .footerLogo h2{
-  color: #fff !important;
+  color: rgb(255, 126, 0) !important;
 }
 
 
