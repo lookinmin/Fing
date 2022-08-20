@@ -221,23 +221,23 @@ class CategoryBtn extends StatelessWidget {
 Widget imgSet(int id) {
   switch (id) {
     case 1:
-      return Image.asset('images/music.png');
+      return Image.asset('assets/images/music.png');
     case 2:
-      return Image.asset('images/food.png');
+      return Image.asset('assets/images/food.png');
     case 3:
-      return Image.asset('images/natural.png');
+      return Image.asset('assets/images/natural.png');
     case 4:
-      return Image.asset('images/region.png');
+      return Image.asset('assets/images/region.png');
     case 5:
-      return Image.asset('images/spring.png');
+      return Image.asset('assets/images/spring.png');
     case 6:
-      return Image.asset('images/summer.png');
+      return Image.asset('assets/images/summer.png');
     case 7:
-      return Image.asset('images/fall.png');
+      return Image.asset('assets/images/fall.png');
     case 8:
-      return Image.asset('images/winter.png');
+      return Image.asset('assets/images/winter.png');
     default:
-      return Image.asset('images/mark.jpg');
+      return Image.asset('assets/images/mark.jpg');
   }
 }
 

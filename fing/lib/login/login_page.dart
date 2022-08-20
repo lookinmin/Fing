@@ -12,6 +12,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.fromLTRB(30.0, 170.0, 50.0, 0.0),
@@ -103,34 +105,49 @@ class _LoginState extends State<Login> {
                 ),
               ],
             ),
-
             SizedBox(
-              height: 80.0,
+              height: screenHeight * 0.24,
             ),
-            //Image.asset("images/kakao_login.png"),
-
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Root()));
+              },
+              child: Image.asset('assets/images/kakao_login_large_Kor.png'),
+            ),
             SizedBox(
-              height: 80.0,
+              height: screenHeight * 0.05,
             ),
-
             Center(
               child: Text(
-                '가입 문구',
+                '가입하면 당사의 서비스 약관에 동의하고',
                 style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 13,
                   letterSpacing: 0.0,
-                  fontSize: 10.0,
-                  color: Colors.black,
                 ),
               ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      //화면전환
-                      context,
-                      MaterialPageRoute(builder: (context) => Root()));
-                },
-                child: Text('click'))
+            Center(
+              child: Text(
+                '개인정보 보호정책을(를) 읽어 당사의 데이터 수집,',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 13,
+                  letterSpacing: 0.0,
+                ),
+              ),
+            ),
+            Center(
+              child: Text(
+                '사용, 공유방법을 확인했음을 인정하는 것입니다.',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 13,
+                  letterSpacing: 0.0,
+                ),
+              ),
+            ),
           ],
         ),
       ),

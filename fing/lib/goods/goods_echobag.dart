@@ -82,7 +82,7 @@ class GoodsShow extends State<state> {
             height: 300,
             width: 300,
             child: Image.asset(
-              'images/echobag.png',
+              'assets/images/echobag.png',
               fit: BoxFit.fill,
             )),
         Container(
