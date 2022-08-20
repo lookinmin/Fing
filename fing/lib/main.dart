@@ -180,9 +180,12 @@ class FestivalSearch extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(flex: 1, child: logo()), //여기에 로고 들어감
-          Expanded(
-            flex: 5,
+          Flexible(
+            flex: 1,
+            child: Image.asset('/images/FingLogo.png', fit: BoxFit.fill),
+          ),
+          Flexible(
+            flex: 6,
             child: Container(
               margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -221,10 +224,4 @@ class FestivalSearch extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget logo() {
-  return Image.asset(
-    'images/mark.jpg',
-  );
 }

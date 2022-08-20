@@ -14,9 +14,11 @@ class ListModel {
 }
 
 const likedList = [
-  ListModel("images/waterbombDaegu.png", "WATERBOMB(대구)", "기간 : 2022.07.23",
+  ListModel("assets/images/waterbombDaegu.png", "WATERBOMB(대구)",
+      "기간 : 2022.07.23",
       "위치 : 대구스타디움"),
-  ListModel("images/jazzfestival.png", "자라섬 재즈 페스티벌", "기간 : 2022.10.01~10.03",
+  ListModel("assets/images/jazzfestival.png", "자라섬 재즈 페스티벌",
+      "기간 : 2022.10.01~10.03",
       "위치 : 가평군 가평읍 달전리 자라섬"),
 ];
 

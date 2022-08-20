@@ -77,20 +77,27 @@ class _FestivalItemState extends State<FestivalItem> {
                       color: Colors.grey,
                       child: Image.asset(widget.item.img1, fit: BoxFit.fill)),
                   Container(
-                    margin: EdgeInsets.all(5),
+                    margin: EdgeInsets.only(left: 5),
                     padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                     decoration: BoxDecoration(
                       color: Colors.pink[500],
-                      // color: Color.fromRGBO(255, 126, 0, 30.0),
-                      // color: Color.fromARGB(225, 255, 0, 85),
-                      // color: Color.fromARGB(224, 45, 64, 209),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Text("D-22",
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color.fromARGB(255, 49, 48, 48)
+                                  .withOpacity(0.4),
+                              spreadRadius: 1, //퍼지는거리
+                              blurRadius: 5, //흐림정도
+                              offset: Offset(2, 4)) //그림자위치
+                        ]),
+                    child: Text("D-${widget.item.dday.toString()}",
                         style: TextStyle(
-                            fontSize: 18,
+                            letterSpacing: 0.7,
+                            fontSize: 17,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white)),
+                            color: Colors.white)),                                   
                   )
                 ],
               ),
@@ -98,7 +105,7 @@ class _FestivalItemState extends State<FestivalItem> {
             Padding(
               padding: EdgeInsets.only(top: 10),
               child: Text(widget.item.title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             Padding(
               padding: EdgeInsets.only(top: 10),
@@ -145,9 +152,9 @@ class _FestivalItemState extends State<FestivalItem> {
 
 class FestivalModel {
   const FestivalModel(
-      this.img1, this.title, this.date, this.location, this.likenum);
+      this.dday, this.img1, this.title, this.date, this.location, this.likenum);
+  final int dday;
   final String img1;
-  // final String img2;
   final String title;
   final String date;
   final String location;
@@ -156,32 +163,32 @@ class FestivalModel {
 
 final festivalitem = [
   FestivalModel(
+    2,
     "images/waterbomb1.png",
-    // "images/waterbombDaegu.png",
     "2022 워터밤 대구",
     "2022.07.23~2022.07.23",
     "대구광역시 대구스타디움",
     12,
   ),
   FestivalModel(
+    12,
     "images/waterbomb2.png",
-    // "images/jazzfestival.png",
     "자라섬 재즈 페스티벌",
     "2022.10.01~2022.10.03",
     "가평군 가평읍 달전리 자라섬",
     7,
   ),
   FestivalModel(
+    8,
     "images/jazzfestival.png",
-    // "images/jazzfestival.png",
     "치악산 복숭아축제",
     "2022.08.20~2022.08.21",
     "강원도 원주시",
     3,
   ),
   FestivalModel(
+    23,
     "images/waterbombDaegu.png",
-    // "images/jazzfestival.png",
     "피란수도 부산 문화재 야행",
     "2022.08.19~2022.08.20",
     "부산광역시 임시수도기념거리",
