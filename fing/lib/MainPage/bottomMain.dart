@@ -1,6 +1,7 @@
 import 'package:fing/goods/goods.dart';
 import 'package:flutter/material.dart';
 import '../category/example.dart';
+import 'package:fing/FestivalPage/festivalist.dart';
 
 void main() => runApp(BottomMain());
 
@@ -40,14 +41,22 @@ class CategoryBtn extends StatelessWidget {
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             Column(
               children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 222, 236, 255),
-                      borderRadius: BorderRadius.circular(100)),
-                  child: imgSet(1),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FestivalPage()));
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                    width: 70,
+                    height: 70,
+                    decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 222, 236, 255),
+                        borderRadius: BorderRadius.circular(100)),
+                    child: imgSet(1),
+                  ),
                 ),
                 Text(
                   "Music",
