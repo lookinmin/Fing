@@ -41,7 +41,7 @@ export const Home = () => {
   return (
     <div className="home">
       <div className='mainPage'>
-        <h2 id='logo' onClick={() => moveTop()} className={scrollPosition < 1000 ? "white" : "orange"}>Fing</h2>
+        <h2 id='logo' onClick={() => moveTop()} className={scrollPosition < 1050 ? "white" : "orange"}>Fing</h2>
         <div className="top">
           <h2>페스티벌이 궁금해?</h2>
           <h2><span className='t2'>Fing</span> 찍어<MdRoom size="50"/></h2>

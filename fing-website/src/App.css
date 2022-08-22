@@ -1,3 +1,5 @@
+
+
 @font-face {
   font-family: 'yg-jalnan';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
@@ -282,10 +284,97 @@ a:hover::after {
 .goods{
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(255, 126, 0);
+  /* justify-content: center;
+  align-items: center; */
 }
+
+.goods .txtForTop{
+  display: flex;
+  height: max-content;
+  color: rgb(255, 126, 0);
+  flex-flow: column nowrap;
+  width: 70vw;
+  border-bottom: 2px solid #a8a8a8;
+  margin: 10rem 15vw 0 15vw !important;
+}
+
+.goods .txtForTop h2{
+  font-size: 3rem;
+  font-family: 'GmarketSansMedium';
+  margin: 0 0 10px 0!important;
+}
+
+.goods .goodsItems{
+  display: grid;
+  margin-top: 3rem;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 5vw;
+  width: 70vw;
+  align-self: center;
+}
+
+.goods .goodsItems img{
+  padding-top: 2rem;
+  border-top: 1px solid #a8a8a8;
+  padding-bottom: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #a8a8a8;
+}
+
+
+.goods .goodsItems #item1{
+  grid-column: 0 / 1;
+  padding-left: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.goods .goodsItems #item1 h2{
+  font-family: 'GmarketSansMedium';
+  align-self: flex-start !important;
+  margin-left: 3.5vw;
+  font-size: 1.7em;
+}
+
+.goods .goodsItems .GtxtBox{
+  display: flex;
+  flex-flow: column nowrap;
+  align-self: flex-start !important;
+  margin-left: 3.5vw;
+}
+
+.goods .goodsItems .GtxtBox h3{
+  font-family: 'GmarketSansMedium';
+  margin: 0 !important;
+  padding-bottom: 10px;
+}
+
+.goods .goodsItems .GtxtBox p{
+  font-family: 'GmarketSansMedium';
+  margin: 0 !important;
+  padding-bottom: 10px;
+
+}
+
+
+.goods .goodsItems #item2{
+  grid-column: 0 / 2;
+  padding-left: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.goods .goodsItems #item2 h2{
+  font-family: 'GmarketSansMedium';
+  align-self: flex-start !important;
+  margin-left: 3.5vw;
+  font-size: 1.7em;
+}
+
 
 
 /*-------------for Footer-----------*/

@@ -5,6 +5,7 @@ import { Home } from './components/Home';
 import { Goods } from './components/Goods';
 import { About } from './components/About';
 
+
 function App() {
   return (
     <Router>
