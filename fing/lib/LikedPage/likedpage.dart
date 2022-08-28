@@ -33,8 +33,6 @@ class LikedPage extends StatelessWidget {
   }
 }
 
-
-
 class LikedList extends StatelessWidget {
   const LikedList({Key? key}) : super(key: key);
 
@@ -64,87 +62,64 @@ class LikedItem extends StatefulWidget {
 class _LikedItemState extends State<LikedItem> {
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Flexible(
-                flex: 2,
-                child: Image.asset(
-                  widget.item.imageUrl,
-                  width: 120,
-                ),
+              Container(
+                width: 95,
+                height: 130,
+                child: Image.asset(widget.item.imageUrl, fit: BoxFit.fill),
               ),
-              Flexible(
-                flex: 4,
-                child: Container(
-                    width: 400,
-                    //color: Colors.green,
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          child: Text(
-                            widget.item.title,
-                            style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.bold),
-                          ),
+              Container(
+                  width: screenWidth * 0.52,
+                  padding: EdgeInsets.only(left: 13, right: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 10),
+                        child: Text(
+                          widget.item.title,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(top: 20),
-                          child: Text(
-                            widget.item.desc1,
-                            style: TextStyle(fontSize: 14),
-                          ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Text(
+                          widget.item.desc1,
+                          style: TextStyle(fontSize: 14),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5),
-                          child: Text(
-                            widget.item.desc2,
-                            style: TextStyle(fontSize: 14),
-                          ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 5),
+                        child: Text(
+                          widget.item.desc2,
+                          style: TextStyle(fontSize: 14),
                         ),
-                      ],
-                    )),
+                      ),
+                    ],
+                  )
               ),
-              Expanded(
-                child: Container(
-                  // height: 30,
-                  //color: Colors.red,
-                  child: FavoriteButton(
-                    //플러터 패키지 쓴 favorite_button임
-                    isFavorite: true,
-                    valueChanged: (_isFavorite) {
-                      print("Is Favorite : $_isFavorite");
-                    },
-                  ),
-                  // child: ElevatedButton(
-                  //   onPressed: () {},
-                  //   child: Icon(Icons.delete_forever,
-                  //       color: Color.fromRGBO(255, 126, 0, 1)),
-                  //   style: ElevatedButton.styleFrom(
-                  //     padding: EdgeInsets.zero,
-                  //     //alignment: Alignment.center,
-                  //     //minimumSize: Size(70, 30),
-                  //     primary: Colors.white,
-                  //     onPrimary: Colors.black,
-                  //     side: BorderSide(
-                  //         color: Color.fromRGBO(255, 126, 0, 1)),
-                  //     shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(30.0)),
-                  //   ),
-                  // ),
-                ),
+              // SizedBox(
+              //   width: 20,
+              // ),
+              FavoriteButton(
+                //플러터 패키지 쓴 favorite_button임
+                isFavorite: true,
+                valueChanged: (_isFavorite) {
+                  print("Is Favorite : $_isFavorite");
+                },
+                iconSize: 50,
               ),
-               
-                
             ],
-            ),
-          Padding(padding: EdgeInsets.only(bottom: 5)),
+          ),
+          Padding(padding: EdgeInsets.only(bottom: 15)),
           Divider(
             thickness: 1,
             color: Color.fromARGB(102, 192, 190, 190),

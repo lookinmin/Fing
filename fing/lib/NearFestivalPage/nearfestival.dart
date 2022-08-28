@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kpostal/kpostal.dart';
 
 class NearFestival extends StatefulWidget {
   const NearFestival({Key? key}) : super(key: key);
@@ -9,6 +10,7 @@ class NearFestival extends StatefulWidget {
 
 //내주변 Page -> appbar와 listview로 구성
 class _NearFestivalState extends State<NearFestival> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,60 @@ class _NearFestivalState extends State<NearFestival> {
         elevation: 1.0, // 그림자 제거
         toolbarHeight: 50.0,
       ),
-      body: NearFestivalList(),
+        body: NearFestivalList());
+  }
+}
+
+//주소검색
+class Address extends StatelessWidget {
+  const Address({Key? key}) : super(key: key);
+  final address = '충청북도 청주시';
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListTile(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(17),
+            side: BorderSide(
+              color: Color.fromARGB(255, 255, 128, 0),
+              width: 1,
+            )),
+        minLeadingWidth: 0,
+        // tileColor: Colors.grey,
+        textColor: Color.fromARGB(255, 255, 128, 0),
+        iconColor: Color.fromARGB(255, 255, 128, 0),
+        leading: Icon(Icons.place_outlined, size: 17),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("현재 위치 : ${address}",
+                style: TextStyle(
+                  fontSize: 15,
+                  // fontWeight: FontWeight.bold,
+                )),
+            Row(
+              children: [
+                Text('위치 변경', style: TextStyle(fontSize: 15)),
+                Icon(Icons.chevron_right)
+              ],
+            )
+          ],
+        ),
+        onTap: () async {
+          await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => KpostalView(
+                  useLocalServer: true,
+                  localPort: 7001,
+                  callback: (Kpostal result) {
+                    print(result.address);
+                  },
+                ),
+              ));
+        },
+      ),
     );
   }
 }
@@ -45,6 +100,17 @@ class NearFestivalList extends StatelessWidget {
       child: ListView.builder(
         itemCount: festivalitem.length,
         itemBuilder: (BuildContext context, int index) {
+          if (index == 0) {
+            //리스트뷰에 주소찾기 헤더 추가
+            return Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.fromLTRB(13, 18, 13, 10),
+                  child: Address(),
+                ),
+              ],
+            );
+          }         
           return NearFestivalItem(item: festivalitem[index]);
         },
       ),
@@ -52,6 +118,7 @@ class NearFestivalList extends StatelessWidget {
   }
 }
 
+//페스티벌 리스트 아이템
 class NearFestivalItem extends StatefulWidget {
   const NearFestivalItem({Key? key, required this.item}) : super(key: key);
   final item;
