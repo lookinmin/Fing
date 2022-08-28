@@ -6,6 +6,7 @@ import 'Map/map.dart';
 import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
 import 'Mypage/mypage.dart';
+import 'NearFestivalPage/nearfestival.dart';
 
 void main() {
   runApp(const MyApp());
@@ -54,7 +55,7 @@ class _RootState extends State<Root> {
   final _pages = [
     MainTopBottom(),
     AddressMap(),
-    Setting(),
+    NearFestival(),
     LikedPage(),
     MyPageMain()
   ];
