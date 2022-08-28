@@ -176,6 +176,7 @@ class _MyLocationState extends State<MyLocation> {
               ''');
             } else {
               myLocationMaker();
+              markFestivals();
             }
           },
         ),
