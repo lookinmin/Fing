@@ -182,41 +182,32 @@ class FestivalSearch extends StatelessWidget {
         children: [
           Expanded(flex: 1, child: logo()), //여기에 로고 들어감
           Expanded(
-            flex: 5,
-            child: Container(
-              margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.4),
-                      spreadRadius: 0,
-                      blurRadius: 2,
-                      offset: Offset(0, 7), // changes position of shadow
+              flex: 5,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.4),
+                        spreadRadius: 0,
+                        blurRadius: 2,
+                        offset: Offset(0, 7), // changes position of shadow
+                      )
+                    ]),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(onPressed: () {}, child: Text('페스티벌을 검색하세요')),
+                    Icon(
+                      Icons.search,
+                      color: Color.fromRGBO(255, 126, 0, 1.0),
                     )
-                  ]),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Search Festival',
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                      child: Icon(
-                    Icons.search,
-                    color: Color.fromRGBO(255, 126, 0, 1.0),
-                  ))
-                ],
-              ),
-            ),
-          )
+                  ],
+                ),
+              ))
         ],
       ),
     );
@@ -227,4 +218,13 @@ Widget logo() {
   return Image.asset(
     'images/mark.jpg',
   );
+}
+
+class SearchList extends StatelessWidget {
+  const SearchList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }
