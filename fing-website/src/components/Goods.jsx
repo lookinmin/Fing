@@ -23,7 +23,14 @@ export const Goods = () => {
             <p>Fing 텀블러와 함께 페스티벌을 즐겨보세요</p>
             <p></p>
           </div>
-      
+          <div id="container">
+            <button class="learn-more">
+              <span class="circle" aria-hidden="true">
+                <span class="icon arrow"></span>
+              </span>
+              <span class="button-text">구매하러 앱으로 이동하기</span>
+            </button>
+          </div>
         </div>
         <div id="item2">
           <h2>F-ING 에코백</h2>
@@ -34,6 +41,14 @@ export const Goods = () => {
             <p>페스티벌을 깨끗하게 즐기는 하나의 방법.</p>
             <p>Fing 에코백와 함께 페스티벌을 즐겨보세요</p>
             <p></p>
+          </div>
+          <div id="container">
+            <button class="learn-more">
+              <span class="circle" aria-hidden="true">
+                <span class="icon arrow"></span>
+              </span>
+              <span class="button-text">구매하러 앱으로 이동하기</span>
+            </button>
           </div>
         </div>
       </div>
