@@ -5,6 +5,7 @@ import 'Map/map.dart';
 import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
 import 'Mypage/mypage.dart';
+import 'NearFestivalPage/nearfestival.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,15 +53,10 @@ class _RootState extends State<Root> {
   int _currentIndex = 0;
   final _pages = [
     MainTopBottom(),
-    Setting(),
-    Setting(),
+    AddressMap(),
+    NearFestival(),
     LikedPage(),
     MyPageMain()
-    // Setting(),
-    // Setting(),
-    // Setting(),
-    // Setting(),
-    // Setting(),
   ];
 
   late List<GlobalKey<NavigatorState>> _navigatorKeyList;
@@ -327,3 +323,4 @@ AppBar searchPageHeader() {
     ),
   );
 }
+
