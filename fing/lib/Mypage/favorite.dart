@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 import '../FestivalPage/festivalist.dart';
 
 
-class recent extends StatefulWidget {
-  const recent({Key? key}) : super(key: key);
+class favorite extends StatefulWidget {
+  const favorite({Key? key}) : super(key: key);
 
   @override
-  State<recent> createState() => _recentState();
+  State<favorite> createState() => _favoriteState();
 }
 
-class _recentState extends State<recent> {
+class _favoriteState extends State<favorite> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '최근 본 페스티벌',
+          '찜한 페스티벌',
           style: TextStyle(
               fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
         ),
@@ -26,30 +26,30 @@ class _recentState extends State<recent> {
           color: Colors.black,
         ),
       ),
-      body:recent_festival_list()
+      body:favorite_festival_list()
     );
   }
 }
 
 
-class recent_festival_list extends StatelessWidget {
-  const recent_festival_list({Key? key}) : super(key: key);
+class favorite_festival_list extends StatelessWidget {
+  const favorite_festival_list({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(5),
       child: ListView.builder(
-        itemCount: recentlist.length,
+        itemCount: favoritelist.length,
         itemBuilder: (BuildContext context, int index) {
-          return FestivalItem(item: recentlist[index]);
+          return FestivalItem(item: favoritelist[index]);
         },
       ),
     );
   }
 }
 
-final recentlist= [
+final favoritelist= [
   FestivalModel(
     2,
     "images/waterbomb1.png",
