@@ -54,7 +54,6 @@ ul {
 
 li {
   padding: 6px 0;
-  
 }
 
 li:nth-child(1){
@@ -178,6 +177,17 @@ a:hover::after {
 	        animation: slide-in-bck-bottom 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
+.top2{
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  position: absolute;
+  top: 40%;
+  line-height: 5em;
+  -webkit-animation: slide-in-bck-bottom 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-in-bck-bottom 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
 .mainPage h2{
   color: white;
   font-family: 'LeferiPoint-BlackA';
@@ -187,18 +197,64 @@ a:hover::after {
   margin-left: 4rem;
 }
 
-.txtsBox{
+.exOne{
   display: flex;
-  flex-flow: row nowrap;
-  font-family: 'yg-jalnan';
-  font-size: 2.5rem;
-  justify-content: center;
-  margin-top: 8rem;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  width: max-content;
+  margin-left: 26vw;
 }
 
+.exOne2{
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  width: max-content;
+  margin-left: 10vw;
+}
 
-#y2{
-  padding-top: 5rem;
+.homeImg{
+  visibility: hidden;
+  border-radius: 40px;
+}
+
+.exOne h2{
+  font-family: 'GmarketSansMedium';
+  font-size: 2.4rem;
+}
+
+.exOne h3{
+  font-family: 'GmarketSansMedium';
+  font-size: 1.5rem;
+  color: gray;
+}
+
+.exOne2 h2{
+  font-family: 'GmarketSansMedium';
+  font-size: 2rem;
+}
+
+.exOne2 h3{
+  font-family: 'GmarketSansMedium';
+  font-size: 1.2rem;
+  color: gray;
+}
+
+.t1{
+  color: rgb(255, 126, 0);
+  visibility: hidden;
+}
+
+.t2{
+  color: rgb(255, 126, 0);
+}
+
+.haddan{
+  background-color: #f4f4f4; 
 }
 
 .itemsList{
@@ -223,6 +279,51 @@ a:hover::after {
   font-size: 1.6rem;
 }
 
+.itemsList2{
+  display: flex;
+  flex-flow: column wrap;
+  width: 98vw;
+  margin-top: 5rem;
+  margin-bottom: 8rem;
+}
+
+.itemsList2 .items{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin-left: 30vw;
+  margin-bottom: 5rem;
+}
+
+.itemsList2 .items h2{
+  position: relative;
+  left: 100px;
+  font-family: 'yg-jalnan';
+  font-size: 1.4rem;
+}
+
+.txtsBox{
+  display: flex;
+  flex-flow: row nowrap;
+  font-family: 'yg-jalnan';
+  font-size: 2.5rem;
+  justify-content: center;
+  margin-top: 8rem;
+}
+
+.txtsBox2{
+  display: flex;
+  flex-flow: row nowrap;
+  font-family: 'yg-jalnan';
+  font-size: 1.6rem;
+  justify-content: center;
+  margin-top: 6rem;
+}
+
+#y2{
+  padding-top: 5rem;
+}
+
 .box{
   position: absolute;
   width: 50px;
@@ -235,46 +336,6 @@ a:hover::after {
   position: absolute;
   top: 30px;
   left: 18px;
-}
-
-
-.exOne{
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: flex-start;
-  margin-top: 5rem;
-  margin-bottom: 5rem;
-  width: max-content;
-  margin-left: 30vw;
-}
-
-.homeImg{
-  visibility: hidden;
-  border-radius: 40px;
-}
-
-.exOne h2{
-  font-family: 'GmarketSansMedium';
-  font-size: 2.4rem;
-}
-
-.exOne h3{
-  font-family: 'GmarketSansMedium';
-  font-size: 1.5rem;
-  color: gray;
-}
-
-.t1{
-  color: rgb(255, 126, 0);
-  visibility: hidden;
-}
-
-.t2{
-  color: rgb(255, 126, 0);
-}
-
-.haddan{
-  background-color: #f4f4f4; 
 }
 
 /*------------------------------for goods---------------------------------------*/
@@ -290,7 +351,7 @@ a:hover::after {
   height: max-content;
   color: rgb(255, 126, 0);
   flex-flow: column nowrap;
-  width: 70vw;
+  width: 65vw;
   border-bottom: 2px solid #a8a8a8;
   margin: 10rem 15vw 0 15vw !important;
 }
@@ -311,12 +372,70 @@ a:hover::after {
   margin-bottom: 8rem;
 }
 
-.goods .goodsItems img{
-  padding-top: 2rem;
-  border-top: 1px solid #a8a8a8;
-  padding-bottom: 2rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #a8a8a8;
+
+.goods .goodsItems2{
+  display: grid;
+  margin-top: 6rem;
+  grid-template-rows: 1fr 1fr;
+  column-gap: 5vw;
+  width: 70vw;
+  align-self: center;
+  margin-bottom: 8rem;
+}
+
+.pic-ctn {
+  height: 200px;
+}
+
+@keyframes display {
+  0% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+}
+
+.pic-ctn {
+  position: relative;
+  height: 300px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.pic-ctn > img {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 150px);
+  opacity: 0;
+  animation: display 10s infinite;
+}
+
+.pic-ctn > img:nth-child(2) {
+  animation-delay: 2s;
+}
+.pic-ctn > img:nth-child(3) {
+  animation-delay: 4s;
+}
+.pic-ctn > img:nth-child(4) {
+  animation-delay: 6s;
+}
+.pic-ctn > img:nth-child(5) {
+  animation-delay: 8s;
 }
 
 
@@ -329,20 +448,29 @@ a:hover::after {
   justify-content: center;
 }
 
+
 .goods .goodsItems #item1 h2{
   font-family: 'GmarketSansMedium';
   align-self: flex-start !important;
-  margin-left: 3.5vw;
+  padding-left: 1.5vw;
+  margin-left: 2vw;
   font-size: 1.7em;
+  width: 22vw;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #696464;
 }
 
 .goods .goodsItems .GtxtBox{
   display: flex;
   flex-flow: column nowrap;
   align-self: flex-start !important;
-  margin-left: 3.5vw;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  padding-left: 1.5vw;
+  margin-left: 2vw;
+  width: 22vw;
+  padding-top: 1rem;
+  border-top: 2px solid #696464;
 }
 
 .goods .goodsItems .GtxtBox h3{
@@ -371,8 +499,12 @@ a:hover::after {
 .goods .goodsItems #item2 h2{
   font-family: 'GmarketSansMedium';
   align-self: flex-start !important;
-  margin-left: 3.5vw;
+  padding-left: 1.5vw;
+  margin-left: 2vw;
   font-size: 1.7em;
+  width: 22vw;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #696464;
 }
 
 
@@ -389,9 +521,41 @@ a:hover::after {
   color: #fff;
 }
 
+.footer2{
+  display: flex;
+  flex-flow: column wrap;
+  background-color: #696464;
+  padding-top: 5rem;
+  padding-left: 5vw;
+  padding-bottom: 3rem;
+  color: #fff;
+}
+
+.footer3{
+  display: flex;
+  flex-flow: column wrap;
+  background-color: #696464;
+  padding-top: 2rem;
+  padding-left: 15vw;
+  padding-bottom: 1rem;
+  color: #fff;
+}
+
 .footer h2{
   font-family: 'GmarketSansMedium';
   font-size: 1.5rem;
+  color: rgb(80, 70, 70);
+}
+
+.footer2 h2{
+  font-family: 'GmarketSansMedium';
+  font-size: 1.5rem;
+  color: rgb(80, 70, 70);
+}
+
+.footer3 h2{
+  font-family: 'GmarketSansMedium';
+  font-size: 1.3rem;
   color: rgb(80, 70, 70);
 }
 
@@ -433,18 +597,39 @@ a:hover::after {
   font-size: 1.1rem;
 }
 
+.txt2{
+  display: flex;
+  flex-flow: column wrap;
+  font-family: 'Pretendard-Regular';
+  font-size: 0.8rem;
+}
+
 .txts .TT{
   font-family: 'GmarketSansMedium';
   font-size: 1.2rem;
   margin-right: 1rem;
 }
 
-.div2{
-  margin-left: 4rem;
+.txts2 .TT{
+  font-family: 'GmarketSansMedium';
+  font-size: 1rem;
+  margin-right: 1rem;
 }
 
-.div3{
-  margin-left: 4rem;
+.txts2 .div1{
+  margin-bottom: 2rem !important;
+}
+
+.txts2 .div2{
+  margin-bottom: 2rem !important;
+}
+
+.div1{
+  margin-right: 4rem;
+}
+
+.div2{
+  margin-right: 4rem;
 }
 
 /*------------------------------------------ABOUT-------------------------------------------------*/
@@ -501,6 +686,25 @@ a:hover::after {
   justify-content: center;
   overflow: hidden;
 }
+
+.buttonSS2 {
+  display: inline-flex;
+  font-family: 'GmarketSansMedium';
+  height: 45px;
+  width: 200px;
+  border: 2px solid #BFC0C0;
+  margin-top: 10rem;
+  color: #BFC0C0;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 0.8em;
+  letter-spacing: 1.5px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-right: 5vw;
+}
+
 
 a {
   color: #BFC0C0;
@@ -898,8 +1102,9 @@ a#button-1:hover img {
 
 
 #container {
-  align-self: center;
+  align-self: flex-start;
   justify-self: center;
+  margin-left: 3.5vw;
 }
 
 button {
