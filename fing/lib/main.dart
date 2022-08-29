@@ -229,7 +229,7 @@ class FestivalSearch extends StatelessWidget {
 
 Widget logo() {
   return Image.asset(
-    'assets/images/mark.jpg',
+    'assets/images/FingLogo.png',
   );
 }
 
@@ -286,40 +286,4 @@ class _SearchListState extends State<SearchList> {
                       ));
                 })));
   }
-}
-
-AppBar searchPageHeader() {
-  return AppBar(
-    iconTheme: IconThemeData(color: Colors.grey),
-    backgroundColor: Colors.white,
-    title: TextFormField(
-      decoration: InputDecoration(
-          hintText: '페스티벌을 검색하세요',
-          hintStyle: TextStyle(
-            color: Colors.grey,
-          ),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-            ),
-          ),
-          filled: true,
-          prefixIcon: Icon(Icons.search, color: Colors.grey, size: 30),
-          suffixIcon: IconButton(
-              icon: Icon(
-                Icons.clear,
-                color: Colors.grey,
-              ),
-              onPressed: null)),
-      style: TextStyle(fontSize: 18, color: Colors.white),
-      // 검색어 입력후 DB에서 일치하는 결과값 가져올것
-      onFieldSubmitted: null,
-    ),
-  );
 }
