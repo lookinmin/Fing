@@ -80,7 +80,7 @@ class _FestivalItemState extends State<FestivalItem> {
                     margin: EdgeInsets.only(left: 5),
                     padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                     decoration: BoxDecoration(
-                      color: Colors.pink[500],
+                        color: Colors.pink[500],
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(10),
                             bottomRight: Radius.circular(10)),
@@ -97,7 +97,7 @@ class _FestivalItemState extends State<FestivalItem> {
                             letterSpacing: 0.7,
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white)),                                   
+                            color: Colors.white)),
                   )
                 ],
               ),
@@ -164,7 +164,7 @@ class FestivalModel {
 final festivalitem = [
   FestivalModel(
     2,
-    "images/waterbomb1.png",
+    "assets/images/waterbomb1.png",
     "2022 워터밤 대구",
     "2022.07.23~2022.07.23",
     "대구광역시 대구스타디움",
@@ -172,7 +172,7 @@ final festivalitem = [
   ),
   FestivalModel(
     12,
-    "images/waterbomb2.png",
+    "assets/images/waterbomb2.png",
     "자라섬 재즈 페스티벌",
     "2022.10.01~2022.10.03",
     "가평군 가평읍 달전리 자라섬",
@@ -180,7 +180,7 @@ final festivalitem = [
   ),
   FestivalModel(
     8,
-    "images/jazzfestival.png",
+    "assets/images/jazzfestival.png",
     "치악산 복숭아축제",
     "2022.08.20~2022.08.21",
     "강원도 원주시",
