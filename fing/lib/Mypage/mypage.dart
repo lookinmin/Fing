@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:fing/mypage/recent.dart';
+import 'package:fing/Mypage/favorite.dart';
+import 'package:fing/Mypage/notice.dart';
+import 'package:fing/Mypage/FAQ.dart';
+import 'package:fing/Mypage/personal.dart';
+import 'package:fing/Mypage/service.dart';
 
 void main() => runApp(MyPageMain());
 
@@ -9,7 +15,15 @@ class MyPageMain extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
-      routes: {'/': (context) => MyPage(), '/recent': (context) => recent()},
+      routes: {
+        '/': (context) => MyPage(),
+        '/recent': (context) => recent(),
+        '/favorite': (context) => favorite(),
+        '/notice': ((context) => NoticePage()),
+        '/faq': (context) => FaqPage(),
+        '/service':(context)=>ServicePage(),
+        '/persoanl':(context)=>PersonalPage(),
+      },
     );
   }
 }
@@ -22,7 +36,7 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   var _isNotificationOn = true;
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
@@ -87,7 +101,7 @@ class _MyPageState extends State<MyPage> {
                     title: Text('최근 본 페스티벌'),
                     trailing: Icon(Icons.chevron_right),
                     onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=> 어쩌구()));
+                      Navigator.pushNamed(context, '/recent');
                     },
                   ),
                   ListTile(
@@ -98,8 +112,9 @@ class _MyPageState extends State<MyPage> {
                     trailing: Icon(Icons.chevron_right),
                     onTap: () {
                       // Navigator.push(context, MaterialPageRoute(builder: (context)=> 어쩌구()));
+                      Navigator.pushNamed(context, '/favorite');
                     },
-                  ),                  
+                  ),
                   ListTile(
                     //dense: true,
                     minLeadingWidth: 0,
@@ -137,7 +152,9 @@ class _MyPageState extends State<MyPage> {
                     leading: Icon(Icons.campaign_outlined, size: 17),
                     title: Text('공지사항'),
                     trailing: Icon(Icons.chevron_right),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/notice');
+                    },
                   ),
                   ListTile(
                     //dense: true,
@@ -145,7 +162,9 @@ class _MyPageState extends State<MyPage> {
                     leading: Icon(Icons.help_outline_outlined, size: 17),
                     title: Text('FAQ'),
                     trailing: Icon(Icons.chevron_right),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/faq');
+                    },
                   ),
                   ListTile(
                     //dense: true,
@@ -161,7 +180,51 @@ class _MyPageState extends State<MyPage> {
                     leading: Icon(Icons.call_outlined, size: 17),
                     title: Text('상담원 연결'),
                     trailing: Icon(Icons.chevron_right),
-                    onTap: () {},
+                    onTap: () {
+                      showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              height: 130,
+                              color: Color(0xFF737373),
+                              child: Column(children: [
+                                Container(
+                                  height: 55,
+                                  padding: EdgeInsets.zero,
+                                  margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15))),
+                                  child:Row(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                        child:Icon(Icons.phone,color:Colors.grey[700],size:30)
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                        child:Text("통화 010-0000-0000",style:TextStyle(color:Colors.blue[600],fontSize: 18)))
+                                    ],
+                                  )
+                                ),
+                                InkWell(
+                                  onTap: () =>Navigator.pop(context),
+                                  child: Container(
+                                    height: 55,
+                                    padding: EdgeInsets.zero,
+                                    margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15))),
+                                      child:Center(child: Text('취소',style:TextStyle(color:Colors.blue[600],fontSize:19,fontWeight:FontWeight.w600))),
+                                  ),
+                                ),
+                              ]),
+                            );
+                          });
+                    },
                   ),
                   Divider(
                     height: 50,
@@ -197,7 +260,9 @@ class _MyPageState extends State<MyPage> {
                     leading: Icon(Icons.policy_outlined, size: 17),
                     title: Text('서비스 이용약관'),
                     trailing: Icon(Icons.chevron_right),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/service');
+                    },
                   ),
                   ListTile(
                     dense: true,
@@ -205,7 +270,9 @@ class _MyPageState extends State<MyPage> {
                     leading: Icon(Icons.privacy_tip_outlined, size: 17),
                     title: Text('개인정보 처리방침'),
                     trailing: Icon(Icons.chevron_right),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/personal');
+                    },
                   ),
                 ],
               )
