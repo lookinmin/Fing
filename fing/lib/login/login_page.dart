@@ -1,17 +1,30 @@
-import 'package:fing/MainPage/mainpage.dart';
-import 'package:fing/main.dart';
+
+import 'package:fing/login/login_SNS.dart';
+import 'package:fing/login/login_page.dart';
+import 'package:fing/login/login_page_main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
+import '../main.dart';
+
+
+class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
-  @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance.authStateChanges();
+    return Scaffold(
+      body: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder : (BuildContext context,AsyncSnapshot snapshot) {
+          if(!snapshot.hasData){
+            return Login_SNS();
+          }else{
+            return Root();
+          }
+        },
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -152,5 +165,6 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+    
   }
 }

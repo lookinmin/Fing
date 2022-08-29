@@ -4,6 +4,16 @@ import 'package:flutter/material.dart';
 import 'Map/map.dart';
 import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
+
 import 'Mypage/mypage.dart';
 import 'NearFestivalPage/nearfestival.dart';
 
@@ -38,6 +48,7 @@ class Root extends StatefulWidget {
       body: Column(
         children: [
           Flexible(flex: 2, child: FestivalSearch()),
+          Expanded(child: Text("Test-Main"))
           Text('임시')
           // Expanded(flex: 8, child: MainTopBottom())
         ],

@@ -20,7 +20,7 @@ class _IntroState extends State<Intro> {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => Login()));
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
