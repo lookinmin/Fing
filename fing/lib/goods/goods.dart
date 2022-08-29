@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'goods_tumbler.dart';
@@ -34,9 +33,11 @@ class ProductModel {
 
 const productList = [
   ProductModel(
-      "images/echobag.png", "Fing Echobag", "KRW 15,000", goods_echobag()),
+      "assets/images/echobag.png", "Fing Echobag", "KRW 15,000",
+      goods_echobag()),
   ProductModel(
-      "images/tumbler.png", "Fing Tumbler", "KRW 8,000", goods_tumbler()),
+      "assets/images/tumbler.png", "Fing Tumbler", "KRW 8,000",
+      goods_tumbler()),
 ];
 
 class GoodsPage extends StatelessWidget {

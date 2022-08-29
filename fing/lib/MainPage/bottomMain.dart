@@ -1,6 +1,7 @@
 import 'package:fing/goods/goods.dart';
 import 'package:flutter/material.dart';
 import '../category/example.dart';
+import 'package:fing/FestivalPage/festivalist.dart';
 
 void main() => runApp(BottomMain());
 
@@ -40,14 +41,22 @@ class CategoryBtn extends StatelessWidget {
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             Column(
               children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 222, 236, 255),
-                      borderRadius: BorderRadius.circular(100)),
-                  child: imgSet(1),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FestivalPage()));
+                  },
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                    width: 70,
+                    height: 70,
+                    decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 222, 236, 255),
+                        borderRadius: BorderRadius.circular(100)),
+                    child: imgSet(1),
+                  ),
                 ),
                 Text(
                   "Music",
@@ -212,23 +221,23 @@ class CategoryBtn extends StatelessWidget {
 Widget imgSet(int id) {
   switch (id) {
     case 1:
-      return Image.asset('images/music.png');
+      return Image.asset('assets/images/music.png');
     case 2:
-      return Image.asset('images/food.png');
+      return Image.asset('assets/images/food.png');
     case 3:
-      return Image.asset('images/natural.png');
+      return Image.asset('assets/images/natural.png');
     case 4:
-      return Image.asset('images/region.png');
+      return Image.asset('assets/images/region.png');
     case 5:
-      return Image.asset('images/spring.png');
+      return Image.asset('assets/images/spring.png');
     case 6:
-      return Image.asset('images/summer.png');
+      return Image.asset('assets/images/summer.png');
     case 7:
-      return Image.asset('images/fall.png');
+      return Image.asset('assets/images/fall.png');
     case 8:
-      return Image.asset('images/winter.png');
+      return Image.asset('assets/images/winter.png');
     default:
-      return Image.asset('images/mark.jpg');
+      return Image.asset('assets/images/mark.jpg');
   }
 }
 

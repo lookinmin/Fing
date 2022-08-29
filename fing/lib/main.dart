@@ -1,8 +1,8 @@
 import 'package:fing/MainPage/mainpage.dart';
-import 'package:fing/category/example.dart';
+import 'package:fing/Mypage/mypage.dart';
 import 'package:flutter/material.dart';
 import 'Map/map.dart';
-
+import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -14,6 +14,11 @@ void main() async{
   );
   runApp(const MyApp());
 
+import 'Mypage/mypage.dart';
+import 'NearFestivalPage/nearfestival.dart';
+
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -44,6 +49,8 @@ class Root extends StatefulWidget {
         children: [
           Flexible(flex: 2, child: FestivalSearch()),
           Expanded(child: Text("Test-Main"))
+          Text('임시')
+          // Expanded(flex: 8, child: MainTopBottom())
         ],
       ),
       // bottomNavigationBar: BottomAppBar(
@@ -55,15 +62,17 @@ class Root extends StatefulWidget {
 
 class _RootState extends State<Root> {
   int _currentIndex = 0;
-  final _pages = const [
+  final _pages = [
     MainTopBottom(),
     AddressMap(),
-    Setting(),
-    Setting(),
-    Setting()
+    NearFestival(),
+    LikedPage(),
+    MyPageMain()
   ];
 
   late List<GlobalKey<NavigatorState>> _navigatorKeyList;
+
+  static get data => null;
 
   @override
   void initState() {
@@ -161,7 +170,10 @@ class Setting extends StatelessWidget {
         child: TextButton(
       child: const Text('Setting'),
       // onPressed: () => Navigator.pushNamed(context, '/second'),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SearchList()));
+      },
     ));
   }
 }
@@ -184,41 +196,42 @@ class FestivalSearch extends StatelessWidget {
         children: [
           Expanded(flex: 1, child: logo()), //여기에 로고 들어감
           Expanded(
-            flex: 5,
-            child: Container(
-              margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.4),
-                      spreadRadius: 0,
-                      blurRadius: 2,
-                      offset: Offset(0, 7), // changes position of shadow
+              flex: 5,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.4),
+                        spreadRadius: 0,
+                        blurRadius: 2,
+                        offset: Offset(0, 7), // changes position of shadow
+                      )
+                    ]),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchList()));
+                        },
+                        child: Text(
+                          '페스티벌을 검색하세요',
+                          style: TextStyle(color: Colors.grey),
+                        )),
+                    Icon(
+                      Icons.search,
+                      color: Color.fromRGBO(255, 126, 0, 1.0),
                     )
-                  ]),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Search Festival',
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                      child: Icon(
-                    Icons.search,
-                    color: Color.fromRGBO(255, 126, 0, 1.0),
-                  ))
-                ],
-              ),
-            ),
-          )
+                  ],
+                ),
+              ))
         ],
       ),
     );
@@ -227,6 +240,61 @@ class FestivalSearch extends StatelessWidget {
 
 Widget logo() {
   return Image.asset(
-    'images/mark.jpg',
+    'assets/images/FingLogo.png',
   );
+}
+
+class SearchList extends StatefulWidget {
+  SearchList({Key? key}) : super(key: key);
+
+  @override
+  State<SearchList> createState() => _SearchListState();
+}
+
+class _SearchListState extends State<SearchList> {
+  bool flag = true;
+  static const List<String> festList = <String>[
+    'aardvark',
+    'bobcat',
+    'chameleon',
+  ];
+
+  var searchResult;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+            iconTheme: IconThemeData(color: Colors.grey),
+            backgroundColor: Colors.white,
+            title: Autocomplete<String>(
+              optionsMaxHeight: 0,
+              optionsBuilder: (TextEditingValue textEditingValue) {
+                if (textEditingValue.text == '') {
+                  return const Iterable<String>.empty();
+                }
+                setState(() {
+                  searchResult = festList.where((String option) {
+                    return option.contains(textEditingValue.text.toLowerCase());
+                  }).toList();
+                });
+                return searchResult;
+              },
+              onSelected: (String selection) {
+                debugPrint('You just selected $selection');
+              },
+            )),
+        body: searchResult == null
+            ? Container()
+            : ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: searchResult.length,
+                itemBuilder: ((context, index) {
+                  return InkWell(
+                      onTap: (() {}),
+                      child: Container(
+                        height: 50,
+                        child: Text(searchResult[index]),
+                      ));
+                })));
+  }
 }

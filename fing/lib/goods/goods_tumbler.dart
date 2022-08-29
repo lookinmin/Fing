@@ -15,14 +15,10 @@ class goods_tumbler extends StatelessWidget {
     return MaterialApp(
       title: "FING",
       initialRoute: '/',
-      routes: {
-        '/' : (BuildContext context) => GoodsPage()
-      },
+      routes: {'/': (BuildContext context) => GoodsPage()},
     );
   }
 }
-
-
 
 class GoodsPage extends StatelessWidget {
   const GoodsPage({Key? key}) : super(key: key);
@@ -66,143 +62,151 @@ class GoodsTop extends StatelessWidget {
     );
   }
 }
-class state extends StatefulWidget{
-  State createState(){
+
+class state extends StatefulWidget {
+  State createState() {
     return GoodsShow();
   }
 }
+
 class GoodsShow extends State<state> {
   int number = 0;
   int price = 8000;
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Container(
             margin: EdgeInsets.fromLTRB(0, 50, 0, 0),
             height: 220,
             width: 100,
-            child: Image.asset('images/tumbler.png', fit: BoxFit.fill,)
-          ),
-          Container(
-            width: 300,
-            child: Column(
-              children: [
-                Container(
-                  width: 300,
-                  height: 50,
-                  margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: Text('Fing Tumbler',style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold
-                  ),),
+            child: Image.asset(
+              'assets/images/tumbler.png',
+              fit: BoxFit.fill,
+            )),
+        Container(
+          width: 300,
+          child: Column(
+            children: [
+              Container(
+                width: 300,
+                height: 50,
+                margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: Text(
+                  'Fing Tumbler',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
-                Container(
-                  width: 300,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(width: 1.0, color: Colors.black))
+              ),
+              Container(
+                width: 300,
+                height: 50,
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(width: 1.0, color: Colors.black))),
+                child: Text(
+                  'KRW 8,000',
+                  style: TextStyle(
+                    fontSize: 20,
                   ),
-                  child: Text('KRW 8,000',style: TextStyle(
-                    fontSize: 20,
-                  ),),
                 ),
-                Container(
-                  width: 300,
-                  height: 100,
-                  margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: Text('Fing에서만 볼 수 있는 \n친환경적인 텀블러',style: TextStyle(
+              ),
+              Container(
+                width: 300,
+                height: 100,
+                margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: Text(
+                  'Fing에서만 볼 수 있는 \n친환경적인 텀블러',
+                  style: TextStyle(
                     fontSize: 20,
-                  ),),
+                  ),
                 ),
-                Container(
+              ),
+              Container(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      FlatButton(onPressed: (){
-                        setState((){number++;});
-                      }, 
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          number++;
+                        });
+                      },
                       child: Icon(Icons.add)),
-                      Container(
-                          child: Text('$number',style: TextStyle(
-                            fontSize: 18
-                          ),),
-                      ),
-                      FlatButton(onPressed: (){
-                        setState((){
-                          if(number > 0){
+                  Container(
+                    child: Text(
+                      '$number',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          if (number > 0) {
                             number--;
                           }
-                          });
-                      }, 
+                        });
+                      },
                       child: Icon(Icons.remove)),
-                    ],
-                  )
+                ],
+              )),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '$number개 선택',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    Text((number * price).toString() + ' 원',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red))
+                  ],
                 ),
-                Container(
+              ),
+              Container(
                   margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('$number개 선택',style: TextStyle(
-                        fontSize: 18
-                      ),),
-                      Text((number*price).toString()+' 원',style:TextStyle(
-                        fontSize:18,
-                        fontWeight:FontWeight.bold,
-                        color:Colors.red
-                        ))
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    
                     children: [
                       ElevatedButton(
-                        onPressed: (){
+                        onPressed: () {
                           print('hi');
                         },
-                        style:ElevatedButton.styleFrom(
-                          minimumSize: Size(140,50),
-                          primary:Color.fromRGBO(192,192,192,1),
-                          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(10.5),
-                          )
-                        ),
-                        child: Text("뒤로가기",
-                          style: TextStyle(
-                            color: Colors.white
-                          ),
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(140, 50),
+                            primary: Color.fromRGBO(192, 192, 192, 1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.5),
+                            )),
+                        child: Text(
+                          "뒤로가기",
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
-                        ElevatedButton(
-                        onPressed: (){
+                      ElevatedButton(
+                        onPressed: () {
                           print('hi');
                         },
-                        style:ElevatedButton.styleFrom(
-                          minimumSize: Size(140,50),
-                          primary:Color.fromRGBO(255,126,0,1),
-                          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(10.5),
-                          )
-                        ),
-                        child: Text("구매하기",
-                          style: TextStyle(
-                            color: Colors.white
-                          ),
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(140, 50),
+                            primary: Color.fromRGBO(255, 126, 0, 1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.5),
+                            )),
+                        child: Text(
+                          "구매하기",
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ],
-                  )
-                ),
-              ],
-            ),
-          )
-      ]
-      ),
+                  )),
+            ],
+          ),
+        )
+      ]),
     );
   }
 }
