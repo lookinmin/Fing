@@ -2,6 +2,7 @@ import React from 'react'
 import { IoLogoInstagram, IoLogoGooglePlaystore,IoLogoGithub } from "react-icons/io5";
 import { GrAppleAppStore } from "react-icons/gr";
 import { useMediaQuery } from 'react-responsive';
+import { RiKakaoTalkFill, RiGooglePlayFill } from "react-icons/ri";
 
 export const Footer = () => {
 
@@ -12,7 +13,7 @@ export const Footer = () => {
   const move=(e)=> {
     switch (e){
       case 1:
-        window.open('https://www.instagram.com/lookin_min/');
+        window.open('https://www.instagram.com/festival_ing/');
         break;
       case 2:
         window.open('https://www.apple.com/kr/app-store/');
@@ -22,6 +23,9 @@ export const Footer = () => {
         break;
       case 4:
         window.open('https://github.com/lookinmin/Fing');
+        break;
+      case 5:
+        window.open('http://pf.kakao.com/_jMfVxj');
         break;
     }
   }
@@ -34,8 +38,9 @@ export const Footer = () => {
           <div className="pageIcons">
             <IoLogoInstagram color='#faf5e4' size={40} onClick={() => move(1)}/>
             <GrAppleAppStore color='#faf5e4' size={40} onClick={() => move(2)}/>
-            <IoLogoGooglePlaystore color='#faf5e4' size={40} onClick={() => move(3)}/>  
+            <RiGooglePlayFill color='#faf5e4' size={40} onClick={() => move(3)}/>  
             <IoLogoGithub color='#faf5e4' size={40} onClick={() => move(4)}/>
+            <RiKakaoTalkFill color='#faf5e4' size={40} onClick={() => move(5)}/>
           </div>
           <div className="footerLogo">
             <h2>Fing : Festival-ing</h2>
@@ -50,7 +55,7 @@ export const Footer = () => {
             
             <div className="div2">
               <p><span className='TT'>E-mail.</span>sncalphs@gmail.com</p>
-              <p><span className='TT'>Instagram.</span>@lookin_min</p>
+              <p><span className='TT'>Instagram.</span>@festival_ing</p>
             </div>
             
             <div className="div3">
@@ -67,8 +72,9 @@ export const Footer = () => {
           <div className="pageIcons">
             <IoLogoInstagram color='#faf5e4' size={40} onClick={() => move(1)}/>
             <GrAppleAppStore color='#faf5e4' size={40} onClick={() => move(2)}/>
-            <IoLogoGooglePlaystore color='#faf5e4' size={40} onClick={() => move(3)}/>  
+            <RiGooglePlayFill color='#faf5e4' size={40} onClick={() => move(3)}/>  
             <IoLogoGithub color='#faf5e4' size={40} onClick={() => move(4)}/>
+            <RiKakaoTalkFill color='#faf5e4' size={40} onClick={() => move(5)}/>
           </div>
           <div className="footerLogo">
             <h2>Fing : Festival-ing</h2>
@@ -97,10 +103,11 @@ export const Footer = () => {
       {isPhone &&
         <div className="footer3">
           <div className="pageIcons">
-            <IoLogoInstagram color='#faf5e4' size={40} onClick={() => move(1)}/>
+          <IoLogoInstagram color='#faf5e4' size={40} onClick={() => move(1)}/>
             <GrAppleAppStore color='#faf5e4' size={40} onClick={() => move(2)}/>
-            <IoLogoGooglePlaystore color='#faf5e4' size={40} onClick={() => move(3)}/>  
+            <RiGooglePlayFill color='#faf5e4' size={40} onClick={() => move(3)}/>  
             <IoLogoGithub color='#faf5e4' size={40} onClick={() => move(4)}/>
+            <RiKakaoTalkFill color='#faf5e4' size={40} onClick={() => move(5)}/>
           </div>
           <div className="footerLogo">
             <h2>Fing : Festival-ing</h2>

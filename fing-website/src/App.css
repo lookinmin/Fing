@@ -566,7 +566,7 @@ a:hover::after {
   display: flex;
   flex-flow: row nowrap;
   margin-bottom: 1rem;
-  width: 300px;
+  width: 330px;
   align-items: baseline;
   justify-content: space-between;
   cursor: pointer;
@@ -582,7 +582,6 @@ a:hover::after {
   flex-flow: row nowrap;
   justify-content: space-between;
   width: 55%;
-
 }
 
 .footerLogo h2{
