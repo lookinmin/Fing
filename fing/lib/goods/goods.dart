@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "FING",
       routes: {
+        '/':(context)=>GoodsPage(),
         '/goods_tumbler': (BuildContext context) => goods_tumbler(),
         '/goods_echobag': (BuildContext context) => goods_echobag()
       },
@@ -47,38 +48,25 @@ class GoodsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [Container(child: GoodsTop()), Expanded(child: GoodsMenu())],
-      ),
-    );
-  }
-}
-
-class GoodsTop extends StatelessWidget {
-  const GoodsTop({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-      width: double.infinity,
-      height: 60,
-      decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(width: 1.0, color: Colors.black))),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          children: [
-            Text(
-              'Fing MARKET',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+      appBar: AppBar(
+        title: Text(
+          'Fing Market',
+          style: TextStyle(
+              fontSize: 18.0, 
+              fontWeight: FontWeight.bold, 
+              color: Colors.black,
+              letterSpacing:1.0,
               ),
-            )
-          ],
+        ),
+        centerTitle:true,
+        elevation:1.0,
+        toolbarHeight: 50.0,
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(
+          color: Colors.black,
         ),
       ),
+      body: GoodsMenu(),
     );
   }
 }
