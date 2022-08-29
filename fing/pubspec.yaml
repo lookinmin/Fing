@@ -49,6 +49,7 @@ dependencies:
   geolocator: ^9.0.1
   geocoding: ^2.0.5
   favorite_button: ^0.0.4
+  auth_buttons: ^3.0.0
 
 
 dev_dependencies:

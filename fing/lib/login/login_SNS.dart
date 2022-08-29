@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' as kakao;
+import 'package:auth_buttons/auth_buttons.dart';
+import 'package:auth_buttons/auth_buttons.dart'
+    show GoogleAuthButton, AuthButtonStyle, AuthButtonType, AuthIconType;
 
 import '../firebase_auth_remote_data_source.dart';
 
@@ -48,6 +51,7 @@ class Login_SNS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.fromLTRB(30.0, 170.0, 50.0, 0.0),
@@ -142,33 +146,45 @@ class Login_SNS extends StatelessWidget {
             SizedBox(
               height: 80.0,
             ),
-            Image.asset("assets/images/kakao_login.png"),
+            // Image.asset("assets/images/kakao_login.png"),
             SizedBox(
               height: 80.0,
             ),
-            Center(
-              child: Text(
-                '가입 문구',
-                style: TextStyle(
-                  letterSpacing: 0.0,
-                  fontSize: 10.0,
-                  color: Colors.black,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Root()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    minimumSize: Size.fromHeight(50), // 높이만 50으로 설정
+                    elevation: 1.0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.asset('images/glogo.png'),
+                      Text(
+                        '구글로 로그인',
+                        style: TextStyle(color: Colors.black87, fontSize: 15.0),
+                      ),
+                      Opacity(
+                        opacity: 0.0,
+                        child: Image.asset('images/glogo.png'),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
-            FlatButton(
-              color: Colors.grey.withOpacity(0.3),
-              // onPressed: signInWithGoogle,
-              onPressed: () {
-                Navigator.push(
-                    //화면전환
-                    context,
-                    MaterialPageRoute(builder: (context) => Root()));
-              },
-              child: Text("Google Login"),
-            ),
-            FlatButton(
-                onPressed: () async {
+                SizedBox(
+                  height: screenHeight * 0.02,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
                   kakao.KakaoSdk.init(
                       nativeAppKey: 'a3feadb74b79c4040c956d3c0e962c1f');
                   kakao.User user = await kakao.UserApi.instance.me();
@@ -245,14 +261,83 @@ class Login_SNS extends StatelessWidget {
                         'photoURL': user.kakaoAccount?.profile?.profileImageUrl
                             .toString()
                       });
-
+ 
                       await FirebaseAuth.instance.signInWithCustomToken(token);
                     } catch (error) {
                       print("카카오 계정으로 로그인 실패 $error ");
                     }
                   }
                 },
-                child: Image.asset('assets/images/kakao_login_large_Kor.png'))
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xffFEE500),
+                    minimumSize: Size.fromHeight(50), // 높이만 50으로 설정
+                    elevation: 1.0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.asset('images/kakao4.png'),
+                      Text(
+                        '카카오 로그인',
+                        style: TextStyle(color: Colors.black87, fontSize: 15.0),
+                      ),
+                      Opacity(
+                        opacity: 0.0,
+                        child: Image.asset('images/kakao4.png'),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: screenHeight * 0.03,
+                ),
+                Center(
+                  child: Text(
+                    '가입하면 당사의 서비스 약관에 동의하고',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 13,
+                      letterSpacing: 0.0,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    '개인정보 보호정책을(를) 읽어 당사의 데이터 수집,',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 13,
+                      letterSpacing: 0.0,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    '사용, 공유방법을 확인했음을 인정하는 것입니다.',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 13,
+                      letterSpacing: 0.0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            // FlatButton(
+            //   color: Colors.grey.withOpacity(0.3),
+            //   // onPressed: signInWithGoogle, //어 나중에... 헤헤 ... 허허 .. 진짜 로그인하기!!><
+            //   onPressed: () {
+            //     Navigator.push(
+            //         //화면전환
+            //         context,
+            //         MaterialPageRoute(builder: (context) => Root()));
+            //   },
+            //   child: Text("Google Login"),
+            // ),
+
           ]),
         ),
       ),
