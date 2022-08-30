@@ -17,11 +17,7 @@ class Login extends StatelessWidget {
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return Login_SNS();
-          } else {
-            return Root();
-          }
+          return Login_SNS();
         },
       ),
     );
