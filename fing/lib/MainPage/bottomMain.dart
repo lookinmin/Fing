@@ -11,7 +11,7 @@ class BottomMain extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          flex: 4,
+          flex: 5,
           child: CategoryBtn(),
         ),
         Flexible(
@@ -26,218 +26,71 @@ class BottomMain extends StatelessWidget {
 class CategoryBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+      margin: EdgeInsets.fromLTRB(size.width * 0.05, 0, size.width * 0.05, 10),
       decoration: BoxDecoration(
-          color: Color.fromARGB(255, 243, 243, 243),
+          // color: Color.fromARGB(255, 243, 243, 243),
           border: Border(
+              top: BorderSide(color: Colors.grey, width: 1.0),
               bottom: BorderSide(
-            color: Colors.grey,
-            width: 2.0,
-          ))),
+                color: Colors.grey,
+                width: 1.0,
+              ))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            Column(
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 0, 0, size.height * 0.02),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CatBtn(1, context),
+                  CatBtn(2, context),
+                  CatBtn(3, context),
+                  CatBtn(4, context)
+                ]),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 0, 0, size.height * 0.02),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FestivalPage()));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 222, 236, 255),
-                        borderRadius: BorderRadius.circular(100)),
-                    child: imgSet(1),
-                  ),
-                ),
-                Text(
-                  "Music",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Color.fromARGB(255, 105, 105, 105),
-                      fontSize: 14),
-                )
+                CatBtn(5, context),
+                CatBtn(6, context),
+                CatBtn(7, context),
+                CatBtn(8, context)
               ],
             ),
-            Column(
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 0, 0, size.height * 0.02),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 222, 236, 255),
-                      borderRadius: BorderRadius.circular(100)),
-                  child: imgSet(2),
-                ),
-                Text(
-                  "Food",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Color.fromARGB(255, 105, 105, 105),
-                      fontSize: 14),
-                )
+                CatBtn(9, context),
+                CatBtn(10, context),
+                CatBtn(11, context),
+                CatBtn(12, context)
               ],
             ),
-            Column(
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 0, 0, size.height * 0.02),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 222, 236, 255),
-                      borderRadius: BorderRadius.circular(100)),
-                  child: imgSet(3),
-                ),
-                Text(
-                  "Natural",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Color.fromARGB(255, 105, 105, 105),
-                      fontSize: 14),
-                )
+                CatBtn(13, context),
+                CatBtn(14, context),
+                CatBtn(15, context),
+                CatBtn(16, context)
               ],
             ),
-            Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 222, 236, 255),
-                      borderRadius: BorderRadius.circular(100)),
-                  child: imgSet(4),
-                ),
-                Text(
-                  "Region",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Color.fromARGB(255, 105, 105, 105),
-                      fontSize: 14),
-                )
-              ],
-            ),
-          ]),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  Container(
-                      margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 222, 236, 255),
-                          borderRadius: BorderRadius.circular(100)),
-                      child: imgSet(5)),
-                  Text(
-                    "Spring",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Color.fromARGB(255, 105, 105, 105),
-                        fontSize: 14),
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 222, 236, 255),
-                        borderRadius: BorderRadius.circular(100)),
-                    child: imgSet(6),
-                  ),
-                  Text(
-                    "Summer",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Color.fromARGB(255, 105, 105, 105),
-                        fontSize: 14),
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 222, 236, 255),
-                        borderRadius: BorderRadius.circular(100)),
-                    child: imgSet(7),
-                  ),
-                  Text(
-                    "Fall",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Color.fromARGB(255, 105, 105, 105),
-                        fontSize: 14),
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 222, 236, 255),
-                        borderRadius: BorderRadius.circular(100)),
-                    child: imgSet(8),
-                  ),
-                  Text(
-                    "Winter",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Color.fromARGB(255, 105, 105, 105),
-                        fontSize: 14),
-                  )
-                ],
-              ),
-            ],
-          )
+          ),
         ],
       ),
     );
-  }
-}
-
-Widget imgSet(int id) {
-  switch (id) {
-    case 1:
-      return Image.asset('assets/images/music.png');
-    case 2:
-      return Image.asset('assets/images/food.png');
-    case 3:
-      return Image.asset('assets/images/natural.png');
-    case 4:
-      return Image.asset('assets/images/region.png');
-    case 5:
-      return Image.asset('assets/images/spring.png');
-    case 6:
-      return Image.asset('assets/images/summer.png');
-    case 7:
-      return Image.asset('assets/images/fall.png');
-    case 8:
-      return Image.asset('assets/images/winter.png');
-    default:
-      return Image.asset('assets/images/mark.jpg');
   }
 }
 
@@ -286,5 +139,482 @@ class GoodsButton extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(80)))),
       ),
     );
+  }
+}
+
+Widget CatBtn(int id, BuildContext context) {
+  var size = MediaQuery.of(context).size;
+  switch (id) {
+    case 1:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(4),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(1),
+            ),
+          ),
+          Text(
+            "문화관광축제",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 2:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(2),
+            ),
+          ),
+          Text(
+            "일반축제",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 3:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(3),
+            ),
+          ),
+          Text(
+            "전통공연",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 4:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(4),
+            ),
+          ),
+          Text(
+            "연극",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 5:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(6),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(5),
+            ),
+          ),
+          Text(
+            "뮤지컬",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 6:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(7),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(6),
+            ),
+          ),
+          Text(
+            "오페라",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 7:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(7),
+            ),
+          ),
+          Text(
+            "전시회",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 8:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(6),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(8),
+            ),
+          ),
+          Text(
+            "박람회",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 9:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(4),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(9),
+            ),
+          ),
+          Text(
+            "컨벤션",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 10:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(10),
+            ),
+          ),
+          Text(
+            "무용",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 11:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(6),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(11),
+            ),
+          ),
+          Text(
+            "클래식 음악회",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 12:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(7),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(12),
+            ),
+          ),
+          Text(
+            "콘서트",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 13:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              padding: EdgeInsets.all(8),
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(13),
+            ),
+          ),
+          Text(
+            "영화",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 14:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              padding: EdgeInsets.all(5),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(14),
+            ),
+          ),
+          Text(
+            "스포츠",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 15:
+      return Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FestivalPage()));
+            },
+            child: Container(
+              margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              width: size.width * 0.13,
+              height: size.width * 0.13,
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 240, 246, 255),
+                  borderRadius: BorderRadius.circular(100)),
+              child: imgSet(15),
+            ),
+          ),
+          Text(
+            "기타",
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 105, 105, 105),
+                fontSize: 11),
+          )
+        ],
+      );
+    case 16:
+      return Column(
+        children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
+            width: size.width * 0.13,
+            height: size.width * 0.13,
+          ),
+        ],
+      );
+    default:
+      return Image.asset('assets/images/mark.jpg');
+  }
+}
+
+Widget imgSet(int id) {
+  switch (id) {
+    case 1:
+      return Image.asset('assets/images/garland.png');
+    case 2:
+      return Image.asset('assets/images/fireworks.png');
+    case 3:
+      return Image.asset('assets/images/buk.png');
+    case 4:
+      return Image.asset('assets/images/ticket.png');
+    case 5:
+      return Image.asset('assets/images/music.png');
+    case 6:
+      return Image.asset('assets/images/opera.png');
+    case 7:
+      return Image.asset('assets/images/exhibition.png');
+    case 8:
+      return Image.asset('assets/images/flyer.png');
+    case 9:
+      return Image.asset('assets/images/handshake.png');
+    case 10:
+      return Image.asset('assets/images/ballet.png');
+    case 11:
+      return Image.asset('assets/images/piano.png');
+    case 12:
+      return Image.asset('assets/images/spotlight.png');
+    case 13:
+      return Image.asset('assets/images/movie.png');
+    case 14:
+      return Image.asset('assets/images/sports.png');
+    case 15:
+      return Icon(
+        Icons.more_horiz,
+        size: 40,
+      );
+    default:
+      return Image.asset('assets/images/mark.jpg');
   }
 }
