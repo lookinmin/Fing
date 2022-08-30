@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:fing/FestivalPage/detail/detail.dart';
 
 class FestivalPage extends StatefulWidget {
-  const FestivalPage({Key? key}) : super(key: key);
+  const FestivalPage(
+      {Key? key, required this.type, required this.region, required this.city})
+      : super(key: key);
+  final type;
+  final region;
+  final city;
 
   @override
   State<FestivalPage> createState() => _FestivalState();
@@ -16,7 +21,7 @@ class _FestivalState extends State<FestivalPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Music',
+          widget.type,
           style: TextStyle(
               fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
         ),
@@ -78,29 +83,7 @@ class _FestivalItemState extends State<FestivalItem> {
                       width: double.infinity,
                       color: Colors.grey,
                       child: Image.asset(widget.item.img1, fit: BoxFit.fill)),
-                  Container(
-                    margin: EdgeInsets.only(left: 5),
-                    padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                    decoration: BoxDecoration(
-                        color: Colors.pink[500],
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color.fromARGB(255, 49, 48, 48)
-                                  .withOpacity(0.4),
-                              spreadRadius: 1, //퍼지는거리
-                              blurRadius: 5, //흐림정도
-                              offset: Offset(2, 4)) //그림자위치
-                        ]),
-                    child: Text("D-${widget.item.dday.toString()}",
-                        style: TextStyle(
-                            letterSpacing: 0.7,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
-                  )
+                  d_day()
                 ],
               ),
             ),
@@ -116,30 +99,7 @@ class _FestivalItemState extends State<FestivalItem> {
                 style: TextStyle(fontSize: 15, color: Colors.grey),
               ),
             ),
-            Container(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.item.location,
-                  style: TextStyle(fontSize: 15, color: Colors.grey),
-                ),
-                Container(
-                  child:
-                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    Icon(
-                      Icons.favorite,
-                      color: Colors.pink[400],
-                      size: 17,
-                    ),
-                    Container(
-                        margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
-                        child: Text(widget.item.likenum.toString(),
-                            style: TextStyle(fontSize: 15))),
-                  ]),
-                )
-              ],
-            )),
+            location(),
             Padding(padding: EdgeInsets.only(bottom: 10)),
             Divider(
               thickness: 1,
@@ -148,6 +108,54 @@ class _FestivalItemState extends State<FestivalItem> {
           ],
         ),
       ),
+    );
+  }
+
+  Container d_day() {
+    return Container(
+      margin: EdgeInsets.only(left: 5),
+      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+      decoration: BoxDecoration(
+          color: Colors.pink[500],
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+                color: Color.fromARGB(255, 49, 48, 48).withOpacity(0.4),
+                spreadRadius: 1, //퍼지는거리
+                blurRadius: 5, //흐림정도
+                offset: Offset(2, 4)) //그림자위치
+          ]),
+      child: Text("D-${widget.item.dday.toString()}",
+          style: TextStyle(
+              letterSpacing: 0.7,
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: Colors.white)),
+    );
+  }
+
+  Row location() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          widget.item.location,
+          style: TextStyle(fontSize: 15, color: Colors.grey),
+        ),
+        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+          Icon(
+            Icons.visibility,
+            color: Color.fromRGBO(255, 126, 0, 1),
+            size: 17,
+          ),
+          Container(
+              margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
+              child: Text(widget.item.likenum.toString(),
+                  style: TextStyle(fontSize: 15))),
+        ])
+      ],
     );
   }
 }
