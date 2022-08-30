@@ -103,9 +103,6 @@ class _MyLocationState extends State<MyLocation> {
   }
 
   void markFestivals() {
-    print('markFestivals');
-    int num = 0;
-
     _mapController?.runJavascript('''
         class FestList {
           constructor(lat, lng, name, address) {
@@ -127,18 +124,20 @@ class _MyLocationState extends State<MyLocation> {
             var imageSize = new kakao.maps.Size(28, 30);                
             var imageOption = {offset: new kakao.maps.Point(17, 36)};    
       
+            var markers = [];
             function addMarker(position, name, info) {
               let testMarker = new kakao.maps.Marker({position: position,
               image: new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)});
 
               testMarker.setMap(map); 
+              markers.push(testMarker);
               kakao.maps.event.addListener(testMarker, 'click', function (mouseEvent) {
                                            onTapMarker.postMessage(name+'-'+info);
               });
              }
 
             let len = festPin.length;
-            for(let i=0;i<len;i++){
+            for(let i=0;i<festPin.length;i++){
               addMarker(new kakao.maps.LatLng(festPin[i].lat, festPin[i].lng), festPin[i].name, festPin[i].address);
             }
     ''');
@@ -178,18 +177,24 @@ class _MyLocationState extends State<MyLocation> {
             festivalInfo(context, name, address).then((value) {
               setState(() {});
             });
+            MaterialPageRoute(builder: (context) => DetailPage());
           },
           zoomChanged: (p0) {
-            print(p0.message);
             //level 9에서부터 marker 지우기
             int level = int.parse(p0.message);
-            if (level > 9) {
+            print(level);
+            if (level >= 9) {
               _mapController?.runJavascript('''
-                  marker.setMap(null);
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                }      
               ''');
             } else {
-              myLocationMaker();
-              markFestivals();
+              _mapController?.runJavascript('''
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(map);
+                }    
+              ''');
             }
           },
         ),
