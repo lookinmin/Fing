@@ -4,14 +4,16 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
+import '../FestivalPage/detail/detail.dart';
+
 const String kakaoMapKey = '096bea75f9d0374f3c939bff68e78cd3'; //자바스크립트 key
 
 class FestInfo {
   double lat;
   double lng;
   String name;
-  String info;
-  FestInfo(this.lat, this.lng, this.name, this.info);
+  String address;
+  FestInfo(this.lat, this.lng, this.name, this.address);
 }
 
 class MyLocation extends StatefulWidget {
@@ -28,7 +30,7 @@ class _MyLocationState extends State<MyLocation> {
   String location = " ";
 
   List festList = <FestInfo>[
-    FestInfo(36.6183933, 127.469223, "festival1", "페스티벌 일정에 관한 내용"),
+    FestInfo(36.6183933, 127.469223, "목포세계마당페스티벌 ", '목포 원도심 수문로 일대'),
     FestInfo(36.6383933, 127.259223, "festival2", "페스티벌 일정에 관한 내용"),
     FestInfo(36.6483933, 127.419223, "festival3", "페스티벌 일정에 관한 내용"),
     FestInfo(36.7283933, 127.440223, "festival4", "페스티벌 일정에 관한 내용"),
@@ -123,12 +125,12 @@ class _MyLocationState extends State<MyLocation> {
             // for(let i=0; i<${festList.length}; i++){
             //   addMarker(new kakao.maps.LatLng(${festList[0].lat} , ${festList[0].lng}));
             // }
-            addMarker(new kakao.maps.LatLng(${festList[0].lat} , ${festList[0].lng}), `${festList[0].name}`, `${festList[0].info}`);
-            addMarker(new kakao.maps.LatLng(${festList[1].lat} , ${festList[1].lng}), `${festList[1].name}`, `${festList[1].info}`);
-            addMarker(new kakao.maps.LatLng(${festList[2].lat} , ${festList[2].lng}), `${festList[2].name}`, `${festList[2].info}`);
-            addMarker(new kakao.maps.LatLng(${festList[3].lat} , ${festList[3].lng}), `${festList[3].name}`, `${festList[3].info}`);
-            addMarker(new kakao.maps.LatLng(${festList[4].lat} , ${festList[4].lng}), `${festList[4].name}`, `${festList[4].info}`);
-            addMarker(new kakao.maps.LatLng(${festList[5].lat} , ${festList[5].lng}), `${festList[5].name}`, `${festList[5].info}`);
+            addMarker(new kakao.maps.LatLng(${festList[0].lat} , ${festList[0].lng}), `${festList[0].name}`, `${festList[0].address}`);
+            addMarker(new kakao.maps.LatLng(${festList[1].lat} , ${festList[1].lng}), `${festList[1].name}`, `${festList[1].address}`);
+            addMarker(new kakao.maps.LatLng(${festList[2].lat} , ${festList[2].lng}), `${festList[2].name}`, `${festList[2].address}`);
+            addMarker(new kakao.maps.LatLng(${festList[3].lat} , ${festList[3].lng}), `${festList[3].name}`, `${festList[3].address}`);
+            addMarker(new kakao.maps.LatLng(${festList[4].lat} , ${festList[4].lng}), `${festList[4].name}`, `${festList[4].address}`);
+            addMarker(new kakao.maps.LatLng(${festList[5].lat} , ${festList[5].lng}), `${festList[5].name}`, `${festList[5].address}`);
     ''');
   }
 
@@ -161,8 +163,8 @@ class _MyLocationState extends State<MyLocation> {
           onTapMarker: (message) {
             var fest = message.message.split('-');
             String name = fest[0];
-            String info = fest[1];
-            festivalInfo(context, name, info).then((value) {
+            String address = fest[1];
+            festivalInfo(context, name, address).then((value) {
               setState(() {});
             });
           },
@@ -184,7 +186,7 @@ class _MyLocationState extends State<MyLocation> {
     );
   }
 
-  Future<void> festivalInfo(BuildContext context, String name, String info) {
+  Future<void> festivalInfo(BuildContext context, String name, String address) {
     return showModalBottomSheet<void>(
       //디자인 수정 -> api 보는거 보고
       context: context,
@@ -195,29 +197,82 @@ class _MyLocationState extends State<MyLocation> {
               topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       builder: (BuildContext context) {
         return StatefulBuilder(
-            builder: (BuildContext context, setState) => SizedBox(
+            builder: (BuildContext context, setState) => InkWell(
+                onTap: (() => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DetailPage()))),
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.25,
                   child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        Text(
-                          '페스티벌 이름: $name',
-                          style: TextStyle(fontSize: 22),
-                        ),
-                        Divider(
-                          height: 20,
-                          thickness: 1,
-                          color: Color.fromRGBO(95, 95, 95, 0.5),
-                        ),
-                        Text(
-                          '페스티벌 내용: $info',
-                          style: TextStyle(height: 1.5, fontSize: 13),
-                        ),
-                      ],
-                    ),
-                  ),
-                ));
+                      padding: const EdgeInsets.all(20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              'assets/images/WaterbombDaegu.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      name,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Divider(
+                                    thickness: 1.5,
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.near_me_outlined,
+                                        size: 16,
+                                        color: Color.fromRGBO(255, 126, 0, 1),
+                                      ),
+                                      SizedBox(width: 5),
+                                      RichText(
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 5,
+                                        strutStyle: StrutStyle(fontSize: 16.0),
+                                        text: TextSpan(
+                                            text: address,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                height: 1.4,
+                                                fontSize: 14.0,
+                                                fontFamily:
+                                                    'NanumSquareRegular')),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      )),
+                )));
       },
     );
   }
