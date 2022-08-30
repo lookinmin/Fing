@@ -79,6 +79,8 @@ class _RootState extends State<Root> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
     return WillPopScope(
       onWillPop: () async {
         return !(await _navigatorKeyList[_currentIndex]
@@ -88,7 +90,10 @@ class _RootState extends State<Root> {
       child: Scaffold(
         body: Column(
           children: [
-            Flexible(flex: 1, fit: FlexFit.tight, child: FestivalSearch()),
+            Container(
+                margin: EdgeInsets.fromLTRB(0, statusBarHeight + 10, 0, 10),
+                height: size.height * 0.065,
+                child: FestivalSearch()),
             Expanded(
               flex: 8,
               child: IndexedStack(
@@ -111,7 +116,12 @@ class _RootState extends State<Root> {
           type: BottomNavigationBarType.fixed,
           onTap: (index) {
             setState(() {
-              _currentIndex = index;
+              if (index == 0) {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Root()));
+              } else {
+                _currentIndex = index;
+              }
             });
           },
           items: const [
@@ -179,7 +189,7 @@ class FestivalSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
       decoration: BoxDecoration(
           border: Border(
               bottom: BorderSide(
@@ -189,7 +199,14 @@ class FestivalSearch extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(flex: 1, child: logo()), //여기에 로고 들어감
+          Expanded(
+              flex: 1,
+              child: InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Root()));
+                  },
+                  child: logo())), //여기에 로고 들어감
           Expanded(
               flex: 5,
               child: Container(
@@ -269,7 +286,7 @@ class _SearchListState extends State<SearchList> {
                 }
                 setState(() {
                   searchResult = festList.where((String option) {
-                    return option.contains(textEditingValue.text.toLowerCase());
+                    return option.contains(textEditingValue.text);
                   }).toList();
                 });
                 return searchResult;
@@ -287,8 +304,30 @@ class _SearchListState extends State<SearchList> {
                   return InkWell(
                       onTap: (() {}),
                       child: Container(
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        margin: EdgeInsets.fromLTRB(20, 5, 30, 5),
                         height: 50,
-                        child: Text(searchResult[index]),
+                        alignment: Alignment(-1.0, 0.0),
+                        // decoration: BoxDecoration(
+                        //     border: Border(
+                        //   bottom: BorderSide(
+                        //       color: Color.fromARGB(255, 129, 129, 129),
+                        //       width: 1),
+                        // )),
+                        child: Row(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                child: Icon(
+                                  Icons.search,
+                                  color: Colors.grey,
+                                )),
+                            Text(
+                              searchResult[index],
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
                       ));
                 })));
   }

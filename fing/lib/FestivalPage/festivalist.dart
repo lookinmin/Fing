@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:fing/FestivalPage/detail/detail.dart';
+
 class FestivalPage extends StatefulWidget {
   const FestivalPage({Key? key}) : super(key: key);
 
@@ -62,7 +63,8 @@ class _FestivalItemState extends State<FestivalItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage())),
+      onTap: () => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => DetailPage())),
       child: Container(
         padding: EdgeInsets.all(10),
         child: Column(
