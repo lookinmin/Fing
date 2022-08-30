@@ -29,7 +29,7 @@ class _MyLocationState extends State<MyLocation> {
   double initLat = 36.6283933;
   String location = " ";
 
-  List festList = <FestInfo>[
+  List festList = [
     FestInfo(36.6183933, 127.469223, "목포세계마당페스티벌 ", '목포 원도심 수문로 일대'),
     FestInfo(36.6383933, 127.259223, "festival2", "페스티벌 일정에 관한 내용"),
     FestInfo(36.6483933, 127.419223, "festival3", "페스티벌 일정에 관한 내용"),
@@ -104,6 +104,24 @@ class _MyLocationState extends State<MyLocation> {
 
   void markFestivals() {
     print('markFestivals');
+    int num = 0;
+
+    _mapController?.runJavascript('''
+        class FestList {
+          constructor(lat, lng, name, address) {
+            this.lat = lat;
+            this.lng = lng;
+            this.name = name;
+            this.address = address
+          }
+        }
+        var festPin = []
+    ''');
+    for (var item in festList) {
+      _mapController?.runJavascript('''
+          festPin.push(new FestList(`${item.lat}`, `${item.lng}`, `${item.name}`, `${item.address}`))
+      ''');
+    }
     _mapController?.runJavascript(''' 
             var imageSrc = 'https://cdn-icons-png.flaticon.com/512/149/149059.png';                             
             var imageSize = new kakao.maps.Size(28, 30);                
@@ -114,23 +132,15 @@ class _MyLocationState extends State<MyLocation> {
               image: new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)});
 
               testMarker.setMap(map); 
-              // console.log(name.);
               kakao.maps.event.addListener(testMarker, 'click', function (mouseEvent) {
                                            onTapMarker.postMessage(name+'-'+info);
               });
-
-
              }
 
-            // for(let i=0; i<${festList.length}; i++){
-            //   addMarker(new kakao.maps.LatLng(${festList[0].lat} , ${festList[0].lng}));
-            // }
-            addMarker(new kakao.maps.LatLng(${festList[0].lat} , ${festList[0].lng}), `${festList[0].name}`, `${festList[0].address}`);
-            addMarker(new kakao.maps.LatLng(${festList[1].lat} , ${festList[1].lng}), `${festList[1].name}`, `${festList[1].address}`);
-            addMarker(new kakao.maps.LatLng(${festList[2].lat} , ${festList[2].lng}), `${festList[2].name}`, `${festList[2].address}`);
-            addMarker(new kakao.maps.LatLng(${festList[3].lat} , ${festList[3].lng}), `${festList[3].name}`, `${festList[3].address}`);
-            addMarker(new kakao.maps.LatLng(${festList[4].lat} , ${festList[4].lng}), `${festList[4].name}`, `${festList[4].address}`);
-            addMarker(new kakao.maps.LatLng(${festList[5].lat} , ${festList[5].lng}), `${festList[5].name}`, `${festList[5].address}`);
+            let len = festPin.length;
+            for(let i=0;i<len;i++){
+              addMarker(new kakao.maps.LatLng(festPin[i].lat, festPin[i].lng), festPin[i].name, festPin[i].address);
+            }
     ''');
   }
 
@@ -144,10 +154,11 @@ class _MyLocationState extends State<MyLocation> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        address(),
-        KakaoMapView(
+    return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      address(),
+      Expanded(
+        flex: 10,
+        child: KakaoMapView(
           mapController: (controller) {
             _mapController = controller;
           },
@@ -182,8 +193,8 @@ class _MyLocationState extends State<MyLocation> {
             }
           },
         ),
-      ],
-    );
+      )
+    ]);
   }
 
   Future<void> festivalInfo(BuildContext context, String name, String address) {
