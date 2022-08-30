@@ -28,6 +28,23 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
+Future<List<SearchFestival>>fetchHotFestival() async {
+  String Url="https://apis.data.go.kr/B551011/KorService/searchFestival?numOfRows=5&pageNo=1&MobileOS=ETC&MobileApp=Fing&serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D&_type=json&arrange=P&eventStartDate=20220901";
+  
+  print('api 호출$Url');
+
+  final response = await http.get(Uri.parse(Url));
+  if(response.statusCode==200){
+    print('api 호출 성공');
+    return (jsonDecode("[${utf8.decode(response.bodyBytes)}]") as List<dynamic>)
+        .map((e) => SearchFestival.fromJson(e))
+        .toList();
+  }else{
+      throw Exception("Failed to load data");
+    }
+}
+
 // api 호출
 Future<List<SearchFestival>> fetchSearchFestival({required String arrange, required String areaCode, required String sigunguCode, required String eventStartDate, required String eventEndDate}) async {
 

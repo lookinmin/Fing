@@ -7,6 +7,8 @@ import 'package:fing/login/intro_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'NearFestivalPage/nearfestival.dart';
 import 'firebase_options.dart';
+import 'Region/RegionPage.dart';
+import 'Map/mylocation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,8 +61,8 @@ class _RootState extends State<Root> {
   int _currentIndex = 0;
   final _pages = [
     MainTopBottom(),
-    AddressMap(),
-    NearFestival(),
+    RegionPageMain(),
+    MyLocation(),
     LikedPage(),
     MyPageMain()
   ];

@@ -1,10 +1,22 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '../API/searchFestival.dart';
 
 void main() => runApp(TopMain());
 
-class TopMain extends StatelessWidget {
+
+
+class TopMain extends StatefulWidget {
   TopMain({Key? key}) : super(key: key);
+
+  @override
+  State<TopMain> createState() => _TopMainState();
+}
+
+class _TopMainState extends State<TopMain> {
+  late Future<List<SearchFestival>> futureHotFestival;
+
   final List<String> festivalImg = [
     'FestImg1',
     'FestImg2',
@@ -12,6 +24,7 @@ class TopMain extends StatelessWidget {
     'FestImg4',
     'FestImg5'
   ];
+
   List<String> festivalList = [
     'festivalList1',
     'festivalList2',
@@ -21,15 +34,41 @@ class TopMain extends StatelessWidget {
   ];
 
   @override
+  void initState(){
+    super.initState();
+    futureHotFestival = fetchHotFestival();
+  }
+
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Flexible(
-          flex: 6,
-          child: FestivalCarousel(festivalImg: festivalImg),
-        ),
-        Expanded(flex: 2, child: FestivalRanking(festivalList: festivalList))
-      ],
+    return FutureBuilder<List<SearchFestival>>(
+      future:futureHotFestival,
+      builder:(context,snapshot){
+        if(snapshot.hasData){
+          print('hasData');
+
+          List<Item> hotfestival_model = snapshot.data![0].response!.body!.items!.item!;
+
+          for(int i=0;i<5;i++){
+            festivalImg[i] = hotfestival_model[i].firstimage.toString();
+            festivalList[i] = hotfestival_model[i].title.toString();
+          }
+          
+          return Column(
+            children: [
+              Flexible(
+                flex: 6,
+                child: FestivalCarousel(festivalImg: festivalImg),
+              ),
+              Expanded(flex: 2, child: FestivalRanking(festivalList: festivalList))
+            ],
+          );
+        }else if(snapshot.hasError){
+          print('error');
+          print(snapshot.error);
+          return Text('error${snapshot.error}');
+        }
+        return Center(child:CupertinoActivityIndicator());
+      }
     );
   }
 }
@@ -38,7 +77,7 @@ class TopMain extends StatelessWidget {
 class FestivalRanking extends StatelessWidget {
   FestivalRanking({
     Key? key,
-    required this.festivalList,
+    required List<String> this.festivalList,
   }) : super(key: key);
 
   final List<String> festivalList;
@@ -165,8 +204,7 @@ class FestivalRankCarousel extends StatelessWidget {
 //메인 페이지 상단 페스티벌 사진 carousel
 class FestivalCarousel extends StatelessWidget {
   const FestivalCarousel({
-    Key? key,
-    required this.festivalImg,
+    Key? key, required this.festivalImg
   }) : super(key: key);
 
   final List<String> festivalImg;
@@ -191,13 +229,8 @@ class FestivalCarousel extends StatelessWidget {
               return Container(
                   width: MediaQuery.of(context).size.width,
                   margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  decoration: BoxDecoration(color: Colors.amber),
-                  child: Center(
-                    child: Text(
-                      i,
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                  ));
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: Image.network(i),);
             },
           );
         }).toList(),
