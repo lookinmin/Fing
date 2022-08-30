@@ -68,13 +68,13 @@ class GoodsShow extends State<state> {
             children: [
               Text(
                 'Fing Thumbler',
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(height:10),
               Text(
                 'KRW 8,000',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                 ),
               ),
               Divider(
@@ -82,9 +82,10 @@ class GoodsShow extends State<state> {
               ),
                             SizedBox(height:10),
               Text(
-                'Fing에서만 볼 수 있는 \n친환경적인 텀블러',
+                'Fing 로고가 박힌 심플 텀블러,\n페스티벌을 깨끗하게 즐기는 하나의 방법.\nFing 텀블러와 함께 페스티벌을 즐겨보세요',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
+                  color:Colors.grey[600],
                 ),
               ),
             ],
@@ -107,7 +108,7 @@ class GoodsShow extends State<state> {
           Container(
             child: Text(
               '$number',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 16),
             ),
           ),
           FlatButton(
@@ -131,7 +132,7 @@ class GoodsShow extends State<state> {
             children: [
               Text(
                 '$number개 선택',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 16),
               ),
               Text((number * price).toString() + ' 원',
                   style: TextStyle(
@@ -168,14 +169,14 @@ class GoodsShow extends State<state> {
                   print('hi');
                 },
                 style: ElevatedButton.styleFrom(
-                    minimumSize: Size(screen.width*0.8, screen.height*0.08),
+                    minimumSize: Size(screen.width*0.8, screen.height*0.07),
                     primary: Color.fromRGBO(255, 126, 0, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.5),
                     )),
                 child: Text(
                   "구매하기",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white,fontSize: 18),
                 ),
               ),
             ],
