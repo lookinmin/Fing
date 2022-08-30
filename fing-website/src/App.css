@@ -369,7 +369,7 @@ a:hover::after {
   column-gap: 5vw;
   width: 70vw;
   align-self: center;
-  margin-bottom: 8rem;
+  margin-bottom: 10rem;
 }
 
 
@@ -380,7 +380,7 @@ a:hover::after {
   column-gap: 5vw;
   width: 70vw;
   align-self: center;
-  margin-bottom: 8rem;
+  margin-bottom: 10rem;
 }
 
 .pic-ctn {
@@ -420,7 +420,7 @@ a:hover::after {
 .pic-ctn > img {
   position: absolute;
   top: 0;
-  left: calc(50% - 150px);
+  left: calc(50% - 7vw);
   opacity: 0;
   animation: display 10s infinite;
 }

@@ -53,8 +53,8 @@ export const Goods = () => {
             <div className='GtxtBox'>
               <h3>KRW 7,000</h3>
               <p>Fing 로고가 박힌 화이트 에코백</p>
-              <p>페스티벌을 깨끗하게 즐기는 하나의 방법.</p>
-              <p>Fing 에코백와 함께 페스티벌을 즐겨보세요</p>
+              <p>친환경적인 페스티벌에 한발짝.</p>
+              <p>Fing 에코백과 함께 페스티벌을 즐겨보세요</p>
               <p></p>
             </div>
             <div id="container">
@@ -108,8 +108,8 @@ export const Goods = () => {
             <div className='GtxtBox'>
               <h3>KRW 7,000</h3>
               <p>Fing 로고가 박힌 화이트 에코백</p>
-              <p>페스티벌을 깨끗하게 즐기는 하나의 방법.</p>
-              <p>Fing 에코백와 함께 페스티벌을 즐겨보세요</p>
+              <p>친환경적인 페스티벌에 한발짝.</p>
+              <p>Fing 에코백과 함께 페스티벌을 즐겨보세요</p>
               <p></p>
             </div>
             <div id="container">
