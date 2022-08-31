@@ -1,6 +1,7 @@
 import 'package:fing/MainPage/mainpage.dart';
 import 'package:fing/Mypage/mypage.dart';
 import 'package:flutter/material.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'Map/map.dart';
 import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
@@ -10,6 +11,7 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  KakaoSdk.init(nativeAppKey: 'a0f1222696827f5577c696088787bc1f');
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform
       //DefaultFirebaseOptions.currentPlatform,
       );
