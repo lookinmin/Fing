@@ -118,7 +118,12 @@ class _FestivalItemState extends State<FestivalItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => DetailPage())),
+          context,
+          MaterialPageRoute(
+              builder: (context) => DetailPage(
+                  firstimage: widget.item.firstimage,
+                  title: widget.item.title,
+                  addr1: widget.item.addr1))),
       child: Container(
         padding: EdgeInsets.all(10),
         child: Column(

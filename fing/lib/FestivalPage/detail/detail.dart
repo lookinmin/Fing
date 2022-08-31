@@ -4,7 +4,15 @@ import 'package:kakao_flutter_sdk_navi/kakao_flutter_sdk_navi.dart';
 import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  const DetailPage(
+      {Key? key,
+      required this.firstimage,
+      required this.title,
+      required this.addr1})
+      : super(key: key);
+  final firstimage;
+  final title;
+  final addr1;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -23,21 +31,20 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final dropdownList = ['거리순', '조회순'];
-    Object? selectedDropdown = '거리순';
 
     return Scaffold(
         body: CustomScrollView(
       slivers: <Widget>[
-        const SliverAppBar(
+        SliverAppBar(
           pinned: true,
           elevation: 0.0,
           expandedHeight: 300.0,
           backgroundColor: Colors.white,
           foregroundColor: Colors.redAccent,
           flexibleSpace: FlexibleSpaceBar(
+            centerTitle: true,
             title: Text(
-              '[서울 잠실] 싸이 흠뻑쇼', //축제 이름마다 변경
+              widget.title, //축제 이름마다 변경
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -48,8 +55,8 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
               start: 32,
               bottom: 16,
             ),
-            background: Image(
-                image: AssetImage('assets/images/waterbomb1.png')), //축제 사진맘다 변경
+            background: Image.network(widget.firstimage,
+                fit: BoxFit.contain), //축제 사진맘다 변경
           ),
         ),
         SliverToBoxAdapter(
@@ -64,7 +71,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                   Container(
                     width: size.width * 0.75,
                     child: Text(
-                      'title 싸이 흠뻑쇼 "SUMME SWAG 2022"', // 축제 이름마다 변경
+                      widget.title, 
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 24.0,
@@ -185,7 +192,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                         Container(
                           width: size.width * 0.6,
                           child: Text(
-                            '경기도 수원시 팔달구 정조로 825',
+                            widget.addr1,
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
@@ -302,71 +309,61 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
               ),
               Align(
                 alignment: Alignment.topRight,
-                // child: DropdownButtonFormField(
-                //     decoration: InputDecoration(
-                //         enabledBorder: OutlineInputBorder(
-                //             borderSide: BorderSide(
-                //                 color: Color(0xffff7e00), width: 2),
-                //             borderRadius: BorderRadius.circular(20)),
-                //         border: OutlineInputBorder(
-                //             borderSide: BorderSide(
-                //                 color: Color(0xffff7e00), width: 2),
-                //             borderRadius: BorderRadius.circular(20)),
-                //         filled: false),
-                //     items: dropdownList.map(
-                //       (String value) {
-                //         return DropdownMenuItem<String>(
-                //           value: value,
-                //           child: Text(value),
-                //         );
-                //       },
-                //     ).toList(),
-                //     onChanged: (value) {
-                //       setState(() {
-                //         selectedDropdown = value;
-                //       });
-                //     })
-                child: DropdownButton(
-                    value: selectedDropdown,
-                    items: dropdownList.map(
-                      (String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      },
-                    ).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedDropdown = value;
-                      });
-                    }),
+                child: DropDown(),
               ),
             ],
           ),
         )),
         SliverFillRemaining(
-          fillOverscroll: true,
-          hasScrollBody: true,
+          fillOverscroll: false,
+          hasScrollBody: false,
           child: Container(
-            constraints: BoxConstraints(maxHeight: double.infinity),
-            child: Container(
-              height: size.height,
-              margin: EdgeInsets.only(left: 16.0, right: 16.0),
-              child: TabBarView(
-                controller: _TabController,
-                children: <Widget>[
-                  PlaceList(type: 1),
-                  PlaceList(type: 2),
-                  MarketList()
-                ],
-              ),
+            height: size.height,
+            margin: EdgeInsets.only(left: 16.0, right: 16.0),
+            child: TabBarView(
+              controller: _TabController,
+              children: <Widget>[
+                PlaceList(type: 1),
+                PlaceList(type: 2),
+                MarketList()
+              ],
             ),
           ),
           // )
         ),
       ],
     ));
+  }
+}
+
+class DropDown extends StatefulWidget {
+  const DropDown({Key? key}) : super(key: key);
+
+  @override
+  State<DropDown> createState() => _DropDownState();
+}
+
+class _DropDownState extends State<DropDown> {
+  final dropdownList = ['거리순', '조회순'];
+  var selectedDropdown = '거리순';
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton(
+        value: selectedDropdown,
+        items: dropdownList.map(
+          (value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Text(value),
+            );
+          },
+        ).toList(),
+        onChanged: (value) {
+          setState(() {
+            selectedDropdown = value.toString();
+          });
+        });
   }
 }
 
@@ -378,6 +375,7 @@ class PlaceList extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(5),
       child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
         itemCount: listitem.length,
         itemBuilder: (BuildContext context, int index) {
           return ListItem(item: type == 1 ? listitem[index] : listitem2[index]);
@@ -400,8 +398,22 @@ class _ListItemState extends State<ListItem> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return InkWell(
-      onTap: () => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => DetailPage())),
+      onTap: () async {
+        bool result = await NaviApi.instance.isKakaoNaviInstalled();
+        var title = "어디로 갈까";
+        var lat = '36.6617';
+        var long = '127.539913';
+        if (result) {
+          await NaviApi.instance.shareDestination(
+              destination: Location(name: title, x: '$long', y: '$lat'),
+              option: NaviOption(
+                  coordType: CoordType.wgs84,
+                  vehicleType: VehicleType.second,
+                  rpOption: RpOption.recommended));
+        } else {
+          launchBrowserTab(Uri.parse(NaviApi.webNaviInstall));
+        }
+      },
       child: Container(
         padding: EdgeInsets.all(10),
         child: Column(
@@ -454,6 +466,7 @@ class MarketList extends StatelessWidget {
     return Container(
         margin: EdgeInsets.all(5),
         child: ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
           itemCount: listitem.length,
           itemBuilder: (BuildContext context, int index) {
             return MarketItem(item: marketitem[index]);

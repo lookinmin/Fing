@@ -50,6 +50,7 @@ dependencies:
   geocoding: ^2.0.5
   favorite_button: ^0.0.4
   auth_buttons: ^3.0.0
+  cloud_firestore: ^3.1.17
 
   #카카오네비꺼임
   kakao_flutter_sdk_user: ^1.2.1 # 카카오 로그인
@@ -61,7 +62,6 @@ dependencies:
   crypto: ^3.0.2
   encrypt: ^5.0.1
   access_control: ^0.9.0
-
 
 dev_dependencies:
   flutter_test:
@@ -89,6 +89,7 @@ flutter:
     - assets/json/
     - assets/
     - assets/images/
+    - assets/ca/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

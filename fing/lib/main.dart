@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:fing/MainPage/mainpage.dart';
 import 'package:fing/Mypage/mypage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
@@ -28,6 +30,12 @@ void main() async {
       //DefaultFirebaseOptions.currentPlatform,
       );
   HttpOverrides.global = new MyHttpOverrides();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  ByteData data =
+      await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
+  SecurityContext.defaultContext
+      .setTrustedCertificatesBytes(data.buffer.asUint8List());
   runApp(const MyApp());
 }
 
@@ -40,6 +48,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "FING",
       initialRoute: '/',
+      debugShowMaterialGrid: false,
       routes: {
         '/': (context) => Intro(),
       },
@@ -81,10 +90,11 @@ class _RootState extends State<Root> {
     var size = MediaQuery.of(context).size;
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     return WillPopScope(
-      onWillPop: () async {
-        return !(await _navigatorKeyList[_currentIndex]
-            .currentState!
-            .maybePop());
+      onWillPop: () {
+        return Future(() => false);
+        // return !(await _navigatorKeyList[_currentIndex]
+        //     .currentState!
+        //     .maybePop());
       },
       child: Scaffold(
         body: Column(
