@@ -23,8 +23,8 @@ class MyPageMain extends StatelessWidget {
         '/favorite': (context) => favorite(),
         '/notice': ((context) => NoticePage()),
         '/faq': (context) => FaqPage(),
-        '/service':(context)=>ServicePage(),
-        '/personal':(context)=>PersonalPage(),
+        '/service': (context) => ServicePage(),
+        '/persoanl': (context) => PersonalPage(),
       },
     );
   }
@@ -40,10 +40,10 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
-    String nickname = fing_db_user[0].name;
-    String email = fing_db_user[0].email;
+    // String nickname = fing_db_user[0].name;
+    // String email = fing_db_user[0].email;
 
-    print('nickname'+nickname);
+    //print('nickname'+nickname);
 
     return Scaffold(
         appBar: AppBar(
@@ -86,10 +86,10 @@ class _MyPageState extends State<MyPage> {
                       iconColor: Colors.white,
                       leading: Icon(Icons.account_circle, size: 40),
                       title: Text(
-                        nickname,
+                        "asdf",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text(email),
+                      subtitle: Text("Asdf"),
                     ),
                   ),
                   ListTile(
@@ -210,27 +210,32 @@ class _MyPageState extends State<MyPage> {
                               color: Color(0xFF737373),
                               child: Column(children: [
                                 Container(
-                                  height: 55,
-                                  padding: EdgeInsets.zero,
-                                  margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))),
-                                  child:Row(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                                        child:Icon(Icons.phone,color:Colors.grey[700],size:30)
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                        child:Text("통화 010-0000-0000",style:TextStyle(color:Colors.blue[600],fontSize: 18)))
-                                    ],
-                                  )
-                                ),
+                                    height: 55,
+                                    padding: EdgeInsets.zero,
+                                    margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15))),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                            padding: EdgeInsets.fromLTRB(
+                                                30, 0, 0, 0),
+                                            child: Icon(Icons.phone,
+                                                color: Colors.grey[700],
+                                                size: 30)),
+                                        Container(
+                                            padding: EdgeInsets.fromLTRB(
+                                                20, 0, 0, 0),
+                                            child: Text("통화 010-0000-0000",
+                                                style: TextStyle(
+                                                    color: Colors.blue[600],
+                                                    fontSize: 18)))
+                                      ],
+                                    )),
                                 InkWell(
-                                  onTap: () =>Navigator.pop(context),
+                                  onTap: () => Navigator.pop(context),
                                   child: Container(
                                     height: 55,
                                     padding: EdgeInsets.zero,
@@ -239,7 +244,12 @@ class _MyPageState extends State<MyPage> {
                                         color: Colors.white,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15))),
-                                      child:Center(child: Text('취소',style:TextStyle(color:Colors.blue[600],fontSize:19,fontWeight:FontWeight.w600))),
+                                    child: Center(
+                                        child: Text('취소',
+                                            style: TextStyle(
+                                                color: Colors.blue[600],
+                                                fontSize: 19,
+                                                fontWeight: FontWeight.w600))),
                                   ),
                                 ),
                               ]),

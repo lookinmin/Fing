@@ -9,3 +9,4 @@ class fing_db {
 }
 
 List fing_db_user= [];
+List current_fast = [];
