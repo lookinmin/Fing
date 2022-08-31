@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "FING",
       initialRoute: '/',
+      debugShowMaterialGrid: false,
       routes: {
         '/': (context) => Intro(),
       },
