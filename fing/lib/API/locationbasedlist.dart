@@ -5,7 +5,7 @@ import 'dart:convert'; //json으로 바꿔주기 위해 필요한 패키지
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; // api 호출 위해 필요한 패키지
 
 void main() {
@@ -29,38 +29,56 @@ class MyApp extends StatelessWidget {
 }
 
 // api 호출
-Future<List<LocationBasedList>> fetchLocationBasedList({required String arrange, required String contentTypeId, required String mapX, required String mapY,required String radius}) async {
-
+Future<List<LocationBasedList>> fetchLocationBasedList(
+    {required String arrange,
+    required String contentTypeId,
+    required String mapX,
+    required String mapY,
+    required String radius}) async {
   String Url = "https://apis.data.go.kr/B551011/KorService/locationBasedList";
-  String queryParams = "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
+  String queryParams =
+      "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
   queryParams += "&_type=json&MobileOS=ETC&MobileApp=Fing";
-  queryParams ="$queryParams&arrange=$arrange&contentTypeId=$contentTypeId&mapX=$mapX&mapY=$mapY&radius=$radius";
+  queryParams =
+      "$queryParams&arrange=$arrange&contentTypeId=$contentTypeId&mapX=$mapX&mapY=$mapY&radius=$radius";
 
   print('api 호출$Url$queryParams');
 
-  final response = await http.get(
-      Uri.parse(Url+queryParams)
-  );
+  final response = await http.get(Uri.parse(Url + queryParams));
 
-  if(response.statusCode == 200){
-    Map<String,dynamic> fes = jsonDecode(response.body);
+  if (response.statusCode == 200) {
+    print('1');
+    Map<String, dynamic> fes = jsonDecode(response.body);
+    print('2');
+    print(response);
+    print(fes);
     var modelObject = LocationBasedList.fromJson(fes);
+    print('3');
     String totalNum = modelObject.response!.body!.totalCount!.toString();
+    print('4');
 
-    queryParams = "$queryParams&numOfRows=$totalNum";
-    queryParams = "$queryParams&pageNo=1";
-   
-    print('총개수만큼 api 호출\n$Url$queryParams');
-   
-    final res = await http.get(Uri.parse(Url+queryParams));
-    
-    if (res.statusCode == 200){
-      print('api 호출 성공');
-      return (jsonDecode("[${utf8.decode(res.bodyBytes)}]") as List<dynamic>)
-        .map((e) => LocationBasedList.fromJson(e))
-        .toList();
-    }else{
-      throw Exception("Failed to load data");
+    if (totalNum == "0") {
+      print('tatalnum=0');
+      return ([
+        {'response': null}
+      ] as List<dynamic>)
+          .map((e) => LocationBasedList.fromJson(e))
+          .toList();
+    } else {
+      queryParams = "$queryParams&numOfRows=$totalNum";
+      queryParams = "$queryParams&pageNo=1";
+
+      print('총개수만큼 api 호출\n$Url$queryParams');
+
+      final res = await http.get(Uri.parse(Url + queryParams));
+      if (res.statusCode == 200) {
+        print('api 호출 성공');
+        return (jsonDecode("[${utf8.decode(res.bodyBytes)}]") as List<dynamic>)
+            .map((e) => LocationBasedList.fromJson(e))
+            .toList();
+      } else {
+        throw Exception("Failed to load data");
+      }
     }
   } else {
     throw Exception('Failed to load data');
@@ -72,56 +90,62 @@ class LocationBasedListWidget extends StatefulWidget {
   const LocationBasedListWidget({Key? key}) : super(key: key);
 
   @override
-  State<LocationBasedListWidget> createState() => _LocationBasedListWidgetState();
+  State<LocationBasedListWidget> createState() =>
+      _LocationBasedListWidgetState();
 }
 
 class _LocationBasedListWidgetState extends State<LocationBasedListWidget> {
   late Future<List<LocationBasedList>> futureLocationBasedList;
-  
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     // 여기 적혀 있는 변수들 다 넣어야됨
     futureLocationBasedList = fetchLocationBasedList(
-      arrange:"A",
-      contentTypeId:"12",
-      mapX : "128.6922646449",
-      mapY:"35.9910080699",
-      radius:"10000");
+        arrange: "A",
+        contentTypeId: "15",
+        mapX: "127.459223",
+        mapY: "36.6283933",
+        radius: "1000");
   }
 
   Widget build(BuildContext context) {
     return FutureBuilder<List<LocationBasedList>>(
-      future:futureLocationBasedList,
-      builder:(context,snapshot){
-        if(snapshot.hasData){
-          print('hasData');
+        future: futureLocationBasedList,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print('hasData');
+            if ((snapshot.data![0].response) == null) {
+              return Center(child: Text('이거눈 데이터가 없어용 앙앙'));
+            } else {
+              // tranditional_festival_model[index].변수명 으로 쓰면 됨
+              List<Item> locationbasedlist_model =
+                  snapshot.data![0].response!.body!.items!.item!;
+              print(locationbasedlist_model.length);
 
-          // tranditional_festival_model[index].변수명 으로 쓰면 됨
-          List<Item> locationbasedlist_model = snapshot.data![0].response!.body!.items!.item!;
-          print(locationbasedlist_model.length);
-
-          return Container(
-            color:Colors.white,
-            child:ListView.builder(
-            itemCount:locationbasedlist_model.length,
-            itemBuilder:(BuildContext context, index)=>Card(
-              margin:const EdgeInsets.all(10),
-              child:ListTile(
-                contentPadding:const EdgeInsets.all(10),
-                title:Text(locationbasedlist_model[index].title.toString()),
-                subtitle:Text(locationbasedlist_model[index].addr1.toString()),
-              )
-            )
-          ));
-        }else if(snapshot.hasError){
-          print('error');
-          print(snapshot.error);
-          return Text('error${snapshot.error}');
-        }
-        return Center(child: CupertinoActivityIndicator());
-      }
-      );
+              return Container(
+                  color: Colors.white,
+                  child: ListView.builder(
+                      itemCount: locationbasedlist_model.length,
+                      itemBuilder: (BuildContext context, index) => Card(
+                          margin: const EdgeInsets.all(10),
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.all(10),
+                            title: Text(locationbasedlist_model[index]
+                                .title
+                                .toString()),
+                            subtitle: Text(locationbasedlist_model[index]
+                                .addr1
+                                .toString()),
+                          ))));
+            }
+          } else if (snapshot.hasError) {
+            print('error');
+            print(snapshot.error);
+            return Text('error${snapshot.error}');
+          }
+          return Center(child: CupertinoActivityIndicator());
+        });
   }
 }
 
@@ -198,7 +222,9 @@ class Body {
   Body({this.items, this.numOfRows, this.pageNo, this.totalCount});
 
   Body.fromJson(Map<String, dynamic> json) {
-    items = json['items'] != null ? new Items.fromJson(json['items']) : null;
+    items = json['items'].toString().length != 0
+        ? new Items.fromJson(json['items'])
+        : null;
     numOfRows = json['numOfRows'];
     pageNo = json['pageNo'];
     totalCount = json['totalCount'];

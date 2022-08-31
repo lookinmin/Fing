@@ -178,6 +178,11 @@ class _FestivalItemState extends State<FestivalItem> {
           print(current_fast);
         }
       },
+                    firstimage: widget.item.firstimage,
+                    title: widget.item.title,
+                    addr1: widget.item.addr1,
+                    contentid: widget.item.contentid,
+                  ))),
       child: Container(
         padding: EdgeInsets.all(10),
         child: Column(

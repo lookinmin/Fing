@@ -88,7 +88,7 @@ class _RegionState extends State<Region> {
   @override
   Widget build(BuildContext context) {
     var screen = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -106,15 +106,10 @@ class _RegionState extends State<Region> {
       future: futureAreaCode,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          //print('hasData');
-
           List<Item> areacode_model =
               snapshot.data![0].response!.body!.items!.item!;
-          //print(areacode_model.length);
-
           return region(screen, areacode_model);
         } else if (snapshot.hasError) {
-          print('err: ${snapshot.error}');
           return Text('error${snapshot.error}');
         }
         return Center(child: CupertinoActivityIndicator());
@@ -131,10 +126,8 @@ class _RegionState extends State<Region> {
           if (snapshot.hasData) {
             List<Item> areadetailcode_model =
                 snapshot.data![0].response!.body!.items!.item!;
-
             return city(screen, areadetailcode_model);
           } else if (snapshot.hasError) {
-            print('err: ${snapshot.error}');
             return Text('error${snapshot.error}');
           }
           return Center(child: CupertinoActivityIndicator());
@@ -150,9 +143,7 @@ class _RegionState extends State<Region> {
       child: ListView.builder(
         itemCount: areadetailcode_model.length,
         itemBuilder: (BuildContext context, index) => InkWell(
-          // 세부지역의 페스티벌 띄우기
           onTap: () {
-            print(areadetailcode_model[index].name);
             setState(() {
               cityName = areadetailcode_model[index].name.toString();
               cityCode = areadetailcode_model[index].code.toString();
@@ -202,10 +193,7 @@ class _RegionState extends State<Region> {
         itemBuilder: (BuildContext context, index) => InkWell(
           onTap: () => {
             setState(() {
-              if (code == areacodeModel[index].code) {
-                print(areacodeModel[index].name);
-              } else {
-                print(areacodeModel[index].name);
+              if (code != areacodeModel[index].code) {
                 code = areacodeModel[index].code.toString();
               }
               regionCode = areacodeModel[index].code.toString();

@@ -8,11 +8,13 @@ class DetailPage extends StatefulWidget {
       {Key? key,
       required this.firstimage,
       required this.title,
-      required this.addr1})
+      required this.addr1,
+      required this.contentid})
       : super(key: key);
   final firstimage;
   final title;
   final addr1;
+  final contentid;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -71,7 +73,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                   Container(
                     width: size.width * 0.75,
                     child: Text(
-                      widget.title, 
+                      widget.title,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 24.0,

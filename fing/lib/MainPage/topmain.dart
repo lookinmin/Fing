@@ -5,8 +5,6 @@ import '../API/searchFestival.dart';
 
 void main() => runApp(TopMain());
 
-
-
 class TopMain extends StatefulWidget {
   TopMain({Key? key}) : super(key: key);
 
@@ -34,42 +32,43 @@ class _TopMainState extends State<TopMain> {
   ];
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     futureHotFestival = fetchHotFestival();
   }
 
   Widget build(BuildContext context) {
     return FutureBuilder<List<SearchFestival>>(
-      future:futureHotFestival,
-      builder:(context,snapshot){
-        if(snapshot.hasData){
-          print('hasData');
+        future: futureHotFestival,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print('hasData');
 
-          List<Item> hotfestival_model = snapshot.data![0].response!.body!.items!.item!;
+            List<Item> hotfestival_model =
+                snapshot.data![0].response!.body!.items!.item!;
 
-          for(int i=0;i<5;i++){
-            festivalImg[i] = hotfestival_model[i].firstimage.toString();
-            festivalList[i] = hotfestival_model[i].title.toString();
+            for (int i = 0; i < 5; i++) {
+              festivalImg[i] = hotfestival_model[i].firstimage.toString();
+              festivalList[i] = hotfestival_model[i].title.toString();
+            }
+
+            return Column(
+              children: [
+                Flexible(
+                  flex: 6,
+                  child: FestivalCarousel(festivalImg: festivalImg),
+                ),
+                Expanded(
+                    flex: 2, child: FestivalRanking(festivalList: festivalList))
+              ],
+            );
+          } else if (snapshot.hasError) {
+            print('error');
+            print(snapshot.error);
+            return Text('error${snapshot.error}');
           }
-          
-          return Column(
-            children: [
-              Flexible(
-                flex: 6,
-                child: FestivalCarousel(festivalImg: festivalImg),
-              ),
-              Expanded(flex: 2, child: FestivalRanking(festivalList: festivalList))
-            ],
-          );
-        }else if(snapshot.hasError){
-          print('error');
-          print(snapshot.error);
-          return Text('error${snapshot.error}');
-        }
-        return Center(child:CupertinoActivityIndicator());
-      }
-    );
+          return Center(child: CupertinoActivityIndicator());
+        });
   }
 }
 
@@ -165,9 +164,9 @@ class FestivalRankCarousel extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.symmetric(horizontal: 5.0),
                         child: Text(
-                          i,
+                          '${festivalList.indexOf(i) + 1}. $i',
                           style: TextStyle(
-                              fontSize: 16.0, fontWeight: FontWeight.w600),
+                              fontSize: 14.0, fontWeight: FontWeight.w500),
                         ));
                   },
                 );
@@ -203,9 +202,8 @@ class FestivalRankCarousel extends StatelessWidget {
 
 //메인 페이지 상단 페스티벌 사진 carousel
 class FestivalCarousel extends StatelessWidget {
-  const FestivalCarousel({
-    Key? key, required this.festivalImg
-  }) : super(key: key);
+  const FestivalCarousel({Key? key, required this.festivalImg})
+      : super(key: key);
 
   final List<String> festivalImg;
 
@@ -227,10 +225,11 @@ class FestivalCarousel extends StatelessWidget {
           return Builder(
             builder: (BuildContext context) {
               return Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: Image.network(i),);
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.symmetric(horizontal: 5.0),
+                decoration: BoxDecoration(color: Colors.white),
+                child: Image.network(i),
+              );
             },
           );
         }).toList(),
