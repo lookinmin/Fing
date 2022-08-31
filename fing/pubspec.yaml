@@ -62,7 +62,6 @@ dependencies:
   encrypt: ^5.0.1
   access_control: ^0.9.0
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -89,6 +88,7 @@ flutter:
     - assets/json/
     - assets/
     - assets/images/
+    - assets/ca/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
