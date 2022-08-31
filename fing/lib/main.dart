@@ -1,6 +1,7 @@
 import 'package:fing/MainPage/mainpage.dart';
 import 'package:fing/Mypage/mypage.dart';
 import 'package:flutter/material.dart';
+
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'Map/map.dart';
 import 'LikedPage/likedpage.dart';
@@ -8,6 +9,8 @@ import 'package:fing/login/intro_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'NearFestivalPage/nearfestival.dart';
 import 'firebase_options.dart';
+import 'Region/RegionPage.dart';
+import 'Map/mylocation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,30 +42,14 @@ class Root extends StatefulWidget {
 
   @override
   State<Root> createState() => _RootState();
-
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Flexible(flex: 2, child: FestivalSearch()),
-          Expanded(child: Text("Test-Main")),
-          Text('임시')
-          // Expanded(flex: 8, child: MainTopBottom())
-        ],
-      ),
-      // bottomNavigationBar: BottomAppBar(
-      //   child: BottomMenu(),
-      // ),
-    ); // TODO: implement build
-  }
 }
 
 class _RootState extends State<Root> {
   int _currentIndex = 0;
   final _pages = [
     MainTopBottom(),
-    AddressMap(),
-    NearFestival(),
+    RegionPageMain(),
+    MyLocation(),
     LikedPage(),
     MyPageMain()
   ];
@@ -165,23 +152,6 @@ class _RootState extends State<Root> {
         ),
       ),
     );
-  }
-}
-
-class Setting extends StatelessWidget {
-  const Setting({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: TextButton(
-      child: const Text('Setting'),
-      // onPressed: () => Navigator.pushNamed(context, '/second'),
-      onPressed: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SearchList()));
-      },
-    ));
   }
 }
 
@@ -298,7 +268,25 @@ class _SearchListState extends State<SearchList> {
               },
             )),
         body: searchResult == null
-            ? Container()
+            ? Center(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.search_outlined,
+                        size: 25,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        '페스티벌을 검색하세요',
+                        style: TextStyle(fontSize: 20, color: Colors.grey),
+                      )
+                    ]),
+              )
             : ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: searchResult.length,
