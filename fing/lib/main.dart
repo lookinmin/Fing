@@ -29,7 +29,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform
       //DefaultFirebaseOptions.currentPlatform,
       );
-  //HttpOverrides.global = new MyHttpOverrides();
+  HttpOverrides.global = new MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
 
   ByteData data =
