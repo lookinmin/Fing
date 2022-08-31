@@ -27,7 +27,7 @@ class FestivalPage extends StatefulWidget {
   final type;
   final region;
   final city;
-
+  
   @override
   State<FestivalPage> createState() => _FestivalState();
 }
@@ -57,6 +57,7 @@ class _FestivalState extends State<FestivalPage> {
 
 //페스티벌 리스트뷰 -> 페스티벌 갯수만큼 아이템들을 리스트뷰로 생성
 class FestivalList extends StatefulWidget {
+  
   FestivalList({Key? key, required this.region, required this.city})
       : super(key: key);
   final region;
@@ -124,9 +125,14 @@ class current_Model {
   String? current_title;
   String? current_address;
 
-  current_Model({this.current_image, this.current_title, this.current_address});
 
-  Map<String, dynamic> toJson() {
+  current_Model({
+    this.current_image,
+    this.current_title,
+    this.current_address
+  });
+
+  Map<String,dynamic> toJson(){
     final map = <String, dynamic>{};
     map['current_image'] = current_image;
     map['current_title'] = current_title;
@@ -135,9 +141,13 @@ class current_Model {
   }
 }
 
+
 class _FestivalItemState extends State<FestivalItem> {
+  
+  
   @override
   Widget build(BuildContext context) {
+    
     return InkWell(
       onTap: () {
         Navigator.push(
