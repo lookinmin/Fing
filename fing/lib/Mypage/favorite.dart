@@ -42,6 +42,7 @@ class favorite_festival_list extends StatefulWidget {
 
 class _favorite_festival_listState extends State<favorite_festival_list> {
   List favoritelist = <FireModel>[];
+  bool flag = false;
 
   @override
   void initState() {
@@ -62,7 +63,7 @@ class _favorite_festival_listState extends State<favorite_festival_list> {
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
         await _collectionReference.get();
 
-    List<FireModel> favoritelist = [];
+    List<FireModel> tmp = [];
     for (var doc in querySnapshot.docs) {
       FireModel fireModel = FireModel.fromQuerySnapshot(doc);
       favoritelist.add(FireModel(fireModel.address, fireModel.favorite_image,
@@ -74,20 +75,25 @@ class _favorite_festival_listState extends State<favorite_festival_list> {
       print('${item.title}, ${item.address}, ${item.reference}');
     }
 
-    return favoritelist;
+    setState(() {
+      flag = true;
+    });
+
+    return tmp;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(5),
-      child: ListView.builder(
-        itemCount: favoritelist.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Text('Content Number ${favoritelist[index].address}');
-        },
-      ),
-    );
+        margin: EdgeInsets.all(5),
+        child: flag
+            ? ListView.builder(
+                itemCount: favoritelist.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Text('Content Number ${favoritelist[index].address}');
+                },
+              )
+            : Text('adsfasdf'));
   }
 }
 
