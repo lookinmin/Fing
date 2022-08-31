@@ -30,12 +30,6 @@ void main() async {
       //DefaultFirebaseOptions.currentPlatform,
       );
   HttpOverrides.global = new MyHttpOverrides();
-  WidgetsFlutterBinding.ensureInitialized();
-
-  ByteData data =
-      await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
-  SecurityContext.defaultContext
-      .setTrustedCertificatesBytes(data.buffer.asUint8List());
   runApp(const MyApp());
 }
 
