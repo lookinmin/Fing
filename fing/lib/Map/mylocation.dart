@@ -209,8 +209,8 @@ class _MyLocationState extends State<MyLocation> {
       builder: (BuildContext context) {
         return StatefulBuilder(
             builder: (BuildContext context, setState) => InkWell(
-                onTap: (() => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DetailPage()))),
+                    // onTap: (() => Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => DetailPage()))), //팡모야여기에욤
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.25,
                   child: Padding(
