@@ -166,7 +166,7 @@ class FestivalRankCarousel extends StatelessWidget {
                         child: Text(
                           '${festivalList.indexOf(i) + 1}. $i',
                           style: TextStyle(
-                              fontSize: 16.0, fontWeight: FontWeight.w600),
+                              fontSize: 14.0, fontWeight: FontWeight.w500),
                         ));
                   },
                 );

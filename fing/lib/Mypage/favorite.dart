@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fing/login/login_SNS.dart';
 import 'package:flutter/material.dart';
 import '../FestivalPage/festivalist.dart';
 
@@ -31,8 +33,49 @@ class _favoriteState extends State<favorite> {
   }
 }
 
-class favorite_festival_list extends StatelessWidget {
+class favorite_festival_list extends StatefulWidget {
   const favorite_festival_list({Key? key}) : super(key: key);
+
+  @override
+  State<favorite_festival_list> createState() => _favorite_festival_listState();
+}
+
+class _favorite_festival_listState extends State<favorite_festival_list> {
+  List favoritelist = <FireModel>[];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    String curuser = "wjdtpdus828@naver.com";
+
+    readData();
+  }
+
+  Future<List<FireModel>> readData() async {
+    print('readData start');
+    CollectionReference<Map<String, dynamic>> _collectionReference =
+        FirebaseFirestore.instance
+            .collection("User")
+            .doc("wjdtpdus828@naver.com")
+            .collection("MyFavorite");
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await _collectionReference.get();
+
+    List<FireModel> favoritelist = [];
+    for (var doc in querySnapshot.docs) {
+      FireModel fireModel = FireModel.fromQuerySnapshot(doc);
+      favoritelist.add(FireModel(fireModel.address, fireModel.favorite_image,
+          fireModel.title, fireModel.reference));
+      // favoritelist.add(fireModel);
+    }
+
+    for (var item in favoritelist) {
+      print('${item.title}, ${item.address}, ${item.reference}');
+    }
+
+    return favoritelist;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +84,28 @@ class favorite_festival_list extends StatelessWidget {
       child: ListView.builder(
         itemCount: favoritelist.length,
         itemBuilder: (BuildContext context, int index) {
-          return FestivalItem(item: favoritelist[index]);
+          return Text('Content Number ${favoritelist[index].address}');
         },
       ),
     );
   }
 }
 
-final favoritelist = [
-  FestivalModel("assets/images/jazzfestival.png", "2022 워터밤 대구", "2022.08.20",
-      "2022.08.21", "강원도 원주시", "3")
-];
+class FireModel {
+  String? address;
+  String? favorite_image;
+  String? title;
+  DocumentReference? reference;
+
+  FireModel(this.address, this.favorite_image, this.title, this.reference);
+
+  FireModel.fromJson(dynamic json, this.reference) {
+    address = json['address'];
+    favorite_image = json['favorite_image'];
+    title = json['title'];
+  }
+
+  FireModel.fromQuerySnapshot(
+      QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
+      : this.fromJson(snapshot.data(), snapshot.reference);
+}
