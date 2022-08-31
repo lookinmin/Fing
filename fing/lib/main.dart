@@ -77,10 +77,12 @@ class _RootState extends State<Root> {
       child: Scaffold(
         body: Column(
           children: [
-            Container(
-                margin: EdgeInsets.fromLTRB(0, statusBarHeight + 10, 0, 10),
-                height: size.height * 0.065,
-                child: FestivalSearch()),
+            _currentIndex == 0
+                ? Container(
+                    margin: EdgeInsets.fromLTRB(0, statusBarHeight + 10, 0, 10),
+                    height: size.height * 0.065,
+                    child: FestivalSearch())
+                : Container(),
             Expanded(
               flex: 8,
               child: IndexedStack(

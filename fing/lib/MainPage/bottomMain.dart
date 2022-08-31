@@ -119,10 +119,9 @@ class GoodsButton extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
       child: OutlinedButton(
         onPressed: () {
-          Navigator.push(
-              //화면전환
-              context,
-              MaterialPageRoute(builder: (context) => GoodsPage()));
+          Navigator.of(context, rootNavigator: true).push(
+            MaterialPageRoute(builder: (context) => GoodsPage()),
+          );
         },
         // ignore: sort_child_properties_last
         child: SizedBox(
@@ -168,14 +167,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(4),
@@ -202,14 +196,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(5),
@@ -236,14 +225,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(5),
@@ -270,14 +254,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(5),
@@ -304,14 +283,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(6),
@@ -338,14 +312,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(7),
@@ -372,14 +341,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(5),
@@ -406,14 +370,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(6),
@@ -440,14 +399,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(4),
@@ -474,14 +428,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(5),
@@ -508,14 +457,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(6),
@@ -542,14 +486,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(7),
@@ -576,14 +515,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               padding: EdgeInsets.all(8),
@@ -610,14 +544,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
@@ -644,14 +573,9 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FestivalPage(
-                            type: type,
-                            region: '0',
-                            city: '0',
-                          )));
+              Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) =>
+                      FestivalPage(type: type, region: '0', city: '0')));
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
