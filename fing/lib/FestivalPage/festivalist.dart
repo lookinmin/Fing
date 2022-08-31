@@ -66,7 +66,6 @@ class _FestivalListState extends State<FestivalList> {
   @override
   void initState() {
     super.initState();
-    print('asdfasdf ${widget.region} ${widget.city}');
     futureSearchFestival = fetchSearchFestival(
         arrange: "B",
         areaCode: widget.region,
@@ -213,57 +212,9 @@ String strToDate(eventenddate) {
 
 String getDDay(eventstartdate) {
   var _toDay = DateTime.now();
-  String date = "20210101";
-
-  int difference =
-      int.parse(_toDay.difference(DateTime.parse(date)).inDays.toString());
-
-  print(difference);
-  return '111';
+  int diff = _toDay.difference(DateTime.parse(eventstartdate)).inDays - 1;
+  if (diff >= 0) {
+    return "진행중";
+  }
+  return 'D$diff';
 }
-
-// class FestivalModel {
-//   const FestivalModel(
-//       this.dday, this.img1, this.title, this.date, this.location, this.likenum);
-//   final int dday;
-//   final String img1;
-//   final String title;
-//   final String date;
-//   final String location;
-//   final int likenum;
-// }
-
-// final festivalitem = [
-//   FestivalModel(
-//     2,
-//     "assets/images/waterbomb1.png",
-//     "2022 워터밤 대구",
-//     "2022.07.23~2022.07.23",
-//     "대구광역시 대구스타디움",
-//     12,
-//   ),
-//   FestivalModel(
-//     12,
-//     "assets/images/waterbomb2.png",
-//     "자라섬 재즈 페스티벌",
-//     "2022.10.01~2022.10.03",
-//     "가평군 가평읍 달전리 자라섬",
-//     7,
-//   ),
-//   FestivalModel(
-//     8,
-//     "assets/images/jazzfestival.png",
-//     "치악산 복숭아축제",
-//     "2022.08.20~2022.08.21",
-//     "강원도 원주시",
-//     3,
-//   ),
-//   FestivalModel(
-//     23,
-//     "images/waterbombDaegu.png",
-//     "피란수도 부산 문화재 야행",
-//     "2022.08.19~2022.08.20",
-//     "부산광역시 임시수도기념거리",
-//     7,
-//   ),
-// ];
