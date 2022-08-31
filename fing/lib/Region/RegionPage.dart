@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 
 import '../FestivalPage/festivalist.dart';
 
-void main() {
-  runApp(const RegionPageMain());
-}
+// void main() {
+//   runApp(const RegionPageMain());
+// }
 
 class RegionPageMain extends StatelessWidget {
   const RegionPageMain({Key? key}) : super(key: key);

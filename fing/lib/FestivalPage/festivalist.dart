@@ -1,6 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fing/API/searchFestival.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fing/FestivalPage/detail/detail.dart';
+
+class FestivalModel {
+  String firstimage;
+  String title;
+  String eventstartdate;
+  String eventenddate;
+  String addr1;
+  String readcount;
+  FestivalModel(this.firstimage, this.title, this.eventstartdate,
+      this.eventenddate, this.addr1, this.readcount);
+}
 
 class FestivalPage extends StatefulWidget {
   const FestivalPage(
@@ -32,26 +45,58 @@ class _FestivalState extends State<FestivalPage> {
           color: Colors.grey,
         ),
       ),
-      body: FestivalList(),
+      body: FestivalList(region: widget.region, city: widget.city),
     );
   }
 }
 
 //페스티벌 리스트뷰 -> 페스티벌 갯수만큼 아이템들을 리스트뷰로 생성
-class FestivalList extends StatelessWidget {
-  const FestivalList({Key? key}) : super(key: key);
+class FestivalList extends StatefulWidget {
+  FestivalList({Key? key, required this.region, required this.city})
+      : super(key: key);
+  final region;
+  final city;
 
   @override
+  State<FestivalList> createState() => _FestivalListState();
+}
+
+class _FestivalListState extends State<FestivalList> {
+  late Future<List<SearchFestival>> futureSearchFestival;
+  @override
+  void initState() {
+    super.initState();
+    print('asdfasdf ${widget.region} ${widget.city}');
+    futureSearchFestival = fetchSearchFestival(
+        arrange: "B",
+        areaCode: widget.region,
+        sigunguCode: widget.city,
+        eventStartDate: "20220901",
+        eventEndDate: "");
+  }
+
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(5),
-      child: ListView.builder(
-        itemCount: festivalitem.length,
-        itemBuilder: (BuildContext context, int index) {
-          return FestivalItem(item: festivalitem[index]);
-        },
-      ),
-    );
+    return FutureBuilder<List<SearchFestival>>(
+        future: futureSearchFestival,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Item> searchfestival_model =
+                snapshot.data![0].response!.body!.items!.item!;
+
+            return Container(
+              margin: EdgeInsets.all(5),
+              child: ListView.builder(
+                itemCount: searchfestival_model.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return FestivalItem(item: searchfestival_model[index]);
+                },
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text('error${snapshot.error}');
+          }
+          return Center(child: CupertinoActivityIndicator());
+        });
   }
 }
 
@@ -81,9 +126,10 @@ class _FestivalItemState extends State<FestivalItem> {
                   Container(
                       height: 300,
                       width: double.infinity,
-                      color: Colors.grey,
-                      child: Image.asset(widget.item.img1, fit: BoxFit.fill)),
-                  d_day()
+                      color: Color.fromARGB(255, 227, 227, 227),
+                      child: Image.network(widget.item.firstimage,
+                          fit: BoxFit.contain)),
+                  dDay()
                 ],
               ),
             ),
@@ -95,7 +141,7 @@ class _FestivalItemState extends State<FestivalItem> {
             Padding(
               padding: EdgeInsets.only(top: 10),
               child: Text(
-                widget.item.date,
+                '${strToDate(widget.item.eventstartdate)} ~ ${strToDate(widget.item.eventenddate)}',
                 style: TextStyle(fontSize: 15, color: Colors.grey),
               ),
             ),
@@ -111,7 +157,7 @@ class _FestivalItemState extends State<FestivalItem> {
     );
   }
 
-  Container d_day() {
+  Container dDay() {
     return Container(
       margin: EdgeInsets.only(left: 5),
       padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -127,7 +173,7 @@ class _FestivalItemState extends State<FestivalItem> {
                 blurRadius: 5, //흐림정도
                 offset: Offset(2, 4)) //그림자위치
           ]),
-      child: Text("D-${widget.item.dday.toString()}",
+      child: Text(getDDay(widget.item.eventstartdate),
           style: TextStyle(
               letterSpacing: 0.7,
               fontSize: 17,
@@ -141,7 +187,7 @@ class _FestivalItemState extends State<FestivalItem> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          widget.item.location,
+          widget.item.addr1,
           style: TextStyle(fontSize: 15, color: Colors.grey),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -152,7 +198,7 @@ class _FestivalItemState extends State<FestivalItem> {
           ),
           Container(
               margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
-              child: Text(widget.item.likenum.toString(),
+              child: Text(widget.item.readcount.toString(),
                   style: TextStyle(fontSize: 15))),
         ])
       ],
@@ -160,48 +206,64 @@ class _FestivalItemState extends State<FestivalItem> {
   }
 }
 
-class FestivalModel {
-  const FestivalModel(
-      this.dday, this.img1, this.title, this.date, this.location, this.likenum);
-  final int dday;
-  final String img1;
-  final String title;
-  final String date;
-  final String location;
-  final int likenum;
+String strToDate(eventenddate) {
+  var date = DateTime.parse(eventenddate).toString().split(' ');
+  return date[0];
 }
 
-final festivalitem = [
-  FestivalModel(
-    2,
-    "assets/images/waterbomb1.png",
-    "2022 워터밤 대구",
-    "2022.07.23~2022.07.23",
-    "대구광역시 대구스타디움",
-    12,
-  ),
-  FestivalModel(
-    12,
-    "assets/images/waterbomb2.png",
-    "자라섬 재즈 페스티벌",
-    "2022.10.01~2022.10.03",
-    "가평군 가평읍 달전리 자라섬",
-    7,
-  ),
-  FestivalModel(
-    8,
-    "assets/images/jazzfestival.png",
-    "치악산 복숭아축제",
-    "2022.08.20~2022.08.21",
-    "강원도 원주시",
-    3,
-  ),
-  FestivalModel(
-    23,
-    "images/waterbombDaegu.png",
-    "피란수도 부산 문화재 야행",
-    "2022.08.19~2022.08.20",
-    "부산광역시 임시수도기념거리",
-    7,
-  ),
-];
+String getDDay(eventstartdate) {
+  var _toDay = DateTime.now();
+  String date = "20210101";
+
+  int difference =
+      int.parse(_toDay.difference(DateTime.parse(date)).inDays.toString());
+
+  print(difference);
+  return '111';
+}
+
+// class FestivalModel {
+//   const FestivalModel(
+//       this.dday, this.img1, this.title, this.date, this.location, this.likenum);
+//   final int dday;
+//   final String img1;
+//   final String title;
+//   final String date;
+//   final String location;
+//   final int likenum;
+// }
+
+// final festivalitem = [
+//   FestivalModel(
+//     2,
+//     "assets/images/waterbomb1.png",
+//     "2022 워터밤 대구",
+//     "2022.07.23~2022.07.23",
+//     "대구광역시 대구스타디움",
+//     12,
+//   ),
+//   FestivalModel(
+//     12,
+//     "assets/images/waterbomb2.png",
+//     "자라섬 재즈 페스티벌",
+//     "2022.10.01~2022.10.03",
+//     "가평군 가평읍 달전리 자라섬",
+//     7,
+//   ),
+//   FestivalModel(
+//     8,
+//     "assets/images/jazzfestival.png",
+//     "치악산 복숭아축제",
+//     "2022.08.20~2022.08.21",
+//     "강원도 원주시",
+//     3,
+//   ),
+//   FestivalModel(
+//     23,
+//     "images/waterbombDaegu.png",
+//     "피란수도 부산 문화재 야행",
+//     "2022.08.19~2022.08.20",
+//     "부산광역시 임시수도기념거리",
+//     7,
+//   ),
+// ];

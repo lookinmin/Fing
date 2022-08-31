@@ -38,22 +38,6 @@ class Root extends StatefulWidget {
 
   @override
   State<Root> createState() => _RootState();
-
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Flexible(flex: 2, child: FestivalSearch()),
-          Expanded(child: Text("Test-Main")),
-          Text('임시')
-          // Expanded(flex: 8, child: MainTopBottom())
-        ],
-      ),
-      // bottomNavigationBar: BottomAppBar(
-      //   child: BottomMenu(),
-      // ),
-    ); // TODO: implement build
-  }
 }
 
 class _RootState extends State<Root> {
@@ -164,23 +148,6 @@ class _RootState extends State<Root> {
         ),
       ),
     );
-  }
-}
-
-class Setting extends StatelessWidget {
-  const Setting({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: TextButton(
-      child: const Text('Setting'),
-      // onPressed: () => Navigator.pushNamed(context, '/second'),
-      onPressed: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SearchList()));
-      },
-    ));
   }
 }
 
@@ -297,7 +264,25 @@ class _SearchListState extends State<SearchList> {
               },
             )),
         body: searchResult == null
-            ? Container()
+            ? Center(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.search_outlined,
+                        size: 25,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        '페스티벌을 검색하세요',
+                        style: TextStyle(fontSize: 20, color: Colors.grey),
+                      )
+                    ]),
+              )
             : ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: searchResult.length,
