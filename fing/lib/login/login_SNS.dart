@@ -11,6 +11,7 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' as kakao;
 import '../firebase_auth_remote_data_source.dart';
 
 class Login_SNS extends StatelessWidget {
+  
   const Login_SNS({Key? key}) : super(key: key);
 
   Future<UserCredential> signInWithGoogle() async {
@@ -37,7 +38,7 @@ class Login_SNS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.fromLTRB(30.0, 170.0, 50.0, 0.0),
@@ -46,7 +47,7 @@ class Login_SNS extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
                   Widget>[
             Text(
-              '어디로 갈꺼야?',
+              '페스티벌이 궁금해?',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 30.0,
@@ -60,7 +61,7 @@ class Login_SNS extends StatelessWidget {
               // ignore: prefer_const_literals_to_create_immutables
               children: <Widget>[
                 Text(
-                  'FING',
+                  'Fing',
                   style: TextStyle(
                     letterSpacing: 1.0,
                     fontSize: 35.5,
@@ -130,11 +131,7 @@ class Login_SNS extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 80.0,
-            ),
-            // Image.asset("assets/images/kakao_login.png"),
-            SizedBox(
-              height: 80.0,
+              height: size.height * 0.2,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -146,7 +143,7 @@ class Login_SNS extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.white,
-                    minimumSize: Size.fromHeight(50), // 높이만 50으로 설정
+                    minimumSize: Size.fromHeight(60), // 높이만 50으로 설정
                     elevation: 1.0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4.0)),
@@ -154,20 +151,20 @@ class Login_SNS extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Image.asset('assets/images/glogo.png'),
+                      Container(
+                          child: Image.asset(
+                        'assets/images/GoogleLogo.png',
+                        width: size.width * 0.07,
+                      )),
                       Text(
-                        '구글로 로그인',
-                        style: TextStyle(color: Colors.black87, fontSize: 15.0),
-                      ),
-                      Opacity(
-                        opacity: 0.0,
-                        child: Image.asset('assets/images/glogo.png'),
+                        'Google 로그인',
+                        style: TextStyle(color: Colors.black87, fontSize: 16.0),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  height: screenHeight * 0.02,
+                  height: 15,
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -251,7 +248,7 @@ class Login_SNS extends StatelessWidget {
                 },
                   style: ElevatedButton.styleFrom(
                     primary: Color(0xffFEE500),
-                    minimumSize: Size.fromHeight(50), // 높이만 50으로 설정
+                    minimumSize: Size.fromHeight(60), // 높이만 50으로 설정
                     elevation: 1.0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4.0)),
@@ -259,20 +256,21 @@ class Login_SNS extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Image.asset('assets/images/kakao4.png'),
+                      Container(
+                          child: Image.asset(
+                        'assets/images/KakaoLogo.png',
+                        width: size.width * 0.08,
+                      )),
                       Text(
-                        '카카오 로그인',
-                        style: TextStyle(color: Colors.black87, fontSize: 15.0),
-                      ),
-                      Opacity(
-                        opacity: 0.0,
-                        child: Image.asset('assets/images/kakao4.png'),
+                        'KaKao 로그인',
+                        style: TextStyle(color: Colors.black87, fontSize: 16.0),
                       ),
                     ],
                   ),
+
                 ),
                 SizedBox(
-                  height: screenHeight * 0.03,
+                  height: 25,
                 ),
                 Center(
                   child: Text(
