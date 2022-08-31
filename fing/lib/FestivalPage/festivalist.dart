@@ -211,8 +211,8 @@ String strToDate(eventenddate) {
 }
 
 String getDDay(eventstartdate) {
-  var _toDay = DateTime.now();
-  int diff = _toDay.difference(DateTime.parse(eventstartdate)).inDays - 1;
+  int diff =
+      DateTime.now().difference(DateTime.parse(eventstartdate)).inDays - 1;
   if (diff >= 0) {
     return "진행중";
   }
