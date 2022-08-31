@@ -1,7 +1,11 @@
 // ignore_for_file: deprecated_member_use
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fing/Firebase/fing_db.dart';
 import 'package:fing/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:auth_buttons/auth_buttons.dart'
@@ -185,9 +189,19 @@ class Login_SNS extends StatelessWidget {
                            'photoURL' : user.kakaoAccount?.profile?.profileImageUrl.toString()
                          }
                        );
-
-
                          await FirebaseAuth.instance.signInWithCustomToken(token);
+
+                        
+                        fing_db_user.add(fing_db(user.kakaoAccount!.profile!.nickname.toString(), user.kakaoAccount!.email.toString()));
+                        print("login추가됨됨됨"+fing_db_user.length.toString());
+                        
+                         //await addinfo().createUser(_fing_db.toJson(),user.kakaoAccount!.email.toString());
+                         await FirebaseFirestore.instance.collection('User').doc(user.kakaoAccount!.email.toString()).collection("Privacy").add({
+                          "name": user.kakaoAccount?.profile?.nickname.toString(),
+                          "email": user.kakaoAccount?.email.toString()
+                          }
+                         );
+                         
                          Navigator.push(
                          //화면전환
                          context,
@@ -209,9 +223,21 @@ class Login_SNS extends StatelessWidget {
                            'photoURL' : user.kakaoAccount?.profile?.profileImageUrl.toString()
                          }
                        );
-
-
                          await FirebaseAuth.instance.signInWithCustomToken(token);
+
+                        
+                        //fing_db_user.add(fing_db(name: user.kakaoAccount!.profile!.nickname.toString(), email: user.kakaoAccount!.email.toString()));
+                        //fing_db_user.add(user.kakaoAccount!.email.toString());
+                         fing_db_user.add(fing_db(user.kakaoAccount!.profile!.nickname.toString(), user.kakaoAccount!.email.toString()));
+                        print("login추가됨됨됨"+fing_db_user.length.toString());
+                        
+
+                         await FirebaseFirestore.instance.collection('User').doc(user.kakaoAccount!.email.toString()).collection("Privacy").add({
+                          "name": user.kakaoAccount?.profile?.nickname.toString(),
+                          "email": user.kakaoAccount?.email.toString()
+                          }
+                         );
+
                          Navigator.push(
                          //화면전환
                          context,
@@ -234,7 +260,20 @@ class Login_SNS extends StatelessWidget {
                            'photoURL' : user.kakaoAccount?.profile?.profileImageUrl.toString()
                          }
                        );
+                        FirebaseFirestore db = FirebaseFirestore.instance;
+                        // fing_db.fromMap()
+                         //await addinfo().createUser(_fireModel.toJson(),user.kakaoAccount!.email.toString());
+                         fing_db_user.add(fing_db(user.kakaoAccount!.profile!.nickname.toString(), user.kakaoAccount!.email.toString()));
+                        print("login추가됨됨됨"+fing_db_user.length.toString());
+                        
+                        await FirebaseFirestore.instance.collection('User').doc(user.kakaoAccount!.email.toString()).collection("Privacy").doc().set({
+                          
+                          "name": user.kakaoAccount?.profile?.nickname.toString(),
+                          "email": user.kakaoAccount?.email.toString()
+                          }
+                         ,SetOptions(merge: true));
 
+                        //fing_db(name: user.kakaoAccount!.profile!.nickname.toString(), email: user.kakaoAccount!.email.toString());
 
                          await FirebaseAuth.instance.signInWithCustomToken(token);
                          Navigator.push(
@@ -323,3 +362,29 @@ class Login_SNS extends StatelessWidget {
     );
   }
 }
+
+class FireModel{
+  String? name;
+  String? email;
+
+  FireModel({
+    this.name,
+    this.email,
+  });
+
+  Map<String,String> toJson(){
+    final map = <String, String>{};
+    map['name'] = name!;
+    map['email'] = email!;
+    return map;
+  }
+}
+
+// class addinfo {
+//   static final addinfo _fireService = addinfo._internal();
+//   factory addinfo() => _fireService;
+//   addinfo._internal();
+
+//   Future createUser(Map<String, String> json, String collection_name) async {
+//     await FirebaseFirestore.instance.collection(collection_name).doc("Privacy").set(data)  }
+// }

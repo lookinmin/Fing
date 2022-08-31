@@ -1,3 +1,4 @@
+import 'package:fing/Firebase/fing_db.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fing/mypage/recent.dart';
@@ -38,6 +39,11 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
+    String nickname = fing_db_user[0].name;
+    String email = fing_db_user[0].email;
+
+    print('nickname'+nickname);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -79,10 +85,10 @@ class _MyPageState extends State<MyPage> {
                       iconColor: Colors.white,
                       leading: Icon(Icons.account_circle, size: 40),
                       title: Text(
-                        "페스티벌좋아요님",
+                        nickname,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text("s2eung1@naver.com"),
+                      subtitle: Text(email),
                     ),
                   ),
                   ListTile(
