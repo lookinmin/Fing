@@ -15,7 +15,6 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' as kakao;
 import '../firebase_auth_remote_data_source.dart';
 
 class Login_SNS extends StatelessWidget {
-  
   const Login_SNS({Key? key}) : super(key: key);
 
   Future<UserCredential> signInWithGoogle() async {
@@ -142,8 +141,7 @@ class Login_SNS extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Root()));
+                    signInWithGoogle();
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.white,
@@ -172,119 +170,145 @@ class Login_SNS extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                  final _firebaseAuthDataSource = FirebaseAuthRemoteDataSource();
-                  kakao.KakaoSdk.init(nativeAppKey: 'a0f1222696827f5577c696088787bc1f');
-                  
-                  if (await kakao.isKakaoTalkInstalled()) {
-                    try {
-                      await kakao.UserApi.instance.loginWithKakaoTalk();
-                      print('카카오톡으로 로그인 성공');
-                      _get_user_info();
-                      kakao.User user = await kakao.UserApi.instance.me();
-                         final token = await _firebaseAuthDataSource.createCustomToken(
-                         {
-                           'uid' : user.id.toString(),
-                           'displayName' : user.kakaoAccount?.profile?.nickname.toString(),
-                           'email' : user.kakaoAccount?.email.toString(),
-                           'photoURL' : user.kakaoAccount?.profile?.profileImageUrl.toString()
-                         }
-                       );
-                         await FirebaseAuth.instance.signInWithCustomToken(token);
+                    final _firebaseAuthDataSource =
+                        FirebaseAuthRemoteDataSource();
+                    kakao.KakaoSdk.init(
+                        nativeAppKey: 'a0f1222696827f5577c696088787bc1f');
 
-                        
-                        fing_db_user.add(fing_db(user.kakaoAccount!.profile!.nickname.toString(), user.kakaoAccount!.email.toString()));
-                        print("login추가됨됨됨"+fing_db_user.length.toString());
-                        
-                         //await addinfo().createUser(_fing_db.toJson(),user.kakaoAccount!.email.toString());
-                         await FirebaseFirestore.instance.collection('User').doc(user.kakaoAccount!.email.toString()).collection("Privacy").add({
-                          "name": user.kakaoAccount?.profile?.nickname.toString(),
+                    if (await kakao.isKakaoTalkInstalled()) {
+                      try {
+                        await kakao.UserApi.instance.loginWithKakaoTalk();
+                        print('카카오톡으로 로그인 성공');
+                        _get_user_info();
+                        kakao.User user = await kakao.UserApi.instance.me();
+                        final token =
+                            await _firebaseAuthDataSource.createCustomToken({
+                          'uid': user.id.toString(),
+                          'displayName':
+                              user.kakaoAccount?.profile?.nickname.toString(),
+                          'email': user.kakaoAccount?.email.toString(),
+                          'photoURL': user
+                              .kakaoAccount?.profile?.profileImageUrl
+                              .toString()
+                        });
+                        await FirebaseAuth.instance
+                            .signInWithCustomToken(token);
+
+                        fing_db_user.add(fing_db(
+                            user.kakaoAccount!.profile!.nickname.toString(),
+                            user.kakaoAccount!.email.toString()));
+                        print("login추가됨됨됨" + fing_db_user.length.toString());
+
+                        //await addinfo().createUser(_fing_db.toJson(),user.kakaoAccount!.email.toString());
+                        await FirebaseFirestore.instance
+                            .collection('User')
+                            .doc(user.kakaoAccount!.email.toString())
+                            .collection("Privacy")
+                            .add({
+                          "name":
+                              user.kakaoAccount?.profile?.nickname.toString(),
                           "email": user.kakaoAccount?.email.toString()
-                          }
-                         );
-                         
-                         Navigator.push(
-                         //화면전환
-                         context,
-                         MaterialPageRoute(builder: (context) => Root()));
-                    } catch (error) {
-                      print('카카오톡으로 로그인 실패 $error');
+                        });
 
-                      // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
+                        Navigator.push(
+                            //화면전환
+                            context,
+                            MaterialPageRoute(builder: (context) => Root()));
+                      } catch (error) {
+                        print('카카오톡으로 로그인 실패 $error');
+
+                        // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
+                        try {
+                          await kakao.UserApi.instance.loginWithKakaoAccount();
+                          print('카카오계정으로 로그인 성공');
+                          _get_user_info();
+                          kakao.User user = await kakao.UserApi.instance.me();
+                          final token =
+                              await _firebaseAuthDataSource.createCustomToken({
+                            'uid': user.id.toString(),
+                            'displayName':
+                                user.kakaoAccount?.profile?.nickname.toString(),
+                            'email': user.kakaoAccount?.email.toString(),
+                            'photoURL': user
+                                .kakaoAccount?.profile?.profileImageUrl
+                                .toString()
+                          });
+                          await FirebaseAuth.instance
+                              .signInWithCustomToken(token);
+
+                          //fing_db_user.add(fing_db(name: user.kakaoAccount!.profile!.nickname.toString(), email: user.kakaoAccount!.email.toString()));
+                          //fing_db_user.add(user.kakaoAccount!.email.toString());
+                          fing_db_user.add(fing_db(
+                              user.kakaoAccount!.profile!.nickname.toString(),
+                              user.kakaoAccount!.email.toString()));
+                          print("login추가됨됨됨" + fing_db_user.length.toString());
+
+                          await FirebaseFirestore.instance
+                              .collection('User')
+                              .doc(user.kakaoAccount!.email.toString())
+                              .collection("Privacy")
+                              .add({
+                            "name":
+                                user.kakaoAccount?.profile?.nickname.toString(),
+                            "email": user.kakaoAccount?.email.toString()
+                          });
+
+                          Navigator.push(
+                              //화면전환
+                              context,
+                              MaterialPageRoute(builder: (context) => Root()));
+                        } catch (error) {
+                          print('카카오계정으로 로그인 실패 $error');
+                        }
+                      }
+                    } else {
                       try {
                         await kakao.UserApi.instance.loginWithKakaoAccount();
                         print('카카오계정으로 로그인 성공');
                         _get_user_info();
                         kakao.User user = await kakao.UserApi.instance.me();
-                           final token = await _firebaseAuthDataSource.createCustomToken(
-                         {
-                           'uid' : user.id.toString(),
-                           'displayName' : user.kakaoAccount?.profile?.nickname.toString(),
-                           'email' : user.kakaoAccount?.email.toString(),
-                           'photoURL' : user.kakaoAccount?.profile?.profileImageUrl.toString()
-                         }
-                       );
-                         await FirebaseAuth.instance.signInWithCustomToken(token);
+                        final token =
+                            await _firebaseAuthDataSource.createCustomToken({
+                          'uid': user.id.toString(),
+                          'displayName':
+                              user.kakaoAccount?.profile?.nickname.toString(),
+                          'email': user.kakaoAccount?.email.toString(),
+                          'photoURL': user
+                              .kakaoAccount?.profile?.profileImageUrl
+                              .toString()
+                        });
+                        FirebaseFirestore db = FirebaseFirestore.instance;
+                        // fing_db.fromMap()
+                        //await addinfo().createUser(_fireModel.toJson(),user.kakaoAccount!.email.toString());
+                        fing_db_user.add(fing_db(
+                            user.kakaoAccount!.profile!.nickname.toString(),
+                            user.kakaoAccount!.email.toString()));
+                        print("login추가됨됨됨" + fing_db_user.length.toString());
 
-                        
-                        //fing_db_user.add(fing_db(name: user.kakaoAccount!.profile!.nickname.toString(), email: user.kakaoAccount!.email.toString()));
-                        //fing_db_user.add(user.kakaoAccount!.email.toString());
-                         fing_db_user.add(fing_db(user.kakaoAccount!.profile!.nickname.toString(), user.kakaoAccount!.email.toString()));
-                        print("login추가됨됨됨"+fing_db_user.length.toString());
-                        
-
-                         await FirebaseFirestore.instance.collection('User').doc(user.kakaoAccount!.email.toString()).collection("Privacy").add({
-                          "name": user.kakaoAccount?.profile?.nickname.toString(),
+                        await FirebaseFirestore.instance
+                            .collection('User')
+                            .doc(user.kakaoAccount!.email.toString())
+                            .collection("Privacy")
+                            .doc()
+                            .set({
+                          "name":
+                              user.kakaoAccount?.profile?.nickname.toString(),
                           "email": user.kakaoAccount?.email.toString()
-                          }
-                         );
+                        }, SetOptions(merge: true));
 
-                         Navigator.push(
-                         //화면전환
-                         context,
-                         MaterialPageRoute(builder: (context) => Root()));
+                        //fing_db(name: user.kakaoAccount!.profile!.nickname.toString(), email: user.kakaoAccount!.email.toString());
+
+                        await FirebaseAuth.instance
+                            .signInWithCustomToken(token);
+                        Navigator.push(
+                            //화면전환
+                            context,
+                            MaterialPageRoute(builder: (context) => Root()));
                       } catch (error) {
                         print('카카오계정으로 로그인 실패 $error');
                       }
                     }
-                  } else {
-                    try {
-                      await kakao.UserApi.instance.loginWithKakaoAccount();
-                      print('카카오계정으로 로그인 성공');
-                      _get_user_info();
-                      kakao.User user = await kakao.UserApi.instance.me();
-                         final token = await _firebaseAuthDataSource.createCustomToken(
-                         {
-                           'uid' : user.id.toString(),
-                           'displayName' : user.kakaoAccount?.profile?.nickname.toString(),
-                           'email' : user.kakaoAccount?.email.toString(),
-                           'photoURL' : user.kakaoAccount?.profile?.profileImageUrl.toString()
-                         }
-                       );
-                        FirebaseFirestore db = FirebaseFirestore.instance;
-                        // fing_db.fromMap()
-                         //await addinfo().createUser(_fireModel.toJson(),user.kakaoAccount!.email.toString());
-                         fing_db_user.add(fing_db(user.kakaoAccount!.profile!.nickname.toString(), user.kakaoAccount!.email.toString()));
-                        print("login추가됨됨됨"+fing_db_user.length.toString());
-                        
-                        await FirebaseFirestore.instance.collection('User').doc(user.kakaoAccount!.email.toString()).collection("Privacy").doc().set({
-                          
-                          "name": user.kakaoAccount?.profile?.nickname.toString(),
-                          "email": user.kakaoAccount?.email.toString()
-                          }
-                         ,SetOptions(merge: true));
-
-                        //fing_db(name: user.kakaoAccount!.profile!.nickname.toString(), email: user.kakaoAccount!.email.toString());
-
-                         await FirebaseAuth.instance.signInWithCustomToken(token);
-                         Navigator.push(
-                         //화면전환
-                         context,
-                         MaterialPageRoute(builder: (context) => Root()));
-                    } catch (error) {
-                      print('카카오계정으로 로그인 실패 $error');
-                    }
-                  }
-                },
+                  },
                   style: ElevatedButton.styleFrom(
                     primary: Color(0xffFEE500),
                     minimumSize: Size.fromHeight(60), // 높이만 50으로 설정
@@ -306,7 +330,6 @@ class Login_SNS extends StatelessWidget {
                       ),
                     ],
                   ),
-
                 ),
                 SizedBox(
                   height: 25,
@@ -355,7 +378,6 @@ class Login_SNS extends StatelessWidget {
             //   },
             //   child: Text("Google Login"),
             // ),
-
           ]),
         ),
       ),
@@ -363,7 +385,7 @@ class Login_SNS extends StatelessWidget {
   }
 }
 
-class FireModel{
+class FireModel {
   String? name;
   String? email;
 
@@ -372,7 +394,7 @@ class FireModel{
     this.email,
   });
 
-  Map<String,String> toJson(){
+  Map<String, String> toJson() {
     final map = <String, String>{};
     map['name'] = name!;
     map['email'] = email!;
