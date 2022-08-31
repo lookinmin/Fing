@@ -35,8 +35,6 @@ class _MyLocationState extends State<MyLocation> {
 
   List festList = [];
 
-  late Future<List<LocationBasedList>> futureLocationBasedList;
-
   Future<void> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -87,8 +85,6 @@ class _MyLocationState extends State<MyLocation> {
           list[0].response.body.items.item[i].firstimage));
     }
 
-    print(festList[0].contentid);
-    print(festList[0].firstimage);
     myLocationMaker();
   }
 
@@ -217,7 +213,6 @@ for(let i=0;i<markers.length;i++){
   Future<void> festivalInfo(BuildContext context, String name, String address,
       String contentid, String firstimage) {
     return showModalBottomSheet<void>(
-      //디자인 수정 -> api 보는거 보고
       context: context,
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
@@ -234,7 +229,7 @@ for(let i=0;i<markers.length;i++){
                             firstimage: firstimage,
                             title: name,
                             addr1: address,
-                            contentid: contentid)))), //팡모야여기에욤
+                            contentid: contentid)))),
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.25,
                   child: Row(
@@ -311,30 +306,23 @@ for(let i=0;i<markers.length;i++){
   Container address() {
     return Container(
       width: 400,
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.only(left: 5),
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.only(right: 5),
-            child: Icon(
-              Icons.location_on_outlined,
-              size: 20,
-            ),
+          Icon(
+            Icons.location_on_outlined,
+            size: 20,
+            color: Color.fromRGBO(255, 126, 0, 1),
           ),
-          Flexible(
-              flex: 5,
+          SizedBox(
+            width: 5,
+          ),
+          Expanded(
               child: Text(
-                '현위치: ',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              )),
-          Flexible(
-              flex: 12,
-              child: Text(
-                location,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                overflow: TextOverflow.ellipsis,
-              ))
+            location,
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+            overflow: TextOverflow.ellipsis,
+          ))
         ],
       ),
     );

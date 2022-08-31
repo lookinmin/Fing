@@ -30,6 +30,12 @@ void main() async {
       //DefaultFirebaseOptions.currentPlatform,
       );
   HttpOverrides.global = new MyHttpOverrides();
+  // WidgetsFlutterBinding.ensureInitialized();
+
+  // ByteData data =
+  //     await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
+  // SecurityContext.defaultContext
+  //     .setTrustedCertificatesBytes(data.buffer.asUint8List());
   runApp(const MyApp());
 }
 
@@ -93,12 +99,16 @@ class _RootState extends State<Root> {
       child: Scaffold(
         body: Column(
           children: [
-            _currentIndex == 0
+            SizedBox(
+              height: _currentIndex == 2 ? statusBarHeight : 0,
+            ),
+            (_currentIndex == 0
                 ? Container(
                     margin: EdgeInsets.fromLTRB(0, statusBarHeight + 10, 0, 10),
                     height: size.height * 0.065,
+                    constraints: BoxConstraints(minHeight: 50),
                     child: FestivalSearch())
-                : Container(),
+                : Container()),
             Expanded(
               flex: 8,
               child: IndexedStack(
@@ -199,7 +209,7 @@ class FestivalSearch extends StatelessWidget {
               flex: 5,
               child: Container(
                 margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
@@ -221,9 +231,12 @@ class FestivalSearch extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => SearchList()));
                         },
-                        child: Text(
-                          '페스티벌을 검색하세요',
-                          style: TextStyle(color: Colors.grey),
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            '페스티벌을 검색하세요',
+                            style: TextStyle(color: Colors.grey),
+                          ),
                         )),
                     Icon(
                       Icons.search,
