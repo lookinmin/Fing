@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fing/MainPage/mainpage.dart';
 import 'package:fing/Mypage/mypage.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +12,22 @@ import 'firebase_options.dart';
 import 'Region/RegionPage.dart';
 import 'Map/mylocation.dart';
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   KakaoSdk.init(nativeAppKey: 'a0f1222696827f5577c696088787bc1f');
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform
       //DefaultFirebaseOptions.currentPlatform,
       );
+  HttpOverrides.global = new MyHttpOverrides();
   runApp(const MyApp());
 }
 

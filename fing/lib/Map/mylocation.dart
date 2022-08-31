@@ -171,8 +171,8 @@ class _MyLocationState extends State<MyLocation> {
             festivalInfo(context, name, address).then((value) {
               setState(() {});
             });
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => DetailPage()));
+            // Navigator.push(
+            //     context, MaterialPageRoute(builder: (context) => DetailPage()));
           },
           zoomChanged: (p0) {
             //level 9에서부터 marker 지우기
