@@ -6,14 +6,16 @@ import 'package:geocoding/geocoding.dart';
 
 import '../FestivalPage/detail/detail.dart';
 
-const String kakaoMapKey = '096bea75f9d0374f3c939bff68e78cd3'; //자바스크립트 key
+const String kakaoMapKey = 'fcc2a9ef6a954ca6baa99fd67031b63f'; //자바스크립트 key
 
 class FestInfo {
-  double lat;
-  double lng;
-  String name;
-  String address;
-  FestInfo(this.lat, this.lng, this.name, this.address);
+  String mapx;
+  String mapy;
+  String title;
+  String addr1;
+  String contentid = "contentid";
+  String firstimage = 'assets/images/WaterbombDaegu.png';
+  FestInfo(this.mapx, this.mapy, this.title, this.addr1);
 }
 
 class MyLocation extends StatefulWidget {
@@ -30,20 +32,13 @@ class _MyLocationState extends State<MyLocation> {
   String location = " ";
 
   List festList = [
-    FestInfo(36.6183933, 127.469223, "목포세계마당페스티벌 ", '목포 원도심 수문로 일대'),
-    FestInfo(36.6383933, 127.259223, "festival2", "페스티벌 일정에 관한 내용"),
-    FestInfo(36.6483933, 127.419223, "festival3", "페스티벌 일정에 관한 내용"),
-    FestInfo(36.7283933, 127.440223, "festival4", "페스티벌 일정에 관한 내용"),
-    FestInfo(36.6883933, 127.420223, "festival5", "페스티벌 일정에 관한 내용"),
-    FestInfo(36.6283933, 127.473223, "festival6", "페스티벌 일정에 관한 내용"),
+    FestInfo('36.6183933', '127.469223', "목포세계마당페스티벌 ", '목포 원도심 수문로 일대'),
+    FestInfo('36.6383933', '127.259223', "festival2", "페스티벌 일정에 관한 내용"),
+    FestInfo('36.6483933', '127.419223', "festival3", "페스티벌 일정에 관한 내용"),
+    FestInfo('36.7283933', '127.440223', "festival4", "페스티벌 일정에 관한 내용"),
+    FestInfo('36.6883933', '127.420223', "festival5", "페스티벌 일정에 관한 내용"),
+    FestInfo('36.6283933', '127.473223', "festival6", "페스티벌 일정에 관한 내용"),
   ];
-
-  // List festList = [
-  //   [36.6183933, 127.469223, "festival1"],
-  //   [36.6383933, 127.259223, "festival2"],
-  //   [36.6483933, 127.419223, "festival3"],
-  //   [36.7283933, 127.440223, "festival4"],
-  // ];
 
   Future<void> _determinePosition() async {
     bool serviceEnabled;
@@ -103,23 +98,20 @@ class _MyLocationState extends State<MyLocation> {
   }
 
   void markFestivals() {
-    print('markFestivals');
-    int num = 0;
-
     _mapController?.runJavascript('''
         class FestList {
-          constructor(lat, lng, name, address) {
-            this.lat = lat;
-            this.lng = lng;
-            this.name = name;
-            this.address = address
+          constructor(mapx, mapy, title, addr1) {
+            this.mapx = mapx;
+            this.mapy = mapy;
+            this.title = title;
+            this.addr1 = addr1;
           }
         }
         var festPin = []
     ''');
     for (var item in festList) {
       _mapController?.runJavascript('''
-          festPin.push(new FestList(`${item.lat}`, `${item.lng}`, `${item.name}`, `${item.address}`))
+          festPin.push(new FestList(`${item.mapx}`, `${item.mapy}`, `${item.title}`, `${item.addr1}`))
       ''');
     }
     _mapController?.runJavascript(''' 
@@ -127,19 +119,21 @@ class _MyLocationState extends State<MyLocation> {
             var imageSize = new kakao.maps.Size(28, 30);                
             var imageOption = {offset: new kakao.maps.Point(17, 36)};    
       
+            var markers = [];
             function addMarker(position, name, info) {
               let testMarker = new kakao.maps.Marker({position: position,
               image: new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)});
 
               testMarker.setMap(map); 
+              markers.push(testMarker);
               kakao.maps.event.addListener(testMarker, 'click', function (mouseEvent) {
                                            onTapMarker.postMessage(name+'-'+info);
               });
              }
 
             let len = festPin.length;
-            for(let i=0;i<len;i++){
-              addMarker(new kakao.maps.LatLng(festPin[i].lat, festPin[i].lng), festPin[i].name, festPin[i].address);
+            for(let i=0;i<festPin.length;i++){
+              addMarker(new kakao.maps.LatLng(festPin[i].mapx, festPin[i].mapy), festPin[i].title, festPin[i].addr1);
             }
     ''');
   }
@@ -178,18 +172,24 @@ class _MyLocationState extends State<MyLocation> {
             festivalInfo(context, name, address).then((value) {
               setState(() {});
             });
+            MaterialPageRoute(builder: (context) => DetailPage());
           },
           zoomChanged: (p0) {
-            print(p0.message);
             //level 9에서부터 marker 지우기
             int level = int.parse(p0.message);
-            if (level > 9) {
+            print(level);
+            if (level >= 9) {
               _mapController?.runJavascript('''
-                  marker.setMap(null);
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                }      
               ''');
             } else {
-              myLocationMaker();
-              markFestivals();
+              _mapController?.runJavascript('''
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(map);
+                }    
+              ''');
             }
           },
         ),
