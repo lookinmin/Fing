@@ -62,7 +62,8 @@ class LikedItem extends StatefulWidget {
 class _LikedItemState extends State<LikedItem> {
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
+    var size = MediaQuery.of(context).size;
+    // var screenWidth = MediaQuery.of(context).size.width;
     return Container(
       padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
       child: Column(
@@ -71,12 +72,12 @@ class _LikedItemState extends State<LikedItem> {
           Row(
             children: [
               Container(
-                width: 95,
-                height: 130,
-                child: Image.asset(widget.item.imageUrl, fit: BoxFit.fill),
+                width: size.width * 0.23,
+                height: size.height * 0.13,
+                child: Image.asset(widget.item.firstimage, fit: BoxFit.fill),
               ),
               Container(
-                  width: screenWidth * 0.52,
+                  width: size.width * 0.52,
                   padding: EdgeInsets.only(left: 13, right: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,17 +90,18 @@ class _LikedItemState extends State<LikedItem> {
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
+                      Container(
+                        width: size.width * 0.6,
                         padding: EdgeInsets.only(top: 20),
                         child: Text(
-                          widget.item.desc1,
+                          '${StringToDate(widget.item.eventstartdate)} ~ ${StringToDate(widget.item.eventenddate)}',
                           style: TextStyle(fontSize: 14),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 5),
                         child: Text(
-                          widget.item.desc2,
+                          widget.item.addr1,
                           style: TextStyle(fontSize: 14),
                         ),
                       ),
@@ -129,18 +131,25 @@ class _LikedItemState extends State<LikedItem> {
     );
   }
 }
+String StringToDate(eventenddate) {
+  var date = DateTime.parse(eventenddate).toString().split(' ');
+  return date[0];
+}
 
 class ListModel {
-  const ListModel(this.imageUrl, this.title, this.desc1, this.desc2);
-  final String imageUrl;
+  const ListModel(this.firstimage, this.title, this.eventstartdate,
+      this.eventenddate, this.addr1);
+  final String firstimage;
   final String title;
-  final String desc1;
-  final String desc2;
+  final String eventstartdate;
+  final String eventenddate;
+  final String addr1;
 }
 
 const likeditem = [
   ListModel("assets/images/waterbombDaegu.png", "WATERBOMB(대구)",
-      "기간 : 2022.07.23", "위치 : 대구스타디움"),
-  ListModel("assets/images/jazzfestival.png", "자라섬 재즈 페스티벌",
-      "기간 : 2022.10.01~10.03", "위치 : 가평군 가평읍 달전리 자라섬"),
+      "20220723",
+      "20220725", "대구광역시 대구스타디움"),
+  ListModel("assets/images/jazzfestival.png", "자라섬 재즈 페스티벌페스티벌페스티벌", "20220823",
+      "20220923", "가평군 가평읍 달전리 자라섬자라섬자라섬자라섬"),
 ];
