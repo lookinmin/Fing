@@ -1,8 +1,13 @@
+import 'dart:collection';
+
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/API/searchFestival.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fing/FestivalPage/detail/detail.dart';
+
+import '../Firebase/fing_db.dart';
 
 class FestivalModel {
   String firstimage;
@@ -22,7 +27,7 @@ class FestivalPage extends StatefulWidget {
   final type;
   final region;
   final city;
-
+  
   @override
   State<FestivalPage> createState() => _FestivalState();
 }
@@ -52,6 +57,7 @@ class _FestivalState extends State<FestivalPage> {
 
 //페스티벌 리스트뷰 -> 페스티벌 갯수만큼 아이템들을 리스트뷰로 생성
 class FestivalList extends StatefulWidget {
+  
   FestivalList({Key? key, required this.region, required this.city})
       : super(key: key);
   final region;
@@ -63,6 +69,7 @@ class FestivalList extends StatefulWidget {
 
 class _FestivalListState extends State<FestivalList> {
   late Future<List<SearchFestival>> futureSearchFestival;
+  
   @override
   void initState() {
     super.initState();
@@ -113,17 +120,64 @@ class FestivalItem extends StatefulWidget {
   State<FestivalItem> createState() => _FestivalItemState();
 }
 
+class current_Model {
+  Uri? current_image;
+  String? current_title;
+  String? current_address;
+
+  current_Model({
+    this.current_image,
+    this.current_title,
+    this.current_address
+  });
+
+  Map<String,dynamic> toJson(){
+    final map = <String, dynamic>{};
+    map['current_image'] = current_image;
+    map['current_title'] = current_title;
+    map['current_address'] = current_address;
+    return map;
+  }
+}
+
+
 class _FestivalItemState extends State<FestivalItem> {
+  
+  
   @override
   Widget build(BuildContext context) {
+    
     return InkWell(
-      onTap: () => Navigator.push(
+      onTap: () {
+         Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => DetailPage(
                   firstimage: widget.item.firstimage,
                   title: widget.item.title,
-                  addr1: widget.item.addr1))),
+                  addr1: widget.item.addr1)));
+        //큐를 기반으로한 최근 본 축제 
+        
+        current_fast.add(widget.item.title.toString());
+        String curuser = "wjdtpdus828@naver.com";
+        FirebaseFirestore.instance.collection('User').doc(curuser).collection("MyCurrent").doc(widget.item.title).set({
+                          
+                          "current_image": widget.item.firstimage,
+                          "current_title": widget.item.title,
+                          "current_address" : widget.item.addr1
+                      }
+                      
+        ,SetOptions(merge: true));
+        print(current_fast);
+        print(current_fast.length);
+        if(current_fast.length > 3){
+          print("hi");
+          String curuser = "wjdtpdus828@naver.com";
+          FirebaseFirestore.instance.collection('User').doc(curuser).collection("MyCurrent").doc(current_fast[0].toString()).delete();
+          current_fast.removeAt(0);
+          print(current_fast);
+        }
+      },
       child: Container(
         padding: EdgeInsets.all(10),
         child: Column(
