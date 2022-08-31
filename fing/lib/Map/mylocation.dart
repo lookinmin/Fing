@@ -1,10 +1,9 @@
+import 'package:fing/FestivalPage/detail/detail.dart';
 import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
-
-import '../FestivalPage/detail/detail.dart';
 
 const String kakaoMapKey = 'fcc2a9ef6a954ca6baa99fd67031b63f'; //자바스크립트 key
 
@@ -172,7 +171,8 @@ class _MyLocationState extends State<MyLocation> {
             festivalInfo(context, name, address).then((value) {
               setState(() {});
             });
-            MaterialPageRoute(builder: (context) => DetailPage());
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => DetailPage()));
           },
           zoomChanged: (p0) {
             //level 9에서부터 marker 지우기

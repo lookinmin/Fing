@@ -355,7 +355,11 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
               margin: EdgeInsets.only(left: 16.0, right: 16.0),
               child: TabBarView(
                 controller: _TabController,
-                children: <Widget>[List(type: 1), List(type: 2), MarketList()],
+                children: <Widget>[
+                  PlaceList(type: 1),
+                  PlaceList(type: 2),
+                  MarketList()
+                ],
               ),
             ),
           ),
@@ -366,8 +370,8 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   }
 }
 
-class List extends StatelessWidget {
-  const List({Key? key, required this.type}) : super(key: key);
+class PlaceList extends StatelessWidget {
+  const PlaceList({Key? key, required this.type}) : super(key: key);
   final type;
   @override
   Widget build(BuildContext context) {
