@@ -69,7 +69,7 @@ class FestivalList extends StatefulWidget {
 
 class _FestivalListState extends State<FestivalList> {
   late Future<List<SearchFestival>> futureSearchFestival;
-  
+
   @override
   void initState() {
     super.initState();
@@ -125,6 +125,7 @@ class current_Model {
   String? current_title;
   String? current_address;
 
+
   current_Model({
     this.current_image,
     this.current_title,
@@ -149,40 +150,44 @@ class _FestivalItemState extends State<FestivalItem> {
     
     return InkWell(
       onTap: () {
-         Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => DetailPage(
-                  firstimage: widget.item.firstimage,
-                  title: widget.item.title,
-                  addr1: widget.item.addr1)));
-        //큐를 기반으로한 최근 본 축제 
-        
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailPage(
+                      firstimage: widget.item.firstimage,
+                      title: widget.item.title,
+                      addr1: widget.item.addr1,
+                      contentid: widget.item.contentid,
+                    )));
+        //큐를 기반으로한 최근 본 축제
+
         current_fast.add(widget.item.title.toString());
         String curuser = "wjdtpdus828@naver.com";
-        FirebaseFirestore.instance.collection('User').doc(curuser).collection("MyCurrent").doc(widget.item.title).set({
-                          
-                          "current_image": widget.item.firstimage,
-                          "current_title": widget.item.title,
-                          "current_address" : widget.item.addr1
-                      }
-                      
-        ,SetOptions(merge: true));
+        FirebaseFirestore.instance
+            .collection('User')
+            .doc(curuser)
+            .collection("MyCurrent")
+            .doc(widget.item.title)
+            .set({
+          "current_image": widget.item.firstimage,
+          "current_title": widget.item.title,
+          "current_address": widget.item.addr1
+        }, SetOptions(merge: true));
         print(current_fast);
         print(current_fast.length);
-        if(current_fast.length > 3){
+        if (current_fast.length > 3) {
           print("hi");
           String curuser = "wjdtpdus828@naver.com";
-          FirebaseFirestore.instance.collection('User').doc(curuser).collection("MyCurrent").doc(current_fast[0].toString()).delete();
+          FirebaseFirestore.instance
+              .collection('User')
+              .doc(curuser)
+              .collection("MyCurrent")
+              .doc(current_fast[0].toString())
+              .delete();
           current_fast.removeAt(0);
           print(current_fast);
         }
       },
-                    firstimage: widget.item.firstimage,
-                    title: widget.item.title,
-                    addr1: widget.item.addr1,
-                    contentid: widget.item.contentid,
-                  ))),
       child: Container(
         padding: EdgeInsets.all(10),
         child: Column(
