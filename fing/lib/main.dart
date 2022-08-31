@@ -1,18 +1,54 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:fing/MainPage/mainpage.dart';
+import 'package:fing/Mypage/mypage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'NearFestivalPage/nearfestival.dart';
+import 'firebase_options.dart';
+import 'Region/RegionPage.dart';
+import 'Map/mylocation.dart';
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  KakaoSdk.init(nativeAppKey: 'a0f1222696827f5577c696088787bc1f');
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform
+      //DefaultFirebaseOptions.currentPlatform,
+      );
+  HttpOverrides.global = new MyHttpOverrides();
+  // WidgetsFlutterBinding.ensureInitialized();
+
+  // ByteData data =
+  //     await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
+  // SecurityContext.defaultContext
+  //     .setTrustedCertificatesBytes(data.buffer.asUint8List());
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "FING",
       initialRoute: '/',
+      debugShowMaterialGrid: false,
       routes: {
         '/': (context) => Intro(),
       },
@@ -20,205 +56,130 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MainPage extends StatelessWidget {
-  const MainPage({Key? key}) : super(key: key);
+class Root extends StatefulWidget {
+  const Root({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Flexible(flex: 2, child: FestivalSearch()),
-          Expanded(child: Text("Test-Main"))
-        ],
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: BottomMenu(),
-      ),
-    ); // TODO: implement build
+  State<Root> createState() => _RootState();
+}
+
+class _RootState extends State<Root> {
+  int _currentIndex = 0;
+  final _pages = [
+    MainTopBottom(),
+    RegionPageMain(),
+    MyLocation(),
+    LikedPage(),
+    MyPageMain()
+  ];
+
+  late List<GlobalKey<NavigatorState>> _navigatorKeyList;
+
+  static get data => null;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _navigatorKeyList =
+        List.generate(_pages.length, (index) => GlobalKey<NavigatorState>());
   }
-}
-
-class BottomMenu extends StatefulWidget {
-  const BottomMenu({Key? key}) : super(key: key);
 
   @override
-  State<BottomMenu> createState() => _BottomMenu();
-}
-
-class _BottomMenu extends State<BottomMenu> {
-  var orange = Color.fromARGB(255, 255, 126, 0);
-  var black = Color.fromARGB(255, 0, 0, 0);
-  List<bool> isClick = [true, true, true, true, true];
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-      child: SizedBox(
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    var size = MediaQuery.of(context).size;
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    return WillPopScope(
+      onWillPop: () {
+        return Future(() => false);
+        // return !(await _navigatorKeyList[_currentIndex]
+        //     .currentState!
+        //     .maybePop());
+      },
+      child: Scaffold(
+        body: Column(
           children: [
-            Column(children: [
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isClick[1] = true;
-                      isClick[2] = true;
-                      isClick[3] = true;
-                      isClick[4] = true;
-                      isClick[0] = !isClick[0];
-                    });
-                  },
-                  icon: Icon(Icons.home_outlined),
-                  color: isClick[0] ? black : orange),
-              Text('  홈  ',
-                  style: TextStyle(
-                      color: isClick[0] ? black : orange,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700))
-            ]),
-            Column(children: [
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isClick[0] = true;
-                      isClick[2] = true;
-                      isClick[3] = true;
-                      isClick[4] = true;
-                      isClick[1] = !isClick[1];
-                    });
-                  },
-                  icon: Icon(Icons.place_outlined),
-                  color: isClick[1] ? black : orange),
-              Text(' 지역 ',
-                  style: TextStyle(
-                      color: isClick[1] ? black : orange,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700))
-            ]),
-            Column(children: [
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isClick[1] = true;
-                      isClick[0] = true;
-                      isClick[3] = true;
-                      isClick[4] = true;
-                      isClick[2] = !isClick[2];
-                    });
-                  },
-                  icon: Icon(Icons.map_outlined),
-                  color: isClick[2] ? black : orange),
-              Text(' 내주변 ',
-                  style: TextStyle(
-                      color: isClick[2] ? black : orange,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700))
-            ]),
-            Column(children: [
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isClick[1] = true;
-                      isClick[2] = true;
-                      isClick[0] = true;
-                      isClick[4] = true;
-                      isClick[3] = !isClick[3];
-                    });
-                  },
-                  icon: Icon(Icons.favorite_outline),
-                  color: isClick[3] ? black : orange),
-              Text(
-                '  찜  ',
-                style: TextStyle(
-                    color: isClick[3] ? black : orange,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700),
-              )
-            ]),
-            Column(children: [
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isClick[1] = true;
-                      isClick[2] = true;
-                      isClick[3] = true;
-                      isClick[0] = true;
-                      isClick[4] = !isClick[4];
-                    });
-                  },
-                  icon: Icon(Icons.person_outline),
-                  color: isClick[4] ? black : orange),
-              Text(
-                '마이페이지',
-                style: TextStyle(
-                    color: isClick[4] ? black : orange,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700),
-              )
-            ]),
+            SizedBox(
+              height: _currentIndex == 2 ? statusBarHeight : 0,
+            ),
+            (_currentIndex == 0
+                ? Container(
+                    margin: EdgeInsets.fromLTRB(0, statusBarHeight + 10, 0, 10),
+                    height: size.height * 0.065,
+                    constraints: BoxConstraints(minHeight: 50),
+                    child: FestivalSearch())
+                : Container()),
+            Expanded(
+              flex: 8,
+              child: IndexedStack(
+                index: _currentIndex,
+                children: _pages.map((page) {
+                  int index = _pages.indexOf(page);
+                  return Navigator(
+                    key: _navigatorKeyList[index],
+                    onGenerateRoute: (_) {
+                      return MaterialPageRoute(builder: (context) => page);
+                    },
+                  );
+                }).toList(),
+              ),
+            )
           ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          type: BottomNavigationBarType.fixed,
+          onTap: (index) {
+            setState(() {
+              if (index == 0) {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Root()));
+              } else {
+                _currentIndex = index;
+              }
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home_outlined,
+              ),
+              label: '홈',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.place_outlined,
+              ),
+              label: '지역',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.map_outlined,
+              ),
+              label: '내주변',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.favorite_outline,
+              ),
+              label: '찜',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person_outline,
+              ),
+              label: '마이페이지',
+            ),
+          ],
+          unselectedItemColor: Colors.black,
+          selectedItemColor: Color.fromRGBO(255, 126, 0, 1),
+          unselectedLabelStyle: TextStyle(color: Colors.black),
+          selectedLabelStyle: TextStyle(color: Color.fromRGBO(255, 126, 0, 1)),
         ),
       ),
     );
   }
 }
-
-// class BottomMenu extends StatelessWidget {
-//   const BottomMenu({Key? key}) : super(key: key);
-//   var orange = const Color.fromARGB(
-//     255,
-//     255,
-//     126,
-//     0,
-//   );
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: 70,
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         children: [
-//           Column(
-//             children: [
-//               IconButton(onPressed: () {}, icon: Icon(Icons.home_outlined)),
-//               Text('  홈  ')
-//             ],
-//           ),
-//           Column(children: [
-//             IconButton(onPressed: () {}, icon: Icon(Icons.place_outlined)),
-//             Text(' 지역 ')
-//           ]),
-//           Column(children: [
-//             IconButton(onPressed: () {}, icon: Icon(Icons.map_outlined)),
-//             Text(' 내주변 ')
-//           ]),
-//           Column(children: [
-//             IconButton(
-//               onPressed: () {},
-//               icon: Icon(Icons.favorite_outline),
-//               color: Color.fromARGB(
-//                 255,
-//                 255,
-//                 126,
-//                 0,
-//               ),
-//             ),
-//             Text(
-//               '  찜  ',
-//               style: TextStyle(color: black),
-//             )
-//           ]),
-//           Column(children: [
-//             IconButton(onPressed: () {}, icon: Icon(Icons.person_outline)),
-//             Text('마이페이지')
-//           ]),
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 class FestivalSearch extends StatelessWidget {
   const FestivalSearch({Key? key}) : super(key: key);
@@ -226,7 +187,7 @@ class FestivalSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
       decoration: BoxDecoration(
           border: Border(
               bottom: BorderSide(
@@ -236,43 +197,54 @@ class FestivalSearch extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(flex: 1, child: logo()),
           Expanded(
-            flex: 5,
-            child: Container(
-              margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.4),
-                      spreadRadius: 0,
-                      blurRadius: 2,
-                      offset: Offset(0, 7), // changes position of shadow
+              flex: 1,
+              child: InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Root()));
+                  },
+                  child: logo())), //여기에 로고 들어감
+          Expanded(
+              flex: 5,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.4),
+                        spreadRadius: 0,
+                        blurRadius: 2,
+                        offset: Offset(0, 7), // changes position of shadow
+                      )
+                    ]),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchList()));
+                        },
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            '페스티벌을 검색하세요',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        )),
+                    Icon(
+                      Icons.search,
+                      color: Color.fromRGBO(255, 126, 0, 1.0),
                     )
-                  ]),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Search Festival',
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                      child: Icon(
-                    Icons.search,
-                    color: Color.fromRGBO(255, 126, 0, 1.0),
-                  ))
-                ],
-              ),
-            ),
-          )
+                  ],
+                ),
+              ))
         ],
       ),
     );
@@ -281,6 +253,101 @@ class FestivalSearch extends StatelessWidget {
 
 Widget logo() {
   return Image.asset(
-    'images/mark.jpg',
+    'assets/images/FingLogo.png',
   );
+}
+
+class SearchList extends StatefulWidget {
+  SearchList({Key? key}) : super(key: key);
+
+  @override
+  State<SearchList> createState() => _SearchListState();
+}
+
+class _SearchListState extends State<SearchList> {
+  bool flag = true;
+  static const List<String> festList = <String>[
+    'aardvark',
+    'bobcat',
+    'chameleon',
+  ];
+
+  var searchResult;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+            iconTheme: IconThemeData(color: Colors.grey),
+            backgroundColor: Colors.white,
+            title: Autocomplete<String>(
+              optionsMaxHeight: 0,
+              optionsBuilder: (TextEditingValue textEditingValue) {
+                if (textEditingValue.text == '') {
+                  return const Iterable<String>.empty();
+                }
+                setState(() {
+                  searchResult = festList.where((String option) {
+                    return option.contains(textEditingValue.text);
+                  }).toList();
+                });
+                return searchResult;
+              },
+              onSelected: (String selection) {
+                debugPrint('You just selected $selection');
+              },
+            )),
+        body: searchResult == null
+            ? Center(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.search_outlined,
+                        size: 25,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        '페스티벌을 검색하세요',
+                        style: TextStyle(fontSize: 20, color: Colors.grey),
+                      )
+                    ]),
+              )
+            : ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: searchResult.length,
+                itemBuilder: ((context, index) {
+                  return InkWell(
+                      onTap: (() {}),
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        margin: EdgeInsets.fromLTRB(20, 5, 30, 5),
+                        height: 50,
+                        alignment: Alignment(-1.0, 0.0),
+                        // decoration: BoxDecoration(
+                        //     border: Border(
+                        //   bottom: BorderSide(
+                        //       color: Color.fromARGB(255, 129, 129, 129),
+                        //       width: 1),
+                        // )),
+                        child: Row(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                child: Icon(
+                                  Icons.search,
+                                  color: Colors.grey,
+                                )),
+                            Text(
+                              searchResult[index],
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ));
+                })));
+  }
 }

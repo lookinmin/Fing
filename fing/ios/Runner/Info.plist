@@ -45,5 +45,20 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+      <dict>
+        <key>NSAllowsArbitraryLoads</key> <true/>
+      </dict>
+    <key>io.flutter.embedded_views_preview</key> <true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+<string>This app needs access to location when open.</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>This app needs access to location when in the background.</string>
+<key>LSApplicationQueriesSchemes</key>
+<array>
+	<string>kakao(a0f1222696827f5577c696088787bc1f)</string>
+	<string>kakakompassauth</string>
+	<string>kakaonavi-sdk</string>
+</array>
 </dict>
 </plist>
