@@ -3,10 +3,10 @@ import 'package:fing/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' as kakao;
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:auth_buttons/auth_buttons.dart'
     show GoogleAuthButton, AuthButtonStyle, AuthButtonType, AuthIconType;
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' as kakao;
 
 import '../firebase_auth_remote_data_source.dart';
 
@@ -173,12 +173,13 @@ class Login_SNS extends StatelessWidget {
                   onPressed: () async {
                   final _firebaseAuthDataSource = FirebaseAuthRemoteDataSource();
                   kakao.KakaoSdk.init(nativeAppKey: 'a0f1222696827f5577c696088787bc1f');
-                  kakao.User user = await kakao.UserApi.instance.me();
+                  
                   if (await kakao.isKakaoTalkInstalled()) {
                     try {
                       await kakao.UserApi.instance.loginWithKakaoTalk();
                       print('카카오톡으로 로그인 성공');
                       _get_user_info();
+                      kakao.User user = await kakao.UserApi.instance.me();
                          final token = await _firebaseAuthDataSource.createCustomToken(
                          {
                            'uid' : user.id.toString(),
@@ -202,6 +203,7 @@ class Login_SNS extends StatelessWidget {
                         await kakao.UserApi.instance.loginWithKakaoAccount();
                         print('카카오계정으로 로그인 성공');
                         _get_user_info();
+                        kakao.User user = await kakao.UserApi.instance.me();
                            final token = await _firebaseAuthDataSource.createCustomToken(
                          {
                            'uid' : user.id.toString(),
@@ -226,6 +228,7 @@ class Login_SNS extends StatelessWidget {
                       await kakao.UserApi.instance.loginWithKakaoAccount();
                       print('카카오계정으로 로그인 성공');
                       _get_user_info();
+                      kakao.User user = await kakao.UserApi.instance.me();
                          final token = await _firebaseAuthDataSource.createCustomToken(
                          {
                            'uid' : user.id.toString(),
