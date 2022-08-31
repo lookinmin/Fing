@@ -4,7 +4,15 @@ import 'package:kakao_flutter_sdk_navi/kakao_flutter_sdk_navi.dart';
 import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  const DetailPage(
+      {Key? key,
+      required this.firstimage,
+      required this.title,
+      required this.addr1})
+      : super(key: key);
+  final firstimage;
+  final title;
+  final addr1;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -27,15 +35,16 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
     return Scaffold(
         body: CustomScrollView(
       slivers: <Widget>[
-        const SliverAppBar(
+        SliverAppBar(
           pinned: true,
           elevation: 0.0,
           expandedHeight: 300.0,
           backgroundColor: Colors.white,
           foregroundColor: Colors.redAccent,
           flexibleSpace: FlexibleSpaceBar(
+            centerTitle: true,
             title: Text(
-              '[서울 잠실] 싸이 흠뻑쇼', //축제 이름마다 변경
+              widget.title, //축제 이름마다 변경
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -46,8 +55,8 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
               start: 32,
               bottom: 16,
             ),
-            background: Image(
-                image: AssetImage('assets/images/waterbomb1.png')), //축제 사진맘다 변경
+            background: Image.network(widget.firstimage,
+                fit: BoxFit.contain), //축제 사진맘다 변경
           ),
         ),
         SliverToBoxAdapter(
@@ -62,7 +71,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                   Container(
                     width: size.width * 0.75,
                     child: Text(
-                      'title 싸이 흠뻑쇼 "SUMME SWAG 2022"', // 축제 이름마다 변경
+                      widget.title, 
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 24.0,
@@ -183,7 +192,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                         Container(
                           width: size.width * 0.6,
                           child: Text(
-                            '경기도 수원시 팔달구 정조로 825',
+                            widget.addr1,
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                         ),
@@ -306,21 +315,18 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
           ),
         )),
         SliverFillRemaining(
-          fillOverscroll: true,
-          hasScrollBody: true,
+          fillOverscroll: false,
+          hasScrollBody: false,
           child: Container(
-            constraints: BoxConstraints(maxHeight: double.infinity),
-            child: Container(
-              height: size.height,
-              margin: EdgeInsets.only(left: 16.0, right: 16.0),
-              child: TabBarView(
-                controller: _TabController,
-                children: <Widget>[
-                  PlaceList(type: 1),
-                  PlaceList(type: 2),
-                  MarketList()
-                ],
-              ),
+            height: size.height,
+            margin: EdgeInsets.only(left: 16.0, right: 16.0),
+            child: TabBarView(
+              controller: _TabController,
+              children: <Widget>[
+                PlaceList(type: 1),
+                PlaceList(type: 2),
+                MarketList()
+              ],
             ),
           ),
           // )
@@ -460,6 +466,7 @@ class MarketList extends StatelessWidget {
     return Container(
         margin: EdgeInsets.all(5),
         child: ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
           itemCount: listitem.length,
           itemBuilder: (BuildContext context, int index) {
             return MarketItem(item: marketitem[index]);
