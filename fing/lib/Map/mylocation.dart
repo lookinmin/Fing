@@ -306,30 +306,23 @@ for(let i=0;i<markers.length;i++){
   Container address() {
     return Container(
       width: 400,
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.only(left: 5),
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 5),
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.only(right: 5),
-            child: Icon(
-              Icons.location_on_outlined,
-              size: 20,
-            ),
+          Icon(
+            Icons.location_on_outlined,
+            size: 20,
+            color: Color.fromRGBO(255, 126, 0, 1),
           ),
-          Flexible(
-              flex: 5,
+          SizedBox(
+            width: 5,
+          ),
+          Expanded(
               child: Text(
-                '현위치: ',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              )),
-          Flexible(
-              flex: 12,
-              child: Text(
-                location,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                overflow: TextOverflow.ellipsis,
-              ))
+            location,
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+            overflow: TextOverflow.ellipsis,
+          ))
         ],
       ),
     );
