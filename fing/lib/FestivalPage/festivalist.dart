@@ -79,6 +79,11 @@ class _FestivalListState extends State<FestivalList> {
         future: futureSearchFestival,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            if (snapshot.data![0].response == null) {
+              return Center(
+                child: Text('예정중인 페스티벌이 없습니다'),
+              );
+            }
             List<Item> searchfestival_model =
                 snapshot.data![0].response!.body!.items!.item!;
 
