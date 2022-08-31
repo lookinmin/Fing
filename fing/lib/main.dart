@@ -89,10 +89,11 @@ class _RootState extends State<Root> {
     var size = MediaQuery.of(context).size;
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     return WillPopScope(
-      onWillPop: () async {
-        return !(await _navigatorKeyList[_currentIndex]
-            .currentState!
-            .maybePop());
+      onWillPop: () {
+        return Future(() => false);
+        // return !(await _navigatorKeyList[_currentIndex]
+        //     .currentState!
+        //     .maybePop());
       },
       child: Scaffold(
         body: Column(
