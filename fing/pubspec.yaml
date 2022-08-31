@@ -51,6 +51,17 @@ dependencies:
   favorite_button: ^0.0.4
   auth_buttons: ^3.0.0
 
+  #카카오네비꺼임
+  kakao_flutter_sdk_user: ^1.2.1 # 카카오 로그인
+  kakao_flutter_sdk_talk: ^1.2.1 # 카카오톡(소셜, 메시지)
+  kakao_flutter_sdk_story: ^1.2.1 # 카카오스토리
+  kakao_flutter_sdk_share: ^1.2.1 # 카카오톡 공유
+  kakao_flutter_sdk_navi: ^1.2.1 # 카카오내비
+  dio: ^4.0.6
+  crypto: ^3.0.2
+  encrypt: ^5.0.1
+  access_control: ^0.9.0
+
 
 dev_dependencies:
   flutter_test:
