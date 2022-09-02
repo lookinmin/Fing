@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fing/FestivalPage/detail/detail.dart';
 import 'package:fing/login/login_SNS.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +85,13 @@ class _favorite_festival_listState extends State<favorite_festival_list> {
           if (snapshot.hasData) {
             return ListView.builder(
                 itemBuilder: ((context, index) => InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        //          Navigator.push(
+                        // context,
+                        // MaterialPageRoute(
+                        //     builder: (context) =>DetailPage())
+                        //     );
+                      },
                       child: Container(),
                     )));
           } else if (snapshot.hasError) {

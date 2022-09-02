@@ -103,13 +103,13 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                     ),
                   ),
                   FavoriteButton(
-                    isFavorite: true,
+                    isFavorite: false,
                     valueChanged: (_isFavorite) async {
                       print("Is Favorite : $_isFavorite");
                       //로그인하면 자동으로 생김 최종 때 무조건 주석 풀어야함
                       //String curuser = fing_db_user[0].name;
                       //좋아요
-                      if (_isFavorite == true) {
+                      if (_isFavorite == false) {
                         //최종때 밑에꺼 없애줘
                         String curuser = "wjdtpdus828@naver.com";
                         await FirebaseFirestore.instance
@@ -120,7 +120,10 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             .set({
                           "favorite_image": widget.firstimage,
                           "title": widget.title,
-                          "address": widget.addr1
+                          "address": widget.addr1,
+                          "contentid": widget.contentid,
+                          "eventstartdate": "20220902",
+                          "eventenddate": "20220905"
                         }, SetOptions(merge: true));
                       }
                       //안좋아요
@@ -134,7 +137,6 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             .doc(widget.title)
                             .delete();
                       }
-
                     },
                     iconSize: 40,
                   ),
