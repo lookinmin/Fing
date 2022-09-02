@@ -9,7 +9,6 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'NearFestivalPage/nearfestival.dart';
 import 'firebase_options.dart';
 import 'Region/RegionPage.dart';
 import 'Map/mylocation.dart';

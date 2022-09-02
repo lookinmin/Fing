@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/login/login_SNS.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../FestivalPage/festivalist.dart';
 
@@ -41,8 +42,9 @@ class favorite_festival_list extends StatefulWidget {
 }
 
 class _favorite_festival_listState extends State<favorite_festival_list> {
-  List favoritelist = <FireModel>[];
-  bool flag = false;
+  late Future<List<FireModel>> favoritelist;
+
+  late Future<List<FireModel>> list;
 
   @override
   void initState() {
@@ -50,7 +52,7 @@ class _favorite_festival_listState extends State<favorite_festival_list> {
     super.initState();
     String curuser = "wjdtpdus828@naver.com";
 
-    readData();
+    favoritelist = readData();
   }
 
   Future<List<FireModel>> readData() async {
@@ -66,34 +68,32 @@ class _favorite_festival_listState extends State<favorite_festival_list> {
     List<FireModel> tmp = [];
     for (var doc in querySnapshot.docs) {
       FireModel fireModel = FireModel.fromQuerySnapshot(doc);
-      favoritelist.add(FireModel(fireModel.address, fireModel.favorite_image,
-          fireModel.title, fireModel.reference));
-      // favoritelist.add(fireModel);
+      tmp.add(FireModel(fireModel.address, fireModel.favorite_image,
+          fireModel.title, fireModel.contentid, fireModel.reference));
     }
-
-    for (var item in favoritelist) {
-      print('${item.title}, ${item.address}, ${item.reference}');
-    }
-
-    setState(() {
-      flag = true;
-    });
-
     return tmp;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.all(5),
-        child: flag
-            ? ListView.builder(
-                itemCount: favoritelist.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Text('Content Number ${favoritelist[index].address}');
-                },
-              )
-            : Text('adsfasdf'));
+      margin: EdgeInsets.all(5),
+      child: FutureBuilder<List<FireModel>>(
+        future: favoritelist,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+                itemBuilder: ((context, index) => InkWell(
+                      onTap: () {},
+                      child: Container(),
+                    )));
+          } else if (snapshot.hasError) {
+            return Text('error${snapshot.error}');
+          }
+          return Center(child: CupertinoActivityIndicator());
+        },
+      ),
+    );
   }
 }
 
@@ -101,14 +101,17 @@ class FireModel {
   String? address;
   String? favorite_image;
   String? title;
+  String? contentid;
   DocumentReference? reference;
 
-  FireModel(this.address, this.favorite_image, this.title, this.reference);
+  FireModel(this.address, this.favorite_image, this.title, this.contentid,
+      this.reference);
 
   FireModel.fromJson(dynamic json, this.reference) {
     address = json['address'];
     favorite_image = json['favorite_image'];
     title = json['title'];
+    contentid = json['contentid'];
   }
 
   FireModel.fromQuerySnapshot(
