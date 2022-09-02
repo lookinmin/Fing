@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:fing/MainPage/mainpage.dart';
+import 'package:fing/Mypage/favorite.dart';
 import 'package:fing/Mypage/mypage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -68,7 +69,7 @@ class _RootState extends State<Root> {
     MainTopBottom(),
     RegionPageMain(),
     MyLocation(),
-    LikedPage(),
+    Favorite(), //LikePage -> Favorite
     MyPageMain()
   ];
 

@@ -1,16 +1,18 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../FestivalPage/festivalist.dart';
+import 'favorite.dart';
 
-class recent extends StatefulWidget {
-  const recent({Key? key}) : super(key: key);
+class Recent extends StatefulWidget {
+  const Recent({Key? key}) : super(key: key);
 
   @override
-  State<recent> createState() => _recentState();
+  State<Recent> createState() => _RecentState();
 }
 
-class _recentState extends State<recent> {
+class _RecentState extends State<Recent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,28 +29,80 @@ class _recentState extends State<recent> {
             color: Colors.black,
           ),
         ),
-        body: recent_festival_list());
+        body: RecentFestivalList());
   }
 }
 
-class recent_festival_list extends StatelessWidget {
-  const recent_festival_list({Key? key}) : super(key: key);
+class RecentFestivalList extends StatefulWidget {
+  const RecentFestivalList({Key? key}) : super(key: key);
+
+  @override
+  State<RecentFestivalList> createState() => _RecentFestivalListState();
+}
+
+class _RecentFestivalListState extends State<RecentFestivalList> {
+  late Future<List<FireModel>> recentList;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    String curuser = "wjdtpdus828@naver.com";
+
+    recentList = readData();
+  }
+
+  Future<List<FireModel>> readData() async {
+    CollectionReference<Map<String, dynamic>> collectionReference =
+        FirebaseFirestore.instance
+            .collection("User")
+            .doc("wjdtpdus828@naver.com")
+            .collection("MyCurrent");
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await collectionReference.get();
+
+    List<FireModel> tmp = [];
+    for (var doc in querySnapshot.docs) {
+      FireModel fireModel = FireModel.fromQuerySnapshot(doc);
+      tmp.add(FireModel(
+          fireModel.addr1,
+          fireModel.firstimage,
+          fireModel.title,
+          fireModel.contentid,
+          fireModel.eventstartdate,
+          fireModel.eventenddate,
+          fireModel.readcount,
+          fireModel.reference));
+    }
+    return tmp;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(5),
-      child: ListView.builder(
-        itemCount: recentlist.length,
-        itemBuilder: (BuildContext context, int index) {
-          return FestivalItem(item: recentlist[index]);
+      child: FutureBuilder<List<FireModel>>(
+        future: recentList,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<FireModel> list = snapshot.data!;
+            return ListView.builder(
+                itemCount: list.length,
+                itemBuilder: ((context, index) => InkWell(
+                      onTap: () {
+                        //          Navigator.push(
+                        // context,
+                        // MaterialPageRoute(
+                        //     builder: (context) =>DetailPage())
+                        //     );
+                      },
+                      child: FestivalItem(item: list[index]),
+                    )));
+          } else if (snapshot.hasError) {
+            return Text('error${snapshot.error}');
+          }
+          return Center(child: CupertinoActivityIndicator());
         },
       ),
     );
   }
 }
-
-final recentlist = [
-  FestivalModel("assets/images/jazzfestival.png", "2022 워터밤 대구", "2022.08.20",
-      "2022.08.21", "강원도 원주시", "3")
-];

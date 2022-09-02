@@ -7,14 +7,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../FestivalPage/festivalist.dart';
 
-class favorite extends StatefulWidget {
-  const favorite({Key? key}) : super(key: key);
+class Favorite extends StatefulWidget {
+  const Favorite({Key? key}) : super(key: key);
 
   @override
-  State<favorite> createState() => _favoriteState();
+  State<Favorite> createState() => _FavoriteState();
 }
 
-class _favoriteState extends State<favorite> {
+class _FavoriteState extends State<Favorite> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,21 +31,19 @@ class _favoriteState extends State<favorite> {
             color: Colors.black,
           ),
         ),
-        body: favorite_festival_list());
+        body: FavoriteFestivalList());
   }
 }
 
-class favorite_festival_list extends StatefulWidget {
-  const favorite_festival_list({Key? key}) : super(key: key);
+class FavoriteFestivalList extends StatefulWidget {
+  const FavoriteFestivalList({Key? key}) : super(key: key);
 
   @override
-  State<favorite_festival_list> createState() => _favorite_festival_listState();
+  State<FavoriteFestivalList> createState() => _FavoriteFestivalListState();
 }
 
-class _favorite_festival_listState extends State<favorite_festival_list> {
+class _FavoriteFestivalListState extends State<FavoriteFestivalList> {
   late Future<List<FireModel>> favoritelist;
-
-  late Future<List<FireModel>> list;
 
   @override
   void initState() {
@@ -57,20 +55,26 @@ class _favorite_festival_listState extends State<favorite_festival_list> {
   }
 
   Future<List<FireModel>> readData() async {
-    print('readData start');
-    CollectionReference<Map<String, dynamic>> _collectionReference =
+    CollectionReference<Map<String, dynamic>> collectionReference =
         FirebaseFirestore.instance
             .collection("User")
             .doc("wjdtpdus828@naver.com")
             .collection("MyFavorite");
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await _collectionReference.get();
+        await collectionReference.get();
 
     List<FireModel> tmp = [];
     for (var doc in querySnapshot.docs) {
       FireModel fireModel = FireModel.fromQuerySnapshot(doc);
-      tmp.add(FireModel(fireModel.address, fireModel.favorite_image,
-          fireModel.title, fireModel.contentid, fireModel.reference));
+      tmp.add(FireModel(
+          fireModel.addr1,
+          fireModel.firstimage,
+          fireModel.title,
+          fireModel.contentid,
+          fireModel.eventstartdate,
+          fireModel.eventenddate,
+          fireModel.readcount,
+          fireModel.reference));
     }
     return tmp;
   }
@@ -83,7 +87,10 @@ class _favorite_festival_listState extends State<favorite_festival_list> {
         future: favoritelist,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            List<FireModel> list = snapshot.data!;
+            print(list[0].addr1);
             return ListView.builder(
+                itemCount: list.length,
                 itemBuilder: ((context, index) => InkWell(
                       onTap: () {
                         //          Navigator.push(
@@ -92,7 +99,7 @@ class _favorite_festival_listState extends State<favorite_festival_list> {
                         //     builder: (context) =>DetailPage())
                         //     );
                       },
-                      child: Container(),
+                      child: FestivalItem(item: list[index]),
                     )));
           } else if (snapshot.hasError) {
             return Text('error${snapshot.error}');
@@ -105,20 +112,26 @@ class _favorite_festival_listState extends State<favorite_festival_list> {
 }
 
 class FireModel {
-  String? address;
-  String? favorite_image;
+  String? addr1;
+  String? firstimage;
   String? title;
   String? contentid;
+  String? eventstartdate;
+  String? eventenddate;
+  String? readcount;
   DocumentReference? reference;
 
-  FireModel(this.address, this.favorite_image, this.title, this.contentid,
-      this.reference);
+  FireModel(this.addr1, this.firstimage, this.title, this.contentid,
+      this.eventstartdate, this.eventenddate, this.readcount, this.reference);
 
   FireModel.fromJson(dynamic json, this.reference) {
-    address = json['address'];
-    favorite_image = json['favorite_image'];
+    addr1 = json['addr1'];
+    firstimage = json['firstimage'];
     title = json['title'];
     contentid = json['contentid'];
+    eventstartdate = json['eventstartdate'];
+    eventenddate = json['eventenddate'];
+    readcount = json['readcount'];
   }
 
   FireModel.fromQuerySnapshot(
