@@ -1,6 +1,6 @@
 import 'package:fing/goods/goods.dart';
 import 'package:flutter/material.dart';
-import 'package:fing/FestivalPage/festivalist.dart';
+import 'package:fing/FestivalPage/festivallist_category.dart';
 
 void main() => runApp(BottomMain());
 
@@ -168,7 +168,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02070100')));
             },
             child: Container(
               padding: EdgeInsets.all(4),
@@ -197,7 +197,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code:'A02070200')));
             },
             child: Container(
               padding: EdgeInsets.all(5),
@@ -226,7 +226,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02080100')));
             },
             child: Container(
               padding: EdgeInsets.all(5),
@@ -255,7 +255,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02080200')));
             },
             child: Container(
               padding: EdgeInsets.all(5),
@@ -284,7 +284,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02080300')));
             },
             child: Container(
               padding: EdgeInsets.all(6),
@@ -313,7 +313,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02080400')));
             },
             child: Container(
               padding: EdgeInsets.all(7),
@@ -342,7 +342,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02080500')));
             },
             child: Container(
               padding: EdgeInsets.all(5),
@@ -371,7 +371,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02080600')));
             },
             child: Container(
               padding: EdgeInsets.all(6),
@@ -400,7 +400,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02080700')));
             },
             child: Container(
               padding: EdgeInsets.all(4),
@@ -429,7 +429,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02080800')));
             },
             child: Container(
               padding: EdgeInsets.all(5),
@@ -458,7 +458,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02080900')));
             },
             child: Container(
               padding: EdgeInsets.all(6),
@@ -487,7 +487,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02081000',)));
             },
             child: Container(
               padding: EdgeInsets.all(7),
@@ -516,7 +516,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02081100')));
             },
             child: Container(
               padding: EdgeInsets.all(8),
@@ -545,7 +545,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02081200',)));
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
@@ -574,7 +574,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, region: '0', city: '0')));
+                      FestivalPage(type: type, code: 'A02081300')));
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
