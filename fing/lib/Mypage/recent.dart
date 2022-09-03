@@ -42,11 +42,12 @@ class RecentFestivalList extends StatefulWidget {
 
 class _RecentFestivalListState extends State<RecentFestivalList> {
   late Future<List<FireModel>> recentList;
+  late String curuser;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    String curuser = "wjdtpdus828@naver.com";
+    curuser = "wjdtpdus828@naver.com";
 
     recentList = readData();
   }
@@ -72,6 +73,15 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
           fireModel.eventenddate,
           fireModel.readcount,
           fireModel.reference));
+      if (tmp.length > 3) {
+        tmp.removeAt(0);
+        FirebaseFirestore.instance
+            .collection('User')
+            .doc(curuser)
+            .collection("MyCurrent")
+            .doc(tmp[0].title.toString())
+            .delete();
+      }
     }
     return tmp;
   }
