@@ -110,17 +110,17 @@ class _MyPageState extends State<MyPage> {
                       Navigator.pushNamed(context, '/recent');
                     },
                   ),
-                  ListTile(
-                    //dense: true,
-                    minLeadingWidth: 0,
-                    leading: Icon(Icons.favorite_border_outlined, size: 17),
-                    title: Text('찜한 페스티벌'),
-                    trailing: Icon(Icons.chevron_right),
-                    onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=> 어쩌구()));
-                      Navigator.pushNamed(context, '/favorite');
-                    },
-                  ),
+                  // ListTile(
+                  //   //dense: true,
+                  //   minLeadingWidth: 0,
+                  //   leading: Icon(Icons.favorite_border_outlined, size: 17),
+                  //   title: Text('찜한 페스티벌'),
+                  //   trailing: Icon(Icons.chevron_right),
+                  //   onTap: () {
+                  //     // Navigator.push(context, MaterialPageRoute(builder: (context)=> 어쩌구()));
+                  //     Navigator.pushNamed(context, '/favorite');
+                  //   },
+                  // ),
                   ListTile(
                     //dense: true,
                     minLeadingWidth: 0,
@@ -163,16 +163,16 @@ class _MyPageState extends State<MyPage> {
                       Navigator.pushNamed(context, '/notice');
                     },
                   ),
-                  ListTile(
-                    //dense: true,
-                    minLeadingWidth: 0,
-                    leading: Icon(Icons.help_outline_outlined, size: 17),
-                    title: Text('FAQ'),
-                    trailing: Icon(Icons.chevron_right),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/faq');
-                    },
-                  ),
+                  // ListTile(
+                  //   //dense: true,
+                  //   minLeadingWidth: 0,
+                  //   leading: Icon(Icons.help_outline_outlined, size: 17),
+                  //   title: Text('FAQ'),
+                  //   trailing: Icon(Icons.chevron_right),
+                  //   onTap: () {
+                  //     Navigator.pushNamed(context, '/faq');
+                  //   },
+                  // ),
                   ListTile(
                     //dense: true,
                     minLeadingWidth: 0,
@@ -191,68 +191,68 @@ class _MyPageState extends State<MyPage> {
                       }
                     },
                   ),
-                  ListTile(
-                    //dense: true,
-                    minLeadingWidth: 0,
-                    leading: Icon(Icons.call_outlined, size: 17),
-                    title: Text('상담원 연결'),
-                    trailing: Icon(Icons.chevron_right),
-                    onTap: () {
-                      showModalBottomSheet<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Container(
-                              height: 130,
-                              color: Color(0xFF737373),
-                              child: Column(children: [
-                                Container(
-                                    height: 55,
-                                    padding: EdgeInsets.zero,
-                                    margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(15))),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                            padding: EdgeInsets.fromLTRB(
-                                                30, 0, 0, 0),
-                                            child: Icon(Icons.phone,
-                                                color: Colors.grey[700],
-                                                size: 30)),
-                                        Container(
-                                            padding: EdgeInsets.fromLTRB(
-                                                20, 0, 0, 0),
-                                            child: Text("통화 010-0000-0000",
-                                                style: TextStyle(
-                                                    color: Colors.blue[600],
-                                                    fontSize: 18)))
-                                      ],
-                                    )),
-                                InkWell(
-                                  onTap: () => Navigator.pop(context),
-                                  child: Container(
-                                    height: 55,
-                                    padding: EdgeInsets.zero,
-                                    margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(15))),
-                                    child: Center(
-                                        child: Text('취소',
-                                            style: TextStyle(
-                                                color: Colors.blue[600],
-                                                fontSize: 19,
-                                                fontWeight: FontWeight.w600))),
-                                  ),
-                                ),
-                              ]),
-                            );
-                          });
-                    },
-                  ),
+                  // ListTile(
+                  //   //dense: true,
+                  //   minLeadingWidth: 0,
+                  //   leading: Icon(Icons.call_outlined, size: 17),
+                  //   title: Text('상담원 연결'),
+                  //   trailing: Icon(Icons.chevron_right),
+                  //   onTap: () {
+                  //     showModalBottomSheet<void>(
+                  //         context: context,
+                  //         builder: (BuildContext context) {
+                  //           return Container(
+                  //             height: 130,
+                  //             color: Color(0xFF737373),
+                  //             child: Column(children: [
+                  //               Container(
+                  //                   height: 55,
+                  //                   padding: EdgeInsets.zero,
+                  //                   margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                  //                   decoration: BoxDecoration(
+                  //                       color: Colors.white,
+                  //                       borderRadius: BorderRadius.all(
+                  //                           Radius.circular(15))),
+                  //                   child: Row(
+                  //                     children: [
+                  //                       Container(
+                  //                           padding: EdgeInsets.fromLTRB(
+                  //                               30, 0, 0, 0),
+                  //                           child: Icon(Icons.phone,
+                  //                               color: Colors.grey[700],
+                  //                               size: 30)),
+                  //                       Container(
+                  //                           padding: EdgeInsets.fromLTRB(
+                  //                               20, 0, 0, 0),
+                  //                           child: Text("통화 010-0000-0000",
+                  //                               style: TextStyle(
+                  //                                   color: Colors.blue[600],
+                  //                                   fontSize: 18)))
+                  //                     ],
+                  //                   )),
+                  //               InkWell(
+                  //                 onTap: () => Navigator.pop(context),
+                  //                 child: Container(
+                  //                   height: 55,
+                  //                   padding: EdgeInsets.zero,
+                  //                   margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                  //                   decoration: BoxDecoration(
+                  //                       color: Colors.white,
+                  //                       borderRadius: BorderRadius.all(
+                  //                           Radius.circular(15))),
+                  //                   child: Center(
+                  //                       child: Text('취소',
+                  //                           style: TextStyle(
+                  //                               color: Colors.blue[600],
+                  //                               fontSize: 19,
+                  //                               fontWeight: FontWeight.w600))),
+                  //                 ),
+                  //               ),
+                  //             ]),
+                  //           );
+                  //         });
+                  //   },
+                  // ),
                   Divider(
                     height: 50,
                     color: Colors.grey[500],

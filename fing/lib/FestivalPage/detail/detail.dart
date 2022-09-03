@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:kakao_flutter_sdk_navi/kakao_flutter_sdk_navi.dart';
@@ -5,6 +6,9 @@ import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/Firebase/fing_db.dart';
+import 'package:fing/API/detailInfo.dart' as info;
+import 'package:fing/API/detailIntro.dart' as intro;
+import 'package:fing/API/locationbasedlist.dart' as local;
 
 class DetailPage extends StatefulWidget {
   const DetailPage(
@@ -12,13 +16,14 @@ class DetailPage extends StatefulWidget {
       required this.firstimage,
       required this.title,
       required this.addr1,
-      required this.contentid})
+      required this.contentid, required this.mapx, required this.mapy})
       : super(key: key);
   final firstimage;
   final title;
   final addr1;
-
   final contentid;
+  final mapx;
+  final mapy;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -44,10 +49,13 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   late TabController _TabController;
   // ScrollController _scrollController = new ScrollController();
 
+  late Future<DetailFestival> futureDetailFestival;
+
   @override
   void initState() {
     super.initState();
     _TabController = new TabController(length: 3, vsync: this);
+    futureDetailFestival = fetchDetailFestival(contentId: widget.contentid,);
   }
 
   @override
@@ -56,146 +64,119 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
     final regionText = widget.addr1.toString();
     final region1 = regionText.split(" ")[0];
     final region2 = regionText.split(" ")[1];
-    return Scaffold(
-        body: CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          pinned: true,
-          elevation: 0.0,
-          expandedHeight: 300.0,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.redAccent,
-          flexibleSpace: FlexibleSpaceBar(
-            centerTitle: true,
-            title: Text(
-              widget.title, //축제 이름마다 변경
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-            titlePadding: EdgeInsetsDirectional.only(
-              start: 32,
-              bottom: 16,
-            ),
-            background: Image.network(widget.firstimage,
-                fit: BoxFit.contain), //축제 사진맘다 변경
-          ),
-        ),
-        SliverToBoxAdapter(
-            child: Container(
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: size.width * 0.75,
-                    child: Text(
-                      widget.title,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold),
-                    ),
+    return FutureBuilder<DetailFestival>(
+      future:futureDetailFestival,
+      builder: (context,snapshot) {
+        if(snapshot.hasData){
+          print('hasData');
+          DetailFestival detailfestival_modal=snapshot.data!;
+
+          return Scaffold(
+            body: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              pinned: true,
+              elevation: 0.0,
+              expandedHeight: 300.0,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.redAccent,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                title: Text(
+                  widget.title, //축제 이름마다 변경
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
-                  FavoriteButton(
-                    isFavorite: false,
-                    valueChanged: (isFavorite) async {
-                      print("Is Favorite : $isFavorite");
-                      //로그인하면 자동으로 생김 최종 때 무조건 주석 풀어야함
-                      //String curuser = fing_db_user[0].name;
-                      //좋아요
-                      if (isFavorite) {
-                        //최종때 밑에꺼 없애줘
-                        String curuser = "wjdtpdus828@naver.com";
-                        await FirebaseFirestore.instance
-                            .collection('User')
-                            .doc(curuser)
-                            .collection("MyFavorite")
-                            .doc(widget.title)
-                            .set({
-                          "firstimage": widget.firstimage,
-                          "title": widget.title,
-                          "addr1": widget.addr1,
-                          "contentid": widget.contentid,
-                          "eventstartdate": "20220902",
-                          "eventenddate": "20220905",
-                          "readcount": "100" //string으로 바꿔서 보내기
-                        }, SetOptions(merge: true));
-                      }
-                      //안좋아요
-                      else {
-                        //최종때 밑에꺼 없애줘
-                        String curuser = "wjdtpdus828@naver.com";
-                        await FirebaseFirestore.instance
-                            .collection('User')
-                            .doc(curuser)
-                            .collection("MyFavorite")
-                            .doc(widget.title)
-                            .delete();
-                      }
-                    },
-                    iconSize: 40,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                titlePadding: EdgeInsetsDirectional.only(
+                  start: 32,
+                  bottom: 16,
+                ),
+                background: Image.network(widget.firstimage,
+                    fit: BoxFit.contain), //축제 사진맘다 변경
+              ),
+            ),
+            SliverToBoxAdapter(
+                child: Container(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: size.width * 0.75,
+                        child: Text(
+                          widget.title,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      FavoriteButton(
+                        isFavorite: false,
+                        valueChanged: (isFavorite) async {
+                          print("Is Favorite : $isFavorite");
+                          //로그인하면 자동으로 생김 최종 때 무조건 주석 풀어야함
+                          //String curuser = fing_db_user[0].name;
+                          //좋아요
+                          if (isFavorite) {
+                            //최종때 밑에꺼 없애줘
+                            String curuser = "wjdtpdus828@naver.com";
+                            await FirebaseFirestore.instance
+                                .collection('User')
+                                .doc(curuser)
+                                .collection("MyFavorite")
+                                .doc(widget.title)
+                                .set({
+                              "firstimage": widget.firstimage,
+                              "title": widget.title,
+                              "addr1": widget.addr1,
+                              "contentid": widget.contentid,
+                              "eventstartdate": "20220902",
+                              "eventenddate": "20220905",
+                              "readcount": "100" //string으로 바꿔서 보내기
+                            }, SetOptions(merge: true));
+                          }
+                          //안좋아요
+                          else {
+                            //최종때 밑에꺼 없애줘
+                            String curuser = "wjdtpdus828@naver.com";
+                            await FirebaseFirestore.instance
+                                .collection('User')
+                                .doc(curuser)
+                                .collection("MyFavorite")
+                                .doc(widget.title)
+                                .delete();
+                          }
+                        },
+                        iconSize: 40,
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey[300],
+                    thickness: 0.7,
                   ),
                 ],
               ),
-              Divider(
-                color: Colors.grey[300],
-                thickness: 0.7,
-              ),
-            ],
-          ),
-        )),
-        SliverToBoxAdapter(
-            child: Container(
-          padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
+            )),
+            SliverToBoxAdapter(
+                child: Container(
+              padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.play_arrow,
-                          size: 16.0,
-                          color: const Color(0xffff7e00),
-                        ),
-                        Container(
-                          width: size.width * 0.25,
-                          child: Text(
-                            ' 이용요금',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color.fromARGB(255, 112, 112, 112)),
-                          ),
-                        ),
-                        Container(
-                          width: size.width * 0.6,
-                          child: Text(
-                            '일부 프로그램 유료',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, bottom: 5),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -207,188 +188,228 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             Container(
                               width: size.width * 0.25,
                               child: Text(
-                                ' 개요',
+                                ' 이용요금',
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Color.fromARGB(255, 112, 112, 112)),
                               ),
                             ),
+                            Container(
+                              width: size.width * 0.6,
+                              child: Text(
+                                detailfestival_modal.usetimefestival.toString(),
+                                style: TextStyle(fontSize: 16, color: Colors.black),
+                              ),
+                            ),
                           ],
                         ),
-                        Container(
-                          width: size.width * 0.6,
-                          child: Text(
-                            '2020·2021 문화관광축제 선정, 정조대왕의 효심과 부국강병의 꿈을 바탕으로 축성된 수원화성에서 매년 펼쳐지는 역사 깊은 문화관광축제 ‘수원화성문화제’이다. 2022년 <제59회 수원화성문화제>는 <세계유산축전 수원화성>과 함께하여 더욱 뜻깊고 다채로운 프로그램으로 시민 곁에 다가간다. 수원화성의 이야기들을 보고, 듣고, 체험할 수 있으며, 역사적 정취가 깃든 장소에서 다양한 문화예술 콘텐츠를 함께 즐길 수 있다.',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, bottom: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.play_arrow,
+                                  size: 16.0,
+                                  color: const Color(0xffff7e00),
+                                ),
+                                Container(
+                                  width: size.width * 0.25,
+                                  child: Text(
+                                    ' 개요',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color.fromARGB(255, 112, 112, 112)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              width: size.width * 0.6,
+                              child: Text(
+                                detailfestival_modal.infotext.toString(),
+                                style: TextStyle(fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.play_arrow,
+                              size: 16.0,
+                              color: const Color(0xffff7e00),
+                            ),
+                            Container(
+                              width: size.width * 0.25,
+                              child: Text(
+                                ' 주소',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 112, 112, 112)),
+                              ),
+                            ),
+                            Container(
+                              width: size.width * 0.6,
+                              child: Text(
+                                widget.addr1,
+                                style: TextStyle(fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.play_arrow,
+                              size: 16.0,
+                              color: const Color(0xffff7e00),
+                            ),
+                            Container(
+                              width: size.width * 0.25,
+                              child: Text(
+                                ' 행사 장소',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 112, 112, 112)),
+                              ),
+                            ),
+                            Container(
+                              width: size.width * 0.6,
+                              child: Text(
+                                detailfestival_modal.eventplace.toString(),
+                                style: TextStyle(fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.play_arrow,
+                              size: 16.0,
+                              color: const Color(0xffff7e00),
+                            ),
+                            Container(
+                              width: size.width * 0.25,
+                              child: Text(
+                                ' 행사 시작일',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 112, 112, 112)),
+                              ),
+                            ),
+                            Container(
+                              width: size.width * 0.6,
+                              child: Text(
+                                strToDate(detailfestival_modal.eventstartdate),
+                                style: TextStyle(fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.play_arrow,
+                              size: 16.0,
+                              color: const Color(0xffff7e00),
+                            ),
+                            Container(
+                              width: size.width * 0.25,
+                              child: Text(
+                                ' 행사 종료일',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color.fromARGB(255, 112, 112, 112)),
+                              ),
+                            ),
+                            Container(
+                              width: size.width * 0.6,
+                              child: Text(
+                                strToDate(detailfestival_modal.eventenddate),
+                                style: TextStyle(fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.play_arrow,
-                          size: 16.0,
-                          color: const Color(0xffff7e00),
-                        ),
-                        Container(
-                          width: size.width * 0.25,
-                          child: Text(
-                            ' 주소',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color.fromARGB(255, 112, 112, 112)),
-                          ),
-                        ),
-                        Container(
-                          width: size.width * 0.6,
-                          child: Text(
-                            widget.addr1,
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ),
-                      ],
-                    ),
+                  Divider(
+                    color: Colors.grey[300],
+                    thickness: 0.7,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.play_arrow,
-                          size: 16.0,
-                          color: const Color(0xffff7e00),
-                        ),
-                        Container(
-                          width: size.width * 0.25,
-                          child: Text(
-                            ' 행사 장소',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color.fromARGB(255, 112, 112, 112)),
-                          ),
-                        ),
-                        Container(
-                          width: size.width * 0.6,
-                          child: Text(
-                            '화성행궁 및 행궁광장 등',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ),
-                      ],
-                    ),
+                  Container(
+                    child: TabBar(
+                        controller: _TabController,
+                        labelColor: Color(0xffff7e00),
+                        unselectedLabelColor: Colors.black,
+                        indicatorColor: Color(0xffff7e00),
+                        tabs: [
+                          Tab(text: '숙소', icon: Icon(Icons.hotel_rounded)),
+                          Tab(text: '맛집', icon: Icon(Icons.restaurant_rounded)),
+                          Tab(text: '전통시장', icon: Icon(Icons.storefront_rounded)),
+                        ]),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.play_arrow,
-                          size: 16.0,
-                          color: const Color(0xffff7e00),
-                        ),
-                        Container(
-                          width: size.width * 0.25,
-                          child: Text(
-                            ' 행사 시작일',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color.fromARGB(255, 112, 112, 112)),
-                          ),
-                        ),
-                        Container(
-                          width: size.width * 0.6,
-                          child: Text(
-                            '2022.10.07',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.play_arrow,
-                          size: 16.0,
-                          color: const Color(0xffff7e00),
-                        ),
-                        Container(
-                          width: size.width * 0.25,
-                          child: Text(
-                            ' 행사 종료일',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color.fromARGB(255, 112, 112, 112)),
-                          ),
-                        ),
-                        Container(
-                          width: size.width * 0.6,
-                          child: Text(
-                            '2022.10.09',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ),
-                      ],
-                    ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: DropDown(),
                   ),
                 ],
               ),
-              Divider(
-                color: Colors.grey[300],
-                thickness: 0.7,
+            )),
+            SliverFillRemaining(
+              fillOverscroll: true,
+              hasScrollBody: true,
+              child: Container(
+                height: double.infinity,
+                margin: EdgeInsets.only(left: 16.0, right: 16.0),
+                child: TabBarView(
+                  controller: _TabController,
+                  children: <Widget>[
+                    PlaceList(type: 1, contentId:widget.contentid,mapX:widget.mapx,mapY:widget.mapy),
+                    PlaceList(type: 2,contentId:widget.contentid,mapX:widget.mapx,mapY:widget.mapy),
+                    MarketList(reg1: region1, reg2: region2)
+                  ],
+                ),
               ),
-              Container(
-                child: TabBar(
-                    controller: _TabController,
-                    labelColor: Color(0xffff7e00),
-                    unselectedLabelColor: Colors.black,
-                    indicatorColor: Color(0xffff7e00),
-                    tabs: [
-                      Tab(text: '숙소', icon: Icon(Icons.hotel_rounded)),
-                      Tab(text: '맛집', icon: Icon(Icons.restaurant_rounded)),
-                      Tab(text: '전통시장', icon: Icon(Icons.storefront_rounded)),
-                    ]),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: DropDown(),
-              ),
-            ],
-          ),
-        )),
-        SliverFillRemaining(
-          fillOverscroll: true,
-          hasScrollBody: true,
-          child: Container(
-            height: double.infinity,
-            margin: EdgeInsets.only(left: 16.0, right: 16.0),
-            child: TabBarView(
-              controller: _TabController,
-              children: <Widget>[
-                PlaceList(type: 1),
-                PlaceList(type: 2),
-                MarketList(reg1: region1, reg2: region2)
-              ],
+              // )
             ),
-          ),
-          // )
-        ),
-      ],
-    ));
+          ],
+        ));
+        }else if (snapshot.hasError){
+          return Text('error${snapshot.error}');
+        }
+        return Center(child:CupertinoActivityIndicator());
+      }
+    );
   }
 }
 
@@ -423,20 +444,60 @@ class _DropDownState extends State<DropDown> {
   }
 }
 
-class PlaceList extends StatelessWidget {
-  const PlaceList({Key? key, required this.type}) : super(key: key);
+// 탭 누르면 숙소,맛집 리스트뷰
+class PlaceList extends StatefulWidget {
+  const PlaceList({Key? key, required this.type, required this.contentId, required this.mapX, required this.mapY}) : super(key: key);
   final type;
+  final contentId;
+  final mapX;
+  final mapY;
+
   @override
+  State<PlaceList> createState() => _PlaceListState();
+}
+
+class _PlaceListState extends State<PlaceList> {
+  late Future<List<local.LocationBasedList>> futureHotel;
+  late Future<List<local.LocationBasedList>> futureRestaurant;
+
+  @override
+  void initState(){
+    super.initState();
+    // 기본 정렬 E (거리순), 일단 10km (10000)
+    if(widget.type == 1){
+      futureHotel = local.fetchLocationBasedList(arrange: "E", contentTypeId: "32", mapX: widget.mapX, mapY: widget.mapY, radius: "10000");
+    }else{
+      futureRestaurant = local.fetchLocationBasedList(arrange: "E", contentTypeId: "39", mapX: widget.mapX, mapY: widget.mapY, radius: "10000");
+    }
+  }
+
+
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(5),
-      child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: listitem.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListItem(item: type == 1 ? listitem[index] : listitem2[index]);
-        },
-      ),
+    return FutureBuilder<List<local.LocationBasedList>>(
+      future:widget.type==1?futureHotel:futureRestaurant,
+      builder: (context,snapshot) {
+        if(snapshot.hasData){
+          if((snapshot.data![0].response)==null){
+            return widget.type==1?Center(child:Text('해당 페스티벌 근방 10km 이내에 숙소 정보가 존재하지 않습니다.')):Center(child:Text("해당 페스티벌 근방 10km 이내에 맛집 정보가 존재하지 않습니다."));
+          }
+          List<local.Item> festivallocation_model = snapshot.data![0].response!.body!.items!.item!;
+          return Container(
+          margin: EdgeInsets.all(5),
+          child: ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: festivallocation_model.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListItem(item:festivallocation_model[index]);
+            },
+          ),
+        );
+
+        }else if(snapshot.hasError){
+          return Text('error${snapshot.error}');
+        }
+        return Center(child:CupertinoActivityIndicator());
+
+      }
     );
   }
 }
@@ -457,8 +518,8 @@ class _ListItemState extends State<ListItem> {
       onTap: () async {
         bool result = await NaviApi.instance.isKakaoNaviInstalled();
         var title = "어디로 갈까";
-        var lat = '36.6617';
-        var long = '127.539913';
+        var lat = widget.item.mapy;
+        var long = widget.item.mapx;
         if (result) {
           await NaviApi.instance.shareDestination(
               destination: Location(name: title, x: '$long', y: '$lat'),
@@ -479,7 +540,7 @@ class _ListItemState extends State<ListItem> {
                 Container(
                     width: size.width * 0.2,
                     height: size.height * 0.1,
-                    child: Image.asset(widget.item.img, fit: BoxFit.fill)),
+                    child: Image.asset(widget.item.firstimage, fit: BoxFit.fill)),
                 Container(
                   width: size.width * 0.6,
                   padding: EdgeInsets.only(left: 15, right: 10),
@@ -495,7 +556,7 @@ class _ListItemState extends State<ListItem> {
                           )),
                       Padding(
                           padding: EdgeInsets.only(top: 10),
-                          child: Text(widget.item.location,
+                          child: Text(widget.item.addr1,
                               style: TextStyle(fontSize: 16))),
                     ],
                   ),
@@ -514,6 +575,7 @@ class _ListItemState extends State<ListItem> {
   }
 }
 
+// 전통시장리스트뷰
 class MarketList extends StatefulWidget {
   MarketList({Key? key, required this.reg1, required this.reg2})
       : super(key: key);
@@ -707,57 +769,6 @@ class _MarketItemState extends State<MarketItem> {
   }
 }
 
-//맛집, 숙소 같이 쓰는 모델
-class ItemModel {
-  const ItemModel(this.img, this.title, this.location);
-  final String img;
-  final String title;
-  final String location;
-}
-
-//숙소 Item
-final listitem = [
-  ItemModel(
-    "assets/images/waterbomb1.png",
-    "2022 워터밤 대구",
-    "대구광역시 대구스타디움",
-  ),
-  ItemModel(
-    "assets/images/waterbomb1.png",
-    "2022 워터밤 대구",
-    "대구광역시 대구스타디움",
-  ),
-  ItemModel(
-    "assets/images/waterbomb1.png",
-    "2022 워터밤 대구",
-    "대구광역시 대구스타디움",
-  ),
-];
-
-//맛집 Item
-final listitem2 = [
-  ItemModel(
-    "assets/images/waterbomb1.png",
-    "202222 워터밤 대구",
-    "대구광역시 대구스타디움",
-  ),
-  ItemModel(
-    "assets/images/waterbomb1.png",
-    "2022222 워터밤 대구",
-    "대구광역시 대구스타디움",
-  ),
-  ItemModel(
-    "assets/images/waterbomb1.png",
-    "2022222 워터밤 대구",
-    "대구광역시 대구스타디움",
-  ),
-  ItemModel(
-    "assets/images/waterbomb1.png",
-    "2022222 워터밤 대구",
-    "대구광역시 대구스타디움",
-  ),
-];
-
 //전통시장모델
 class MarketModel {
   const MarketModel(
@@ -781,6 +792,7 @@ Widget ChgIcon(String yn) {
   }
 }
 
+// 전통시장 Firebase
 Future<List> readdata(String reg1, String reg2) async {
   if (reg1.contains("서울")) {
     reg1 = "서울";
@@ -830,4 +842,35 @@ Future<List> readdata(String reg1, String reg2) async {
     print("응애 ${marketitem[j].mrktNm}");
   }
   return marketitem;
+}
+
+// API
+Future<DetailFestival> fetchDetailFestival( {required String contentId}) async {
+  List introfestival = await intro.fetchDetailIntro(
+        contentId: contentId);
+  List infofestival = await info.fetchDetailInfo(
+        contentId: contentId);
+
+  return DetailFestival(infofestival[0].response.body.items.item[0].infotext,
+  introfestival[0].response.body.items.item[0].eventstartdate,
+  introfestival[0].response.body.items.item[0].eventenddate,
+  introfestival[0].response.body.items.item[0].usetimefestival,
+  introfestival[0].response.body.items.item[0].eventplace);
+
+}
+
+class DetailFestival {
+  String? infotext;
+  String? eventstartdate;
+  String? eventenddate;
+  String? usetimefestival;
+  String? eventplace;
+  
+  DetailFestival(String this.infotext, String this.eventstartdate, String this.eventenddate, String this.usetimefestival, String this.eventplace);
+}
+
+// 날짜형식변환
+String strToDate(eventenddate) {
+  var date = DateTime.parse(eventenddate).toString().split(' ');
+  return date[0];
 }

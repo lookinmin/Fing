@@ -22,12 +22,11 @@ class FestivalModel {
 
 class FestivalPage extends StatefulWidget {
   const FestivalPage(
-      {Key? key, required this.type, required this.region, required this.city})
+      {Key? key, required this.type, required this.code})
       : super(key: key);
   final type;
-  final region;
-  final city;
-
+  final code;
+  
   @override
   State<FestivalPage> createState() => _FestivalState();
 }
@@ -50,17 +49,17 @@ class _FestivalState extends State<FestivalPage> {
           color: Colors.grey,
         ),
       ),
-      body: FestivalList(region: widget.region, city: widget.city),
+      body: FestivalList(code: widget.code),
     );
   }
 }
 
 //페스티벌 리스트뷰 -> 페스티벌 갯수만큼 아이템들을 리스트뷰로 생성
 class FestivalList extends StatefulWidget {
-  FestivalList({Key? key, required this.region, required this.city})
+  
+  FestivalList({Key? key, required this.code,})
       : super(key: key);
-  final region;
-  final city;
+  final code;
 
   @override
   State<FestivalList> createState() => _FestivalListState();
@@ -74,8 +73,8 @@ class _FestivalListState extends State<FestivalList> {
     super.initState();
     futureSearchFestival = fetchSearchFestival(
         arrange: "B",
-        areaCode: widget.region,
-        sigunguCode: widget.city,
+        areaCode: "",
+        sigunguCode: "",
         eventStartDate: "20220901",
         eventEndDate: "");
   }
@@ -90,18 +89,33 @@ class _FestivalListState extends State<FestivalList> {
                 child: Text('예정중인 페스티벌이 없습니다'),
               );
             }
-            List<Item> searchfestivalModel =
+            List<Item> searchfestival_model =
                 snapshot.data![0].response!.body!.items!.item!;
 
-            return Container(
+            List<Item> category_festival_model = [];
+
+            for(int i=0;i<searchfestival_model.length;i++){
+               if(searchfestival_model[i].cat3==widget.code){
+                    category_festival_model.add(searchfestival_model[i]);
+               }
+            }
+
+            if(category_festival_model.length==0){
+              return Center(
+                child: Text('예정중인 페스티벌이 없습니다'),
+              );
+            }
+            else{
+              return Container(
               margin: EdgeInsets.all(5),
               child: ListView.builder(
-                itemCount: searchfestivalModel.length,
+                itemCount: category_festival_model.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return FestivalItem(item: searchfestivalModel[index]);
+                    return FestivalItem(item: category_festival_model[index]);
                 },
               ),
             );
+            }
           } else if (snapshot.hasError) {
             return Text('error${snapshot.error}');
           }
@@ -119,10 +133,35 @@ class FestivalItem extends StatefulWidget {
   State<FestivalItem> createState() => _FestivalItemState();
 }
 
+class current_Model {
+  Uri? current_image;
+  String? current_title;
+  String? current_address;
+
+
+  current_Model({
+    this.current_image,
+    this.current_title,
+    this.current_address
+  });
+
+  Map<String,dynamic> toJson(){
+    final map = <String, dynamic>{};
+    map['current_image'] = current_image;
+    map['current_title'] = current_title;
+    map['current_address'] = current_address;
+    return map;
+  }
+}
+
+
 class _FestivalItemState extends State<FestivalItem> {
+  
+  
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+
+  return InkWell(
       onTap: () {
         Navigator.push(
             context,
@@ -132,8 +171,8 @@ class _FestivalItemState extends State<FestivalItem> {
                       title: widget.item.title,
                       addr1: widget.item.addr1,
                       contentid: widget.item.contentid,
-                      mapx : widget.item.mapx,
-                      mapy: widget.item.mapy,
+                      mapx:widget.item.mapx,
+                      mapy:widget.item.mapy,
                     )));
         //큐를 기반으로한 최근 본 축제
 
@@ -145,13 +184,9 @@ class _FestivalItemState extends State<FestivalItem> {
             .collection("MyCurrent")
             .doc(widget.item.title)
             .set({
-          "firstimage": widget.item.firstimage,
-          "title": widget.item.title,
-          "addr1": widget.item.addr1,
-          "contentid": widget.item.contentid,
-          "eventstartdate": widget.item.eventstartdate,
-          "eventenddate": widget.item.eventenddate,
-          "readcount": widget.item.readcount.toString()
+          "current_image": widget.item.firstimage,
+          "current_title": widget.item.title,
+          "current_address": widget.item.addr1
         }, SetOptions(merge: true));
         print(current_fast);
         print(current_fast.length);
@@ -173,16 +208,18 @@ class _FestivalItemState extends State<FestivalItem> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                Container(
-                    height: 300,
-                    width: double.infinity,
-                    color: Color.fromARGB(255, 227, 227, 227),
-                    child: Image.network(widget.item.firstimage,
-                        fit: BoxFit.contain)),
-                dDay()
-              ],
+            Container(
+              child: Stack(
+                children: [
+                  Container(
+                      height: 300,
+                      width: double.infinity,
+                      color: Color.fromARGB(255, 227, 227, 227),
+                      child: Image.network(widget.item.firstimage,
+                          fit: BoxFit.contain)),
+                  dDay()
+                ],
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(top: 10),

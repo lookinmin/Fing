@@ -184,7 +184,9 @@ class _MyLocationState extends State<MyLocation> {
             String address = fest[1];
             String contentid = fest[2];
             String firstimage = fest[3];
-            festivalInfo(context, name, address, contentid, firstimage)
+            String mapX = fest[4];
+            String mapY = fest[5];
+            festivalInfo(context, name, address, contentid, firstimage,mapX,mapY)
                 .then((value) {
               setState(() {});
             });
@@ -211,7 +213,7 @@ for(let i=0;i<markers.length;i++){
   }
 
   Future<void> festivalInfo(BuildContext context, String name, String address,
-      String contentid, String firstimage) {
+      String contentid, String firstimage,String mapX, String mapY) {
     return showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.white,
@@ -229,7 +231,9 @@ for(let i=0;i<markers.length;i++){
                             firstimage: firstimage,
                             title: name,
                             addr1: address,
-                            contentid: contentid)))),
+                            contentid: contentid,
+                            mapx:mapX,
+                            mapy:mapY)))),
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.25,
                   child: Row(

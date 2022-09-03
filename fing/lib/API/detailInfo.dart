@@ -1,4 +1,4 @@
-// 위치기반 관광정보조회
+// 반복정보조회
 
 // import packages
 import 'dart:convert'; //json으로 바꿔주기 위해 필요한 패키지
@@ -23,24 +23,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LocationBasedListWidget(),
+      home: const DetailInfoWidget(),
     );
   }
 }
 
 // api 호출
-Future<List<LocationBasedList>> fetchLocationBasedList(
-    {required String arrange,
-    required String contentTypeId,
-    required String mapX,
-    required String mapY,
-    required String radius}) async {
-  String Url = "https://apis.data.go.kr/B551011/KorService/locationBasedList";
+Future<List<DetailInfo>> fetchDetailInfo(
+    {required String contentId}) async {
+  String Url = "https://apis.data.go.kr/B551011/KorService/detailInfo";
   String queryParams =
       "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
   queryParams += "&_type=json&MobileOS=ETC&MobileApp=Fing";
-  queryParams =
-      "$queryParams&arrange=$arrange&contentTypeId=$contentTypeId&mapX=$mapX&mapY=$mapY&radius=$radius";
+  queryParams +=
+      "&contentTypeId=15&contentId=$contentId";
 
   print('api 호출$Url$queryParams');
 
@@ -48,15 +44,17 @@ Future<List<LocationBasedList>> fetchLocationBasedList(
 
   if (response.statusCode == 200) {
     Map<String, dynamic> fes = jsonDecode(response.body);
-    var modelObject = LocationBasedList.fromJson(fes);
+
+    var modelObject = DetailInfo.fromJson(fes);
     String totalNum = modelObject.response!.body!.totalCount!.toString();
- 
+    print(totalNum);
+
     if (totalNum == "0") {
       print('tatalnum=0');
       return ([
         {'response': null}
       ] as List<dynamic>)
-          .map((e) => LocationBasedList.fromJson(e))
+          .map((e) => DetailInfo.fromJson(e))
           .toList();
     } else {
       queryParams = "$queryParams&numOfRows=$totalNum";
@@ -65,10 +63,11 @@ Future<List<LocationBasedList>> fetchLocationBasedList(
       print('총개수만큼 api 호출\n$Url$queryParams');
 
       final res = await http.get(Uri.parse(Url + queryParams));
+
       if (res.statusCode == 200) {
         print('api 호출 성공');
         return (jsonDecode("[${utf8.decode(res.bodyBytes)}]") as List<dynamic>)
-            .map((e) => LocationBasedList.fromJson(e))
+            .map((e) => DetailInfo.fromJson(e))
             .toList();
       } else {
         throw Exception("Failed to load data");
@@ -80,57 +79,50 @@ Future<List<LocationBasedList>> fetchLocationBasedList(
 }
 
 // widget example
-class LocationBasedListWidget extends StatefulWidget {
-  const LocationBasedListWidget({Key? key}) : super(key: key);
+class DetailInfoWidget extends StatefulWidget {
+  const DetailInfoWidget({Key? key}) : super(key: key);
 
   @override
-  State<LocationBasedListWidget> createState() =>
-      _LocationBasedListWidgetState();
+  State<DetailInfoWidget> createState() => _DetailInfoWidgetState();
 }
 
-class _LocationBasedListWidgetState extends State<LocationBasedListWidget> {
-  late Future<List<LocationBasedList>> futureLocationBasedList;
+class _DetailInfoWidgetState extends State<DetailInfoWidget> {
+  late Future<List<DetailInfo>> futureDetailInfo;
 
   @override
   void initState() {
     super.initState();
     // 여기 적혀 있는 변수들 다 넣어야됨
-    futureLocationBasedList = fetchLocationBasedList(
-        arrange: "A",
-        contentTypeId: "15",
-        mapX: "127.459223",
-        mapY: "36.6283933",
-        radius: "1000");
+    futureDetailInfo = fetchDetailInfo(
+        contentId: "506545"
+        );
   }
 
   Widget build(BuildContext context) {
-    return FutureBuilder<List<LocationBasedList>>(
-        future: futureLocationBasedList,
+    return FutureBuilder<List<DetailInfo>>(
+        future: futureDetailInfo,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             print('hasData');
             if ((snapshot.data![0].response) == null) {
               return Center(child: Text('이거눈 데이터가 없어용 앙앙'));
             } else {
-              // tranditional_festival_model[index].변수명 으로 쓰면 됨
-              List<Item> locationbasedlist_model =
+              List<Item> detailInfo_model =
                   snapshot.data![0].response!.body!.items!.item!;
-              print(locationbasedlist_model.length);
+              print(detailInfo_model.length);
 
               return Container(
                   color: Colors.white,
                   child: ListView.builder(
-                      itemCount: locationbasedlist_model.length,
+                      itemCount: detailInfo_model.length,
                       itemBuilder: (BuildContext context, index) => Card(
                           margin: const EdgeInsets.all(10),
                           child: ListTile(
                             contentPadding: const EdgeInsets.all(10),
-                            title: Text(locationbasedlist_model[index]
-                                .title
-                                .toString()),
-                            subtitle: Text(locationbasedlist_model[index]
-                                .addr1
-                                .toString()),
+                            title: Text(
+                                detailInfo_model[index].infoname.toString()),
+                            subtitle: Text(
+                                detailInfo_model[index].infotext.toString()),
                           ))));
             }
           } else if (snapshot.hasError) {
@@ -143,13 +135,12 @@ class _LocationBasedListWidgetState extends State<LocationBasedListWidget> {
   }
 }
 
-// json to dart
-class LocationBasedList {
+class DetailInfo {
   Response? response;
 
-  LocationBasedList({this.response});
+  DetailInfo({this.response});
 
-  LocationBasedList.fromJson(Map<String, dynamic> json) {
+  DetailInfo.fromJson(Map<String, dynamic> json) {
     response = json['response'] != null
         ? new Response.fromJson(json['response'])
         : null;
@@ -216,7 +207,7 @@ class Body {
   Body({this.items, this.numOfRows, this.pageNo, this.totalCount});
 
   Body.fromJson(Map<String, dynamic> json) {
-    items = json['items'].toString().length != 0
+        items = json['items'].toString().length != 0
         ? new Items.fromJson(json['items'])
         : null;
     numOfRows = json['numOfRows'];
@@ -260,98 +251,38 @@ class Items {
 }
 
 class Item {
-  String? addr1;
-  String? addr2;
-  String? areacode;
-  String? booktour;
-  String? cat1;
-  String? cat2;
-  String? cat3;
   String? contentid;
   String? contenttypeid;
-  String? createdtime;
-  String? dist;
-  String? firstimage;
-  String? firstimage2;
-  String? mapx;
-  String? mapy;
-  String? mlevel;
-  String? modifiedtime;
-  int? readcount;
-  String? sigungucode;
-  String? tel;
-  String? title;
+  String? serialnum;
+  String? infoname;
+  String? infotext;
+  String? fldgubun;
 
   Item(
-      {this.addr1,
-      this.addr2,
-      this.areacode,
-      this.booktour,
-      this.cat1,
-      this.cat2,
-      this.cat3,
-      this.contentid,
+      {this.contentid,
       this.contenttypeid,
-      this.createdtime,
-      this.dist,
-      this.firstimage,
-      this.firstimage2,
-      this.mapx,
-      this.mapy,
-      this.mlevel,
-      this.modifiedtime,
-      this.readcount,
-      this.sigungucode,
-      this.tel,
-      this.title});
+      this.serialnum,
+      this.infoname,
+      this.infotext,
+      this.fldgubun});
 
   Item.fromJson(Map<String, dynamic> json) {
-    addr1 = json['addr1'];
-    addr2 = json['addr2'];
-    areacode = json['areacode'];
-    booktour = json['booktour'];
-    cat1 = json['cat1'];
-    cat2 = json['cat2'];
-    cat3 = json['cat3'];
     contentid = json['contentid'];
     contenttypeid = json['contenttypeid'];
-    createdtime = json['createdtime'];
-    dist = json['dist'];
-    firstimage = json['firstimage'];
-    firstimage2 = json['firstimage2'];
-    mapx = json['mapx'];
-    mapy = json['mapy'];
-    mlevel = json['mlevel'];
-    modifiedtime = json['modifiedtime'];
-    readcount = json['readcount'];
-    sigungucode = json['sigungucode'];
-    tel = json['tel'];
-    title = json['title'];
+    serialnum = json['serialnum'];
+    infoname = json['infoname'];
+    infotext = json['infotext'];
+    fldgubun = json['fldgubun'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['addr1'] = this.addr1;
-    data['addr2'] = this.addr2;
-    data['areacode'] = this.areacode;
-    data['booktour'] = this.booktour;
-    data['cat1'] = this.cat1;
-    data['cat2'] = this.cat2;
-    data['cat3'] = this.cat3;
     data['contentid'] = this.contentid;
     data['contenttypeid'] = this.contenttypeid;
-    data['createdtime'] = this.createdtime;
-    data['dist'] = this.dist;
-    data['firstimage'] = this.firstimage;
-    data['firstimage2'] = this.firstimage2;
-    data['mapx'] = this.mapx;
-    data['mapy'] = this.mapy;
-    data['mlevel'] = this.mlevel;
-    data['modifiedtime'] = this.modifiedtime;
-    data['readcount'] = this.readcount;
-    data['sigungucode'] = this.sigungucode;
-    data['tel'] = this.tel;
-    data['title'] = this.title;
+    data['serialnum'] = this.serialnum;
+    data['infoname'] = this.infoname;
+    data['infotext'] = this.infotext;
+    data['fldgubun'] = this.fldgubun;
     return data;
   }
 }
