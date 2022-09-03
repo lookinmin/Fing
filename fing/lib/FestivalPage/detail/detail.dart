@@ -24,21 +24,21 @@ class DetailPage extends StatefulWidget {
   State<DetailPage> createState() => _DetailPageState();
 }
 
-class favorite_Model {
-  Uri? favorite_image;
-  String? title;
-  String? address;
+// class favorite_Model {
+//   Uri? favorite_image;
+//   String? title;
+//   String? address;
 
-  favorite_Model({this.favorite_image, this.title, this.address});
+//   favorite_Model({this.favorite_image, this.title, this.address});
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['favorite_image'] = favorite_image;
-    map['title'] = title;
-    map['address'] = address;
-    return map;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final map = <String, dynamic>{};
+//     map['favorite_image'] = favorite_image;
+//     map['title'] = title;
+//     map['address'] = address;
+//     return map;
+//   }
+// }
 
 class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   late TabController _TabController;
@@ -92,7 +92,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
+                  SizedBox(
                     width: size.width * 0.75,
                     child: Text(
                       widget.title,
@@ -103,13 +103,13 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                     ),
                   ),
                   FavoriteButton(
-                    isFavorite: true,
-                    valueChanged: (_isFavorite) async {
-                      print("Is Favorite : $_isFavorite");
+                    isFavorite: false,
+                    valueChanged: (isFavorite) async {
+                      print("Is Favorite : $isFavorite");
                       //로그인하면 자동으로 생김 최종 때 무조건 주석 풀어야함
                       //String curuser = fing_db_user[0].name;
                       //좋아요
-                      if (_isFavorite == true) {
+                      if (isFavorite) {
                         //최종때 밑에꺼 없애줘
                         String curuser = "wjdtpdus828@naver.com";
                         await FirebaseFirestore.instance
@@ -118,9 +118,13 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             .collection("MyFavorite")
                             .doc(widget.title)
                             .set({
-                          "favorite_image": widget.firstimage,
+                          "firstimage": widget.firstimage,
                           "title": widget.title,
-                          "address": widget.addr1
+                          "addr1": widget.addr1,
+                          "contentid": widget.contentid,
+                          "eventstartdate": "20220902",
+                          "eventenddate": "20220905",
+                          "readcount": "100" //string으로 바꿔서 보내기
                         }, SetOptions(merge: true));
                       }
                       //안좋아요
@@ -134,7 +138,6 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             .doc(widget.title)
                             .delete();
                       }
-
                     },
                     iconSize: 40,
                   ),

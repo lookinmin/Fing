@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:fing/MainPage/mainpage.dart';
+import 'package:fing/Mypage/favorite.dart';
 import 'package:fing/Mypage/mypage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +10,6 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'NearFestivalPage/nearfestival.dart';
 import 'firebase_options.dart';
 import 'Region/RegionPage.dart';
 import 'Map/mylocation.dart';
@@ -69,7 +69,7 @@ class _RootState extends State<Root> {
     MainTopBottom(),
     RegionPageMain(),
     MyLocation(),
-    LikedPage(),
+    Favorite(), //LikePage -> Favorite
     MyPageMain()
   ];
 

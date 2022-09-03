@@ -1,7 +1,6 @@
 import 'package:fing/Firebase/fing_db.dart';
+import 'package:fing/Mypage/recent.dart';
 import 'package:flutter/material.dart';
-
-import 'package:fing/mypage/recent.dart';
 import 'package:fing/Mypage/favorite.dart';
 import 'package:fing/Mypage/notice.dart';
 import 'package:fing/Mypage/FAQ.dart';
@@ -19,8 +18,8 @@ class MyPageMain extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => MyPage(),
-        '/recent': (context) => recent(),
-        '/favorite': (context) => favorite(),
+        '/recent': (context) => Recent(),
+        '/favorite': (context) => Favorite(),
         '/notice': ((context) => NoticePage()),
         '/faq': (context) => FaqPage(),
         '/service': (context) => ServicePage(),
@@ -133,11 +132,8 @@ class _MyPageState extends State<MyPage> {
                             value: _isNotificationOn,
                             onChanged: (bool value) => setState(() {
                                   _isNotificationOn = value;
-                                  change_alram(_isNotificationOn);  //알람뽑는거요
-                                }
-                                )
-                                )
-                                ),
+                                  change_alram(_isNotificationOn); //알람뽑는거요
+                                }))),
                     onTap: () {
                       // Navigator.push(context, MaterialPageRoute(builder: (context)=> 어쩌구()));
                     },
@@ -183,16 +179,16 @@ class _MyPageState extends State<MyPage> {
                     leading: Icon(Icons.question_answer_outlined, size: 17),
                     title: Text('1:1 카카오 문의'),
                     trailing: Icon(Icons.chevron_right),
-                    onTap: () async{
-                        Uri url = await TalkApi.instance.addChannelUrl('_jMfVxj');
+                    onTap: () async {
+                      Uri url = await TalkApi.instance.addChannelUrl('_jMfVxj');
 
-                        try {
-                            Channels relations = await TalkApi.instance.channels();
-                            print('채널 관계 확인 성공'
-                                    '\n${relations.channels}');
-                        } catch (error) {
-                            print('채널 관계 확인 실패 $error');
-                        }
+                      try {
+                        Channels relations = await TalkApi.instance.channels();
+                        print('채널 관계 확인 성공'
+                            '\n${relations.channels}');
+                      } catch (error) {
+                        print('채널 관계 확인 실패 $error');
+                      }
                     },
                   ),
                   ListTile(
@@ -312,68 +308,68 @@ class _MyPageState extends State<MyPage> {
         ));
   }
 
-     void change_alram(bool value){
+  void change_alram(bool value) {
     setState(() {
-      if(value){
-        showPopup1(context,value);
-      }
-
-      else{
-        showPopup1(context,value);
+      if (value) {
+        showPopup1(context, value);
+      } else {
+        showPopup1(context, value);
       }
     });
   }
-  void showPopup1(context,value){
-    showDialog(
-      context: context, 
-      builder: (context){
-        if(value){
-          return Dialog(
-          child: Container( 
-            width: MediaQuery.of(context).size.width*0.8,
-            height: 70,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                 Padding(
-                padding: EdgeInsets.all(5),
-                child: Text('알람이 설정되었습니다!',style: TextStyle(fontSize: 14,color:Colors.black,fontWeight: FontWeight.bold),)
-              ),
-              
-            ],),
-            )
-            );
-        }
-        else{
-            return Dialog(
-          child: Container( 
-            width: MediaQuery.of(context).size.width*0.8,
-            height: 70,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                 Padding(
-                padding: EdgeInsets.all(5),
-                child: Text('알람이 해제되었습니다!',style: TextStyle(fontSize: 14,color:Colors.black,fontWeight: FontWeight.bold),)
-              ),
-              
-            ],),
-            )
-            );
-        }
-        
-            });
 
+  void showPopup1(context, value) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          if (value) {
+            return Dialog(
+                child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 70,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10), color: Colors.white),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Text(
+                        '알람이 설정되었습니다!',
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      )),
+                ],
+              ),
+            ));
+          } else {
+            return Dialog(
+                child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 70,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10), color: Colors.white),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Text(
+                        '알람이 해제되었습니다!',
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      )),
+                ],
+              ),
+            ));
+          }
+        });
   }
 }
 

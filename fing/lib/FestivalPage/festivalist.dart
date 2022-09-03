@@ -27,7 +27,7 @@ class FestivalPage extends StatefulWidget {
   final type;
   final region;
   final city;
-  
+
   @override
   State<FestivalPage> createState() => _FestivalState();
 }
@@ -57,7 +57,6 @@ class _FestivalState extends State<FestivalPage> {
 
 //페스티벌 리스트뷰 -> 페스티벌 갯수만큼 아이템들을 리스트뷰로 생성
 class FestivalList extends StatefulWidget {
-  
   FestivalList({Key? key, required this.region, required this.city})
       : super(key: key);
   final region;
@@ -91,15 +90,15 @@ class _FestivalListState extends State<FestivalList> {
                 child: Text('예정중인 페스티벌이 없습니다'),
               );
             }
-            List<Item> searchfestival_model =
+            List<Item> searchfestivalModel =
                 snapshot.data![0].response!.body!.items!.item!;
 
             return Container(
               margin: EdgeInsets.all(5),
               child: ListView.builder(
-                itemCount: searchfestival_model.length,
+                itemCount: searchfestivalModel.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return FestivalItem(item: searchfestival_model[index]);
+                  return FestivalItem(item: searchfestivalModel[index]);
                 },
               ),
             );
@@ -120,34 +119,9 @@ class FestivalItem extends StatefulWidget {
   State<FestivalItem> createState() => _FestivalItemState();
 }
 
-class current_Model {
-  Uri? current_image;
-  String? current_title;
-  String? current_address;
-
-
-  current_Model({
-    this.current_image,
-    this.current_title,
-    this.current_address
-  });
-
-  Map<String,dynamic> toJson(){
-    final map = <String, dynamic>{};
-    map['current_image'] = current_image;
-    map['current_title'] = current_title;
-    map['current_address'] = current_address;
-    return map;
-  }
-}
-
-
 class _FestivalItemState extends State<FestivalItem> {
-  
-  
   @override
   Widget build(BuildContext context) {
-    
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -169,9 +143,13 @@ class _FestivalItemState extends State<FestivalItem> {
             .collection("MyCurrent")
             .doc(widget.item.title)
             .set({
-          "current_image": widget.item.firstimage,
-          "current_title": widget.item.title,
-          "current_address": widget.item.addr1
+          "firstimage": widget.item.firstimage,
+          "title": widget.item.title,
+          "addr1": widget.item.addr1,
+          "contentid": widget.item.contentid,
+          "eventstartdate": widget.item.eventstartdate,
+          "eventenddate": widget.item.eventenddate,
+          "readcount": widget.item.readcount.toString()
         }, SetOptions(merge: true));
         print(current_fast);
         print(current_fast.length);
@@ -193,18 +171,16 @@ class _FestivalItemState extends State<FestivalItem> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              child: Stack(
-                children: [
-                  Container(
-                      height: 300,
-                      width: double.infinity,
-                      color: Color.fromARGB(255, 227, 227, 227),
-                      child: Image.network(widget.item.firstimage,
-                          fit: BoxFit.contain)),
-                  dDay()
-                ],
-              ),
+            Stack(
+              children: [
+                Container(
+                    height: 300,
+                    width: double.infinity,
+                    color: Color.fromARGB(255, 227, 227, 227),
+                    child: Image.network(widget.item.firstimage,
+                        fit: BoxFit.contain)),
+                dDay()
+              ],
             ),
             Padding(
               padding: EdgeInsets.only(top: 10),

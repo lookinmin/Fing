@@ -1,6 +1,5 @@
 import 'package:fing/goods/goods.dart';
 import 'package:flutter/material.dart';
-import '../category/example.dart';
 import 'package:fing/FestivalPage/festivalist.dart';
 
 void main() => runApp(BottomMain());
