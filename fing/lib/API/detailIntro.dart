@@ -29,16 +29,14 @@ class MyApp extends StatelessWidget {
 }
 
 // api 호출
-Future<List<DetailIntro>> fetchDetailIntro(
-    {required String contentId}) async {
+Future<List<DetailIntro>> fetchDetailIntro({required String contentId}) async {
   String Url = "https://apis.data.go.kr/B551011/KorService/detailIntro";
   String queryParams =
       "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
   queryParams += "&_type=json&MobileOS=ETC&MobileApp=Fing";
-  queryParams +=
-      "&contentTypeId=15&contentId=$contentId";
+  queryParams += "&contentTypeId=15&contentId=$contentId";
 
-  print('api 호출$Url$queryParams');
+  // print('api 호출$Url$queryParams');
 
   final response = await http.get(Uri.parse(Url + queryParams));
 
@@ -47,10 +45,10 @@ Future<List<DetailIntro>> fetchDetailIntro(
 
     var modelObject = DetailIntro.fromJson(fes);
     String totalNum = modelObject.response!.body!.totalCount!.toString();
-    print(totalNum);
+    // print(totalNum);
 
     if (totalNum == "0") {
-      print('tatalnum=0');
+      // print('tatalnum=0');
       return ([
         {'response': null}
       ] as List<dynamic>)
@@ -60,12 +58,12 @@ Future<List<DetailIntro>> fetchDetailIntro(
       queryParams = "$queryParams&numOfRows=$totalNum";
       queryParams = "$queryParams&pageNo=1";
 
-      print('총개수만큼 api 호출\n$Url$queryParams');
+      // print('총개수만큼 api 호출\n$Url$queryParams');
 
       final res = await http.get(Uri.parse(Url + queryParams));
 
       if (res.statusCode == 200) {
-        print('api 호출 성공');
+        // print('api 호출 성공');
         return (jsonDecode("[${utf8.decode(res.bodyBytes)}]") as List<dynamic>)
             .map((e) => DetailIntro.fromJson(e))
             .toList();
@@ -93,9 +91,7 @@ class _DetailIntroWidgetState extends State<DetailIntroWidget> {
   void initState() {
     super.initState();
     // 여기 적혀 있는 변수들 다 넣어야됨
-    futureDetailIntro = fetchDetailIntro(
-        contentId: "506545"
-        );
+    futureDetailIntro = fetchDetailIntro(contentId: "506545");
   }
 
   Widget build(BuildContext context) {
@@ -119,10 +115,12 @@ class _DetailIntroWidgetState extends State<DetailIntroWidget> {
                           margin: const EdgeInsets.all(10),
                           child: ListTile(
                             contentPadding: const EdgeInsets.all(10),
-                            title: Text(
-                                detailIntro_model[index].eventstartdate.toString()),
-                            subtitle: Text(
-                                detailIntro_model[index].eventenddate.toString()),
+                            title: Text(detailIntro_model[index]
+                                .eventstartdate
+                                .toString()),
+                            subtitle: Text(detailIntro_model[index]
+                                .eventenddate
+                                .toString()),
                           ))));
             }
           } else if (snapshot.hasError) {
@@ -207,7 +205,7 @@ class Body {
   Body({this.items, this.numOfRows, this.pageNo, this.totalCount});
 
   Body.fromJson(Map<String, dynamic> json) {
-        items = json['items'].toString().length != 0
+    items = json['items'].toString().length != 0
         ? new Items.fromJson(json['items'])
         : null;
     numOfRows = json['numOfRows'];

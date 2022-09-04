@@ -5,7 +5,7 @@ import 'dart:convert'; //json으로 바꿔주기 위해 필요한 패키지
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; // api 호출 위해 필요한 패키지
 
 void main() {
@@ -30,35 +30,33 @@ class MyApp extends StatelessWidget {
 
 // api 호출
 Future<List<TraditionalFestival>> fetchTraditionalFestival() async {
-
   String Url = "http://api.data.go.kr/openapi/tn_pubr_public_cltur_fstvl_api";
-  String queryParams = "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
+  String queryParams =
+      "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
   queryParams = "$queryParams&type=json";
 
-  print('api 호출$Url$queryParams');
+  // print('api 호출$Url$queryParams');
 
-  final response = await http.get(
-      Uri.parse(Url+queryParams)
-  );
+  final response = await http.get(Uri.parse(Url + queryParams));
 
-  if(response.statusCode == 200){
-    Map<String,dynamic> fes = jsonDecode(response.body);
+  if (response.statusCode == 200) {
+    Map<String, dynamic> fes = jsonDecode(response.body);
     var modelObject = TraditionalFestival.fromJson(fes);
     String totalNum = modelObject.response!.body!.totalCount!.toString();
 
     queryParams = "$queryParams&numOfRows=$totalNum";
     queryParams = "$queryParams&pageNo=1";
-   
-    print('총개수만큼 api 호출\n$Url$queryParams');
-   
-    final res = await http.get(Uri.parse(Url+queryParams));
-    
-    if (res.statusCode == 200){
-      print('api 호출 성공');
+
+    // print('총개수만큼 api 호출\n$Url$queryParams');
+
+    final res = await http.get(Uri.parse(Url + queryParams));
+
+    if (res.statusCode == 200) {
+      // print('api 호출 성공');
       return (jsonDecode("[${utf8.decode(res.bodyBytes)}]") as List<dynamic>)
-        .map((e) => TraditionalFestival.fromJson(e))
-        .toList();
-    }else{
+          .map((e) => TraditionalFestival.fromJson(e))
+          .toList();
+    } else {
       throw Exception("Failed to load data");
     }
   } else {
@@ -71,50 +69,53 @@ class TraditionalFestivalWidget extends StatefulWidget {
   const TraditionalFestivalWidget({Key? key}) : super(key: key);
 
   @override
-  State<TraditionalFestivalWidget> createState() => _TraditionalFestivalWidgetState();
+  State<TraditionalFestivalWidget> createState() =>
+      _TraditionalFestivalWidgetState();
 }
 
 class _TraditionalFestivalWidgetState extends State<TraditionalFestivalWidget> {
   late Future<List<TraditionalFestival>> futureTraditionalFestival;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     futureTraditionalFestival = fetchTraditionalFestival();
   }
 
   Widget build(BuildContext context) {
     return FutureBuilder<List<TraditionalFestival>>(
-      future:futureTraditionalFestival,
-      builder:(context,snapshot){
-        if(snapshot.hasData){
-          print('hasData');
+        future: futureTraditionalFestival,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print('hasData');
 
-          // tranditional_festival_model[index].변수명 으로 쓰면 됨
-          List<Items> traditional_festival_model = snapshot.data![0].response!.body!.items!;
-          print(traditional_festival_model.length);
+            // tranditional_festival_model[index].변수명 으로 쓰면 됨
+            List<Items> traditional_festival_model =
+                snapshot.data![0].response!.body!.items!;
+            print(traditional_festival_model.length);
 
-          return Container(
-            color:Colors.white,
-            child:ListView.builder(
-            itemCount:traditional_festival_model.length,
-            itemBuilder:(BuildContext context, index)=>Card(
-              margin:const EdgeInsets.all(10),
-              child:ListTile(
-                contentPadding:const EdgeInsets.all(10),
-                title:Text(traditional_festival_model[index].fstvlNm.toString()),
-                subtitle:Text(traditional_festival_model[index].fstvlStartDate.toString()),
-              )
-            )
-          ));
-        }else if(snapshot.hasError){
-          print('error');
-          print(snapshot.error);
-          return Text('error${snapshot.error}');
-        }
-        return Center(child: CupertinoActivityIndicator());
-      }
-      );
+            return Container(
+                color: Colors.white,
+                child: ListView.builder(
+                    itemCount: traditional_festival_model.length,
+                    itemBuilder: (BuildContext context, index) => Card(
+                        margin: const EdgeInsets.all(10),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(10),
+                          title: Text(traditional_festival_model[index]
+                              .fstvlNm
+                              .toString()),
+                          subtitle: Text(traditional_festival_model[index]
+                              .fstvlStartDate
+                              .toString()),
+                        ))));
+          } else if (snapshot.hasError) {
+            print('error');
+            print(snapshot.error);
+            return Text('error${snapshot.error}');
+          }
+          return Center(child: CupertinoActivityIndicator());
+        });
   }
 }
 

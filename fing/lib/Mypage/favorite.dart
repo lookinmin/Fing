@@ -49,7 +49,7 @@ class _FavoriteFestivalListState extends State<FavoriteFestivalList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    String curuser = "wjdtpdus828@naver.com";
+    String curuser = "sdjmc30412@naver.com";
 
     favoritelist = readData();
   }
@@ -58,7 +58,7 @@ class _FavoriteFestivalListState extends State<FavoriteFestivalList> {
     CollectionReference<Map<String, dynamic>> collectionReference =
         FirebaseFirestore.instance
             .collection("User")
-            .doc("wjdtpdus828@naver.com")
+            .doc("sdjmc30412@naver.com")
             .collection("MyFavorite");
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
         await collectionReference.get();

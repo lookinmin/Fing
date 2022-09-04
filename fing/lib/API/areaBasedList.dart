@@ -29,18 +29,18 @@ class MyApp extends StatelessWidget {
 }
 
 // api 호출
-Future<List<AreaBasedList>> fetchAreaBasedList(
-    {required String cat1,
-    required String cat2,
-    required String cat3,}) async {
+Future<List<AreaBasedList>> fetchAreaBasedList({
+  required String cat1,
+  required String cat2,
+  required String cat3,
+}) async {
   String Url = "https://apis.data.go.kr/B551011/KorService/areaBasedList";
   String queryParams =
       "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
   queryParams += "&_type=json&MobileOS=ETC&MobileApp=Fing";
-  queryParams +=
-      "&arrange=A&contentTypeId=15&cat1=$cat1&cat2=$cat2&cat3=$cat3";
+  queryParams += "&arrange=A&contentTypeId=15&cat1=$cat1&cat2=$cat2&cat3=$cat3";
 
-  print('api 호출$Url$queryParams');
+  // print('api 호출$Url$queryParams');
 
   final response = await http.get(Uri.parse(Url + queryParams));
 
@@ -62,7 +62,7 @@ Future<List<AreaBasedList>> fetchAreaBasedList(
       queryParams = "$queryParams&numOfRows=$totalNum";
       queryParams = "$queryParams&pageNo=1";
 
-      print('총개수만큼 api 호출\n$Url$queryParams');
+      // print('총개수만큼 api 호출\n$Url$queryParams');
 
       final res = await http.get(Uri.parse(Url + queryParams));
 
@@ -96,10 +96,10 @@ class _AreaBasedListWidgetState extends State<AreaBasedListWidget> {
     super.initState();
     // 여기 적혀 있는 변수들 다 넣어야됨
     futureAreaBasedList = fetchAreaBasedList(
-        cat1:"A02",
-        cat2:"A0207",
-        cat3:"A02070100",
-        );
+      cat1: "A02",
+      cat2: "A0207",
+      cat3: "A02070100",
+    );
   }
 
   Widget build(BuildContext context) {

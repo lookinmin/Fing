@@ -5,7 +5,7 @@ import 'dart:convert'; //json으로 바꿔주기 위해 필요한 패키지
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; // api 호출 위해 필요한 패키지
 
 void main() {
@@ -30,36 +30,34 @@ class MyApp extends StatelessWidget {
 
 // api 호출
 Future<List<AreaCode>> fetchAreaCode({required String areaCode}) async {
-
   String Url = "https://apis.data.go.kr/B551011/KorService/areaCode";
-  String queryParams = "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
+  String queryParams =
+      "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
   queryParams += "&_type=json&MobileOS=ETC&MobileApp=Fing";
   queryParams += "&areaCode=$areaCode";
 
-  print('api 호출$Url$queryParams');
+  // print('api 호출$Url$queryParams');
 
-  final response = await http.get(
-      Uri.parse(Url+queryParams)
-  );
+  final response = await http.get(Uri.parse(Url + queryParams));
 
-  if(response.statusCode == 200){
-    Map<String,dynamic> fes = jsonDecode(response.body);
+  if (response.statusCode == 200) {
+    Map<String, dynamic> fes = jsonDecode(response.body);
     var modelObject = AreaCode.fromJson(fes);
     String totalNum = modelObject.response!.body!.totalCount!.toString();
 
     queryParams = "$queryParams&numOfRows=$totalNum";
     queryParams = "$queryParams&pageNo=1";
-   
-    print('총개수만큼 api 호출\n$Url$queryParams');
-   
-    final res = await http.get(Uri.parse(Url+queryParams));
-    
-    if (res.statusCode == 200){
+
+    // print('총개수만큼 api 호출\n$Url$queryParams');
+
+    final res = await http.get(Uri.parse(Url + queryParams));
+
+    if (res.statusCode == 200) {
       print('api 호출 성공');
       return (jsonDecode("[${utf8.decode(res.bodyBytes)}]") as List<dynamic>)
-        .map((e) => AreaCode.fromJson(e))
-        .toList();
-    }else{
+          .map((e) => AreaCode.fromJson(e))
+          .toList();
+    } else {
       throw Exception("Failed to load data");
     }
   } else {
@@ -77,48 +75,46 @@ class AreaCodeWidget extends StatefulWidget {
 
 class _AreaCodeWidgetState extends State<AreaCodeWidget> {
   late Future<List<AreaCode>> futureAreaCode;
-  
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     // 여기 적혀 있는 변수들 다 넣어야됨
     futureAreaCode = fetchAreaCode(
-      areaCode:"1",
+      areaCode: "1",
     );
   }
 
   Widget build(BuildContext context) {
     return FutureBuilder<List<AreaCode>>(
-      future:futureAreaCode,
-      builder:(context,snapshot){
-        if(snapshot.hasData){
-          print('hasData');
+        future: futureAreaCode,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print('hasData');
 
-          // tranditional_festival_model[index].변수명 으로 쓰면 됨
-          List<Item> areacode_model = snapshot.data![0].response!.body!.items!.item!;
-          print(areacode_model.length);
+            // tranditional_festival_model[index].변수명 으로 쓰면 됨
+            List<Item> areacode_model =
+                snapshot.data![0].response!.body!.items!.item!;
+            print(areacode_model.length);
 
-          return Container(
-            color:Colors.white,
-            child:ListView.builder(
-            itemCount:areacode_model.length,
-            itemBuilder:(BuildContext context, index)=>Card(
-              margin:const EdgeInsets.all(10),
-              child:ListTile(
-                contentPadding:const EdgeInsets.all(10),
-                title:Text(areacode_model[index].name.toString()),
-                subtitle:Text(areacode_model[index].code.toString()),
-              )
-            )
-          ));
-        }else if(snapshot.hasError){
-          print('error');
-          print(snapshot.error);
-          return Text('error${snapshot.error}');
-        }
-        return Center(child: CupertinoActivityIndicator());
-      }
-      );
+            return Container(
+                color: Colors.white,
+                child: ListView.builder(
+                    itemCount: areacode_model.length,
+                    itemBuilder: (BuildContext context, index) => Card(
+                        margin: const EdgeInsets.all(10),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(10),
+                          title: Text(areacode_model[index].name.toString()),
+                          subtitle: Text(areacode_model[index].code.toString()),
+                        ))));
+          } else if (snapshot.hasError) {
+            print('error');
+            print(snapshot.error);
+            return Text('error${snapshot.error}');
+          }
+          return Center(child: CupertinoActivityIndicator());
+        });
   }
 }
 

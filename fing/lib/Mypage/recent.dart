@@ -3,7 +3,44 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../FestivalPage/festivalist.dart';
-import 'favorite.dart';
+
+class FireModel {
+  String? addr1;
+  String? firstimage;
+  String? title;
+  String? contentid;
+  String? eventstartdate;
+  String? eventenddate;
+  String? readcount;
+  Timestamp? timestamp;
+  DocumentReference? reference;
+
+  FireModel(
+      this.addr1,
+      this.firstimage,
+      this.title,
+      this.contentid,
+      this.eventstartdate,
+      this.eventenddate,
+      this.readcount,
+      this.timestamp,
+      this.reference);
+
+  FireModel.fromJson(dynamic json, this.reference) {
+    addr1 = json['addr1'];
+    firstimage = json['firstimage'];
+    title = json['title'];
+    contentid = json['contentid'];
+    eventstartdate = json['eventstartdate'];
+    eventenddate = json['eventenddate'];
+    readcount = json['readcount'];
+    timestamp = json['timestamp'];
+  }
+
+  FireModel.fromQuerySnapshot(
+      QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
+      : this.fromJson(snapshot.data(), snapshot.reference);
+}
 
 class Recent extends StatefulWidget {
   const Recent({Key? key}) : super(key: key);
@@ -47,17 +84,17 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    curuser = "wjdtpdus828@naver.com";
+    curuser = "sdjmc30412@naver.com";
 
     recentList = readData();
   }
 
   Future<List<FireModel>> readData() async {
-    CollectionReference<Map<String, dynamic>> collectionReference =
-        FirebaseFirestore.instance
-            .collection("User")
-            .doc(curuser)
-            .collection("MyCurrent");
+    Query<Map<String, dynamic>> collectionReference = FirebaseFirestore.instance
+        .collection("User")
+        .doc(curuser)
+        .collection("MyCurrent")
+        .orderBy("timestamp", descending: true);
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
         await collectionReference.get();
 
@@ -72,14 +109,15 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
           fireModel.eventstartdate,
           fireModel.eventenddate,
           fireModel.readcount,
+          fireModel.timestamp,
           fireModel.reference));
       if (tmp.length > 3) {
-        tmp.removeAt(0);
+        tmp.removeAt(tmp.length - 1);
         FirebaseFirestore.instance
             .collection('User')
             .doc(curuser)
             .collection("MyCurrent")
-            .doc(tmp[0].title.toString())
+            .doc(tmp[tmp.length - 1].title.toString())
             .delete();
       }
     }

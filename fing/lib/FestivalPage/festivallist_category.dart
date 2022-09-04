@@ -21,12 +21,11 @@ class FestivalModel {
 }
 
 class FestivalPage extends StatefulWidget {
-  const FestivalPage(
-      {Key? key, required this.type, required this.code})
+  const FestivalPage({Key? key, required this.type, required this.code})
       : super(key: key);
   final type;
   final code;
-  
+
   @override
   State<FestivalPage> createState() => _FestivalState();
 }
@@ -56,9 +55,10 @@ class _FestivalState extends State<FestivalPage> {
 
 //페스티벌 리스트뷰 -> 페스티벌 갯수만큼 아이템들을 리스트뷰로 생성
 class FestivalList extends StatefulWidget {
-  
-  FestivalList({Key? key, required this.code,})
-      : super(key: key);
+  FestivalList({
+    Key? key,
+    required this.code,
+  }) : super(key: key);
   final code;
 
   @override
@@ -94,27 +94,26 @@ class _FestivalListState extends State<FestivalList> {
 
             List<Item> category_festival_model = [];
 
-            for(int i=0;i<searchfestival_model.length;i++){
-               if(searchfestival_model[i].cat3==widget.code){
-                    category_festival_model.add(searchfestival_model[i]);
-               }
+            for (int i = 0; i < searchfestival_model.length; i++) {
+              if (searchfestival_model[i].cat3 == widget.code) {
+                category_festival_model.add(searchfestival_model[i]);
+              }
             }
 
-            if(category_festival_model.length==0){
+            if (category_festival_model.length == 0) {
               return Center(
                 child: Text('예정중인 페스티벌이 없습니다'),
               );
-            }
-            else{
+            } else {
               return Container(
-              margin: EdgeInsets.all(5),
-              child: ListView.builder(
-                itemCount: category_festival_model.length,
-                itemBuilder: (BuildContext context, int index) {
+                margin: EdgeInsets.all(5),
+                child: ListView.builder(
+                  itemCount: category_festival_model.length,
+                  itemBuilder: (BuildContext context, int index) {
                     return FestivalItem(item: category_festival_model[index]);
-                },
-              ),
-            );
+                  },
+                ),
+              );
             }
           } else if (snapshot.hasError) {
             return Text('error${snapshot.error}');
@@ -138,14 +137,9 @@ class current_Model {
   String? current_title;
   String? current_address;
 
+  current_Model({this.current_image, this.current_title, this.current_address});
 
-  current_Model({
-    this.current_image,
-    this.current_title,
-    this.current_address
-  });
-
-  Map<String,dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['current_image'] = current_image;
     map['current_title'] = current_title;
@@ -154,14 +148,10 @@ class current_Model {
   }
 }
 
-
 class _FestivalItemState extends State<FestivalItem> {
-  
-  
   @override
   Widget build(BuildContext context) {
-
-  return InkWell(
+    return InkWell(
       onTap: () {
         Navigator.push(
             context,
@@ -171,28 +161,40 @@ class _FestivalItemState extends State<FestivalItem> {
                       title: widget.item.title,
                       addr1: widget.item.addr1,
                       contentid: widget.item.contentid,
-                      mapx:widget.item.mapx,
-                      mapy:widget.item.mapy,
+                      mapx: widget.item.mapx,
+                      mapy: widget.item.mapy,
                     )));
         //큐를 기반으로한 최근 본 축제
-
-        current_fast.add(widget.item.title.toString());
-        String curuser = "wjdtpdus828@naver.com";
+        bool flag = true;
+        for (int i = 0; i < current_fast.length; i++) {
+          if (widget.item.title.toString() == current_fast[i]) {
+            flag = false;
+            break;
+          }
+        }
+        if (flag) {
+          current_fast.add(widget.item.title.toString());
+        }
+        print(current_fast);
+        String curuser = "sdjmc30412@naver.com";
         FirebaseFirestore.instance
             .collection('User')
             .doc(curuser)
             .collection("MyCurrent")
             .doc(widget.item.title)
             .set({
-          "current_image": widget.item.firstimage,
-          "current_title": widget.item.title,
-          "current_address": widget.item.addr1
+          "firstimage": widget.item.firstimage,
+          "title": widget.item.title,
+          "addr1": widget.item.addr1,
+          "contentid": widget.item.contentid,
+          "eventstartdate": widget.item.eventstartdate,
+          "eventenddate": widget.item.eventenddate,
+          "readcount": widget.item.readcount.toString(),
+          "timestamp": DateTime.now()
         }, SetOptions(merge: true));
-        print(current_fast);
-        print(current_fast.length);
         if (current_fast.length > 3) {
           print("hi");
-          String curuser = "wjdtpdus828@naver.com";
+          String curuser = "sdjmc30412@naver.com";
           FirebaseFirestore.instance
               .collection('User')
               .doc(curuser)

@@ -139,7 +139,7 @@ class _FestivalItemState extends State<FestivalItem> {
         //큐를 기반으로한 최근 본 축제
 
         current_fast.add(widget.item.title.toString());
-        String curuser = "wjdtpdus828@naver.com";
+        String curuser = "sdjmc30412@naver.com";
         FirebaseFirestore.instance
             .collection('User')
             .doc(curuser)
@@ -153,11 +153,10 @@ class _FestivalItemState extends State<FestivalItem> {
           "eventstartdate": widget.item.eventstartdate,
           "eventenddate": widget.item.eventenddate,
           "readcount": widget.item.readcount.toString(),
+          "timestamp": DateTime.now()
         }, SetOptions(merge: true));
-        print('asdfasdadsf: ${widget.item.firstimage}');
         if (current_fast.length > 3) {
-          print("hi");
-          String curuser = "wjdtpdus828@naver.com";
+          String curuser = "sdjmc30412@naver.com";
           FirebaseFirestore.instance
               .collection('User')
               .doc(curuser)

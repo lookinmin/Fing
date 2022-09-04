@@ -8,6 +8,33 @@ import 'package:favorite_button/favorite_button.dart'; //favorite_button package
 // void main() {
 //   runApp(const LikedPage());
 // }
+
+class FireModel {
+  String? addr1;
+  String? firstimage;
+  String? title;
+  String? contentid;
+  String? eventstartdate;
+  String? eventenddate;
+  DocumentReference? reference;
+
+  FireModel(this.addr1, this.firstimage, this.title, this.contentid,
+      this.eventstartdate, this.eventenddate, this.reference);
+
+  FireModel.fromJson(dynamic json, this.reference) {
+    addr1 = json['addr1'];
+    firstimage = json['firstimage'];
+    title = json['title'];
+    contentid = json['contentid'];
+    eventstartdate = json['eventstartdate'];
+    eventenddate = json['eventenddate'];
+  }
+
+  FireModel.fromQuerySnapshot(
+      QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
+      : this.fromJson(snapshot.data(), snapshot.reference);
+}
+
 class LikedPage extends StatelessWidget {
   const LikedPage({Key? key}) : super(key: key);
 
@@ -45,7 +72,7 @@ class LikedList extends StatefulWidget {
 
 class _LikedListState extends State<LikedList> {
   late Future<List<FireModel>> favoritelist;
-  String curuser = "wjdtpdus828@naver.com";
+  String curuser = "sdjmc30412@naver.com";
   @override
   void initState() {
     super.initState();
@@ -71,7 +98,6 @@ class _LikedListState extends State<LikedList> {
           fireModel.contentid,
           fireModel.eventstartdate,
           fireModel.eventenddate,
-          fireModel.readcount,
           fireModel.reference));
     }
     return tmp;
@@ -195,116 +221,116 @@ class _LikedListState extends State<LikedList> {
 }
 
 //찜한 페스티벌 아이템
-class LikedItem extends StatefulWidget {
-  const LikedItem({Key? key, required this.item, required this.curuser})
-      : super(key: key);
-  final item;
-  final curuser;
+// class LikedItem extends StatefulWidget {
+//   const LikedItem({Key? key, required this.item, required this.curuser})
+//       : super(key: key);
+//   final item;
+//   final curuser;
 
-  @override
-  State<LikedItem> createState() => _LikedItemState();
-}
+//   @override
+//   State<LikedItem> createState() => _LikedItemState();
+// }
 
-class _LikedItemState extends State<LikedItem> {
-  bool flag = true;
-  @override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    // var screenWidth = MediaQuery.of(context).size.width;
-    return Container(
-      padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: size.width * 0.23,
-                height: size.height * 0.13,
-                child: Image.asset(widget.item.firstimage, fit: BoxFit.fill),
-              ),
-              Container(
-                  width: size.width * 0.52,
-                  padding: EdgeInsets.only(left: 13, right: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Text(
-                          widget.item.title,
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Container(
-                        width: size.width * 0.6,
-                        padding: EdgeInsets.only(top: 20),
-                        child: Text(
-                          '${StringToDate(widget.item.eventstartdate)} ~ ${StringToDate(widget.item.eventenddate)}',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 5),
-                        child: Text(
-                          widget.item.addr1,
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ),
-                    ],
-                  )),
-              // SizedBox(
-              //   width: 20,
-              // ),
-              FavoriteButton(
-                //플러터 패키지 쓴 favorite_button임
-                isFavorite: true,
-                valueChanged: (isFavorite) async {
-                  print("Is Favorite : $isFavorite");
-                  if (isFavorite) {
-                    // String curuser = "wjdtpdus828@naver.com";
-                    await FirebaseFirestore.instance
-                        .collection('User')
-                        .doc(widget.curuser)
-                        .collection("MyFavorite")
-                        .doc(widget.item.title)
-                        .delete();
-                  }
-                },
-                iconSize: 50,
-              ),
-            ],
-          ),
-          Padding(padding: EdgeInsets.only(bottom: 15)),
-          Divider(
-            thickness: 1,
-            color: Color.fromARGB(102, 192, 190, 190),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// class _LikedItemState extends State<LikedItem> {
+//   bool flag = true;
+//   @override
+//   Widget build(BuildContext context) {
+//     var size = MediaQuery.of(context).size;
+//     // var screenWidth = MediaQuery.of(context).size.width;
+//     return Container(
+//       padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Row(
+//             children: [
+//               Container(
+//                 width: size.width * 0.23,
+//                 height: size.height * 0.13,
+//                 child: Image.asset(widget.item.firstimage, fit: BoxFit.fill),
+//               ),
+//               Container(
+//                   width: size.width * 0.52,
+//                   padding: EdgeInsets.only(left: 13, right: 15),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       Padding(
+//                         padding: EdgeInsets.only(top: 10),
+//                         child: Text(
+//                           widget.item.title,
+//                           style: TextStyle(
+//                               fontSize: 18, fontWeight: FontWeight.bold),
+//                         ),
+//                       ),
+//                       Container(
+//                         width: size.width * 0.6,
+//                         padding: EdgeInsets.only(top: 20),
+//                         child: Text(
+//                           '${StringToDate(widget.item.eventstartdate)} ~ ${StringToDate(widget.item.eventenddate)}',
+//                           style: TextStyle(fontSize: 14),
+//                         ),
+//                       ),
+//                       Padding(
+//                         padding: EdgeInsets.only(top: 5),
+//                         child: Text(
+//                           widget.item.addr1,
+//                           style: TextStyle(fontSize: 14),
+//                         ),
+//                       ),
+//                     ],
+//                   )),
+//               // SizedBox(
+//               //   width: 20,
+//               // ),
+//               FavoriteButton(
+//                 //플러터 패키지 쓴 favorite_button임
+//                 isFavorite: true,
+//                 valueChanged: (isFavorite) async {
+//                   print("Is Favorite : $isFavorite");
+//                   if (isFavorite) {
+//                     // String curuser = "wjdtpdus828@naver.com";
+//                     await FirebaseFirestore.instance
+//                         .collection('User')
+//                         .doc(widget.curuser)
+//                         .collection("MyFavorite")
+//                         .doc(widget.item.title)
+//                         .delete();
+//                   }
+//                 },
+//                 iconSize: 50,
+//               ),
+//             ],
+//           ),
+//           Padding(padding: EdgeInsets.only(bottom: 15)),
+//           Divider(
+//             thickness: 1,
+//             color: Color.fromARGB(102, 192, 190, 190),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 String StringToDate(eventenddate) {
   var date = DateTime.parse(eventenddate).toString().split(' ');
   return date[0];
 }
 
-class ListModel {
-  const ListModel(this.firstimage, this.title, this.eventstartdate,
-      this.eventenddate, this.addr1);
-  final String firstimage;
-  final String title;
-  final String eventstartdate;
-  final String eventenddate;
-  final String addr1;
-}
+// class ListModel {
+//   const ListModel(this.firstimage, this.title, this.eventstartdate,
+//       this.eventenddate, this.addr1);
+//   final String firstimage;
+//   final String title;
+//   final String eventstartdate;
+//   final String eventenddate;
+//   final String addr1;
+// }
 
-const likeditem = [
-  ListModel("assets/images/waterbombDaegu.png", "WATERBOMB(대구)", "20220723",
-      "20220725", "대구광역시 대구스타디움"),
-  ListModel("assets/images/jazzfestival.png", "자라섬 재즈 페스티벌페스티벌페스티벌", "20220823",
-      "20220923", "가평군 가평읍 달전리 자라섬자라섬자라섬자라섬"),
-];
+// const likeditem = [
+//   ListModel("assets/images/waterbombDaegu.png", "WATERBOMB(대구)", "20220723",
+//       "20220725", "대구광역시 대구스타디움"),
+//   ListModel("assets/images/jazzfestival.png", "자라섬 재즈 페스티벌페스티벌페스티벌", "20220823",
+//       "20220923", "가평군 가평읍 달전리 자라섬자라섬자라섬자라섬"),
+// ];
