@@ -67,8 +67,9 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     final regionText = widget.addr1.toString();
-    final region1 = regionText.split(" ")[0];
-    final region2 = regionText.split(" ")[1];
+    final reg1 = regionText.split(" ")[0];
+    final reg2 = regionText.split(" ")[1];
+    
     return FutureBuilder<DetailFestival>(
         future: futureDetailFestival,
         builder: (context, snapshot) {
@@ -401,19 +402,13 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   text: '전통시장',
                                   icon: Icon(Icons.storefront_rounded)),
                             ]),
-                      ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: DropDown(),
-                      ),
+                      ),                     
                     ],
                   ),
                 )),
-                SliverFillRemaining(
-                  fillOverscroll: true,
-                  hasScrollBody: true,
+                SliverToBoxAdapter(
                   child: Container(
-                    height: double.infinity,
+                    height: size.height * 0.6,
                     margin: EdgeInsets.only(left: 16.0, right: 16.0),
                     child: TabBarView(
                       controller: _TabController,
@@ -430,7 +425,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             firstimage: widget.firstimage,
                             mapX: widget.mapx,
                             mapY: widget.mapy),
-                        MarketList(reg1: region1, reg2: region2)
+                        MarketList(reg1: reg1, reg2: reg2)
                       ],
                     ),
                   ),
@@ -439,7 +434,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
               ],
             ));
           } else if (snapshot.hasError) {
-            return Text('error${snapshot.error}');
+            return Text('error ${snapshot.error}');
           }
           return Center(child: CupertinoActivityIndicator());
         });
@@ -523,33 +518,43 @@ class _PlaceListState extends State<PlaceList> {
   }
 
   Widget build(BuildContext context) {
-    return FutureBuilder<List<local.LocationBasedList>>(
-        future: widget.type == 1 ? futureHotel : futureRestaurant,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if ((snapshot.data![0].response) == null) {
-              return widget.type == 1
-                  ? Center(child: Text('해당 페스티벌 근방 10km 이내에 숙소 정보가 존재하지 않습니다.'))
-                  : Center(
-                      child: Text("해당 페스티벌 근방 10km 이내에 맛집 정보가 존재하지 않습니다."));
-            }
-            List<local.Item> festivallocation_model =
-                snapshot.data![0].response!.body!.items!.item!;
-            return Container(
-              margin: EdgeInsets.all(5),
-              child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: festivallocation_model.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListItem(item: festivallocation_model[index]);
-                },
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Text('error${snapshot.error}');
-          }
-          return Center(child: CupertinoActivityIndicator());
-        });
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.topRight,
+          child: DropDown(),
+        ),
+        FutureBuilder<List<local.LocationBasedList>>(
+            future: widget.type == 1 ? futureHotel : futureRestaurant,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if ((snapshot.data![0].response) == null) {
+                  return widget.type == 1
+                      ? Center(
+                          child: Text('해당 페스티벌 근방 10km 이내에 숙소 정보가 존재하지 않습니다.'))
+                      : Center(
+                          child: Text("해당 페스티벌 근방 10km 이내에 맛집 정보가 존재하지 않습니다."));
+                }
+                List<local.Item> festivallocation_model =
+                    snapshot.data![0].response!.body!.items!.item!;
+                return Container(
+                  margin: EdgeInsets.all(5),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    // physics: NeverScrollableScrollPhysics(),
+                    itemCount: festivallocation_model.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListItem(item: festivallocation_model[index]);
+                    },
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return Text('error${snapshot.error}');
+              }
+              return Center(child: CupertinoActivityIndicator());
+            }),
+      ],
+    );
   }
 }
 
@@ -654,25 +659,31 @@ class _MarketListState extends State<MarketList> {
   }
 
   Widget build(BuildContext context) {
+    print("시장들어옴ㅁㅁ");
     print(widget.reg1 + widget.reg2);
     return FutureBuilder<List>(
         future: futuremarket,
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
             print("들어왔어용");
+            if (snapshot.data!.isEmpty) {
+              return Center(
+                child: Text('해당 페스티벌 근방 10km 이내에 전통시장 정보가 존재하지 않습니다.'),
+              );
+            }
             print(snapshot.data![0]);
-            print(snapshot.data!.length);
+            print("시장갯수 ${snapshot.data!.length}");
             return Container(
                 margin: EdgeInsets.all(5),
                 child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  // physics: NeverScrollableScrollPhysics(),
                   itemCount: snapshot.data!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return MarketItem(item: snapshot.data![index]);
                   },
                 ));
           } else if (snapshot.hasError) {
-            return Text('error');
+            return Text('error응앵${snapshot.error}');
           }
           return Center();
         }));
@@ -693,8 +704,6 @@ class _MarketItemState extends State<MarketItem> {
     var size = MediaQuery.of(context).size;
     print("마켓아이템");
     print(widget.item);
-    print(widget.item.mrktNm);
-    print("dlkfjslkdjf");
     return InkWell(
       onTap: () async {
         bool result = await NaviApi.instance.isKakaoNaviInstalled();
@@ -811,7 +820,7 @@ class _MarketItemState extends State<MarketItem> {
                   ),
                   Container(
                       padding: EdgeInsets.only(top: 3),
-                      child: ChgIcon(widget.item.prkplceYn)),
+                      child: ChgIcon(widget.item.prkplcYn.toString())),
                 ],
               ),
             ),
@@ -830,16 +839,14 @@ class _MarketItemState extends State<MarketItem> {
 //전통시장모델
 class MarketModel {
   const MarketModel(
-      this.mrktNm, this.rdnmadr, this.mrktEstblCycle, this.prkplceYn);
+      this.mrktNm, this.rdnmadr, this.mrktEstblCycle, this.prkplcYn);
   final String mrktNm; //시장이름
   final String rdnmadr; //소재지도로명주소
   final String mrktEstblCycle; //시장개설주기
-  final String prkplceYn; //주차장보유여부y,n
+  final String prkplcYn; //주차장보유여부y,n
 }
 
-List marketitem = [];
-
-Widget ChgIcon(String yn) {
+Widget ChgIcon(yn) {
   print(yn);
   if (yn == "Y") {
     return (Icon(Icons.check_circle_outline_outlined,
@@ -881,6 +888,10 @@ Future<List> readdata(String reg1, String reg2) async {
     reg1 = "제주도";
   }
 
+  List marketitem = [
+    // {"mrktNm": "", "rdnmadr": "", "mrktEstblCycle": "", "prkplcYn": ""}
+  ];
+
   final usercol = FirebaseFirestore.instance
       .collection("전통시장")
       .doc('$reg1')
@@ -893,12 +904,9 @@ Future<List> readdata(String reg1, String reg2) async {
                 "${value.docs[i].data()['mrktNm']}",
                 "${value.docs[i].data()['rdnmadr']}",
                 "${value.docs[i].data()['mrktEstblCycle']}",
-                "${value.docs[i].data()['prkplceYn']}"))
+                "${value.docs[i].data()['prkplcYn']}"))
           },
       });
-  for (int j = 0; j < 48; j++) {
-    print("응애 ${marketitem[j].mrktNm}");
-  }
   return marketitem;
 }
 
