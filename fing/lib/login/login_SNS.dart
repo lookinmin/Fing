@@ -44,11 +44,14 @@ class Login_SNS extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.fromLTRB(30.0, 170.0, 50.0, 0.0),
+        padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
         child: Center(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
                   Widget>[
+            SizedBox(
+              height: size.height * 0.2,
+            ),
             Text(
               '페스티벌이 궁금해?',
               style: TextStyle(
@@ -58,7 +61,7 @@ class Login_SNS extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 6.0,
+              height: 4.0,
             ),
             Row(
               // ignore: prefer_const_literals_to_create_immutables
@@ -66,7 +69,6 @@ class Login_SNS extends StatelessWidget {
                 Text(
                   'Fing',
                   style: TextStyle(
-                    letterSpacing: 1.0,
                     fontSize: 35.5,
                     color: const Color(0xffff7e00),
                     fontWeight: FontWeight.bold,
@@ -86,55 +88,71 @@ class Login_SNS extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 15.0,
+              // height: 15.0,
+              height: size.height * 0.04,
             ),
-            Row(
-              // ignore: prefer_const_literals_to_create_immutables
-              children: <Widget>[
-                Text(
-                  'Fing(',
-                  style: TextStyle(
-                    letterSpacing: 1.0,
+            Flexible(
+              child: Container(
+                  child: Text(
+                "Fing(Festival-ing)에 오신 것을 환영합니다.",
+                style: TextStyle(
+                  letterSpacing: 0.0,
                     fontSize: 15.0,
-                    color: Colors.black,
-                  ),
+                  color: Color.fromARGB(255, 70, 70, 70),
                 ),
-                Text(
-                  'F',
-                  style: TextStyle(
-                    letterSpacing: 1.0,
-                    fontSize: 13.0,
-                    color: const Color(0xffff7e00),
+              )
+                  // child: Expanded(
+                  //   child: Row(
+                  //     // mainAxisSize: MainAxisSize.max,
+                  //     // ignore: prefer_const_literals_to_create_immutables
+                  //     children: <Widget>[
+                  //       Text(
+                  //         'Fing(',
+                  //         style: TextStyle(
+                  //           letterSpacing: 1.0,
+                  //           fontSize: 15.0,
+                  //           color: Colors.black,
+                  //         ),
+                  //       ),
+                  //       Text(
+                  //         'F',
+                  //         style: TextStyle(
+                  //           letterSpacing: 1.0,
+                  //           fontSize: 13.0,
+                  //           color: const Color(0xffff7e00),
+                  //         ),
+                  //       ),
+                  //       Text(
+                  //         'estival ',
+                  //         style: TextStyle(
+                  //           letterSpacing: 0.0,
+                  //           fontSize: 14.0,
+                  //           color: Colors.black,
+                  //         ),
+                  //       ),
+                  //       Text(
+                  //         '-ing',
+                  //         style: TextStyle(
+                  //           letterSpacing: 1.0,
+                  //           fontSize: 14.0,
+                  //           color: const Color(0xffff7e00),
+                  //         ),
+                  //       ),
+                  //       Text(
+                  //         ')에 오신 것을 환영합니다.',
+                  //         style: TextStyle(
+                  //           letterSpacing: 0.0,
+                  //           fontSize: 14.0,
+                  //           color: Colors.black,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   ),
-                ),
-                Text(
-                  'estival ',
-                  style: TextStyle(
-                    letterSpacing: 0.0,
-                    fontSize: 14.0,
-                    color: Colors.black,
-                  ),
-                ),
-                Text(
-                  '-ing',
-                  style: TextStyle(
-                    letterSpacing: 1.0,
-                    fontSize: 14.0,
-                    color: const Color(0xffff7e00),
-                  ),
-                ),
-                Text(
-                  ')에 오신 것을 환영합니다.',
-                  style: TextStyle(
-                    letterSpacing: 0.0,
-                    fontSize: 14.0,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
             ),
             SizedBox(
-              height: size.height * 0.2,
+              height: size.height * 0.12,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -147,10 +165,10 @@ class Login_SNS extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.white,
-                    minimumSize: Size.fromHeight(60), // 높이만 50으로 설정
-                    elevation: 1.0,
+                    minimumSize: Size.fromHeight(50), // 높이만 55로 설정
+                    // elevation: 1.0,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.0)),
+                        borderRadius: BorderRadius.circular(4.5)),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -160,9 +178,13 @@ class Login_SNS extends StatelessWidget {
                         'assets/images/GoogleLogo.png',
                         width: size.width * 0.07,
                       )),
-                      Text(
-                        'Google 로그인',
-                        style: TextStyle(color: Colors.black87, fontSize: 16.0),
+                      Container(
+                        width: size.width * 0.4,
+                        child: Text(
+                          'Google 로그인',
+                          style:
+                              TextStyle(color: Colors.black87, fontSize: 16.0),
+                        ),
                       ),
                     ],
                   ),
@@ -313,10 +335,10 @@ class Login_SNS extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Color(0xffFEE500),
-                    minimumSize: Size.fromHeight(60), // 높이만 50으로 설정
-                    elevation: 1.0,
+                    minimumSize: Size.fromHeight(50),
+                    // elevation: 1.0,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.0)),
+                        borderRadius: BorderRadius.circular(4.5)),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -326,45 +348,49 @@ class Login_SNS extends StatelessWidget {
                         'assets/images/KakaoLogo.png',
                         width: size.width * 0.08,
                       )),
-                      Text(
-                        'KaKao 로그인',
-                        style: TextStyle(color: Colors.black87, fontSize: 16.0),
+                      Container(
+                        width: size.width * 0.4,
+                        child: Text(
+                          'Kakao 로그인',
+                          style:
+                              TextStyle(color: Colors.black87, fontSize: 16.0),
+                        ),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: size.height * 0.04,
                 ),
-                Center(
-                  child: Text(
-                    '가입하면 당사의 서비스 약관에 동의하고',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 13,
-                      letterSpacing: 0.0,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      '가입하면 당사의 서비스 약관에 동의하고',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 13,
+                        letterSpacing: 0.0,
+                      ),
                     ),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    '개인정보 보호정책을(를) 읽어 당사의 데이터 수집,',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 13,
-                      letterSpacing: 0.0,
+                    Text(
+                      '개인정보 보호정책을(를) 읽어 당사의 데이터 수집,',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 13,
+                        letterSpacing: 0.0,
+                      ),
                     ),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    '사용, 공유방법을 확인했음을 인정하는 것입니다.',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 13,
-                      letterSpacing: 0.0,
+                    Text(
+                      '사용, 공유방법을 확인했음을 인정하는 것입니다.',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 13,
+                        letterSpacing: 0.0,
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
