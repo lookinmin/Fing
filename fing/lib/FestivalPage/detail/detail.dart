@@ -54,6 +54,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
 
   late Future<DetailFestival> futureDetailFestival;
 
+
   @override
   void initState() {
     super.initState();
@@ -63,12 +64,30 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
     );
   }
 
+    
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     final regionText = widget.addr1.toString();
     final reg1 = regionText.split(" ")[0];
     final reg2 = regionText.split(" ")[1];
+    bool heartcheck = false;
+
+    // 임시 로그인
+    String curuser = "wjdtpdus828@naver.com";
+    
+    // FireBase 에서 찜 목록 확인
+    FirebaseFirestore.instance
+    .collection('User')
+    .doc(curuser)
+    .collection('MyFavorite')
+    .where("contentid",isEqualTo:widget.contentid.toString())
+    .get().then((res)=>{
+      if(res.docs.isNotEmpty){
+        heartcheck = true,
+      }
+    }
+    );
     
     return FutureBuilder<DetailFestival>(
         future: futureDetailFestival,
@@ -124,7 +143,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             ),
                           ),
                           FavoriteButton(
-                            isFavorite: false,
+                            isFavorite: heartcheck?true:false,
                             valueChanged: (isFavorite) async {
                               print("Is Favorite : $isFavorite");
                               //로그인하면 자동으로 생김 최종 때 무조건 주석 풀어야함
