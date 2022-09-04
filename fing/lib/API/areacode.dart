@@ -36,7 +36,7 @@ Future<List<AreaCode>> fetchAreaCode({required String areaCode}) async {
   queryParams += "&_type=json&MobileOS=ETC&MobileApp=Fing";
   queryParams += "&areaCode=$areaCode";
 
-  // print('api 호출$Url$queryParams');
+  print('api 호출$Url$queryParams');
 
   final response = await http.get(Uri.parse(Url + queryParams));
 
@@ -48,7 +48,7 @@ Future<List<AreaCode>> fetchAreaCode({required String areaCode}) async {
     queryParams = "$queryParams&numOfRows=$totalNum";
     queryParams = "$queryParams&pageNo=1";
 
-    // print('총개수만큼 api 호출\n$Url$queryParams');
+    print('총개수만큼 api 호출\n$Url$queryParams');
 
     final res = await http.get(Uri.parse(Url + queryParams));
 

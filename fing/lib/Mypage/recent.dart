@@ -11,6 +11,8 @@ class FireModel {
   String? contentid;
   String? eventstartdate;
   String? eventenddate;
+  String? mapx;
+  String? mapy;
   String? readcount;
   Timestamp? timestamp;
   DocumentReference? reference;
@@ -22,6 +24,8 @@ class FireModel {
       this.contentid,
       this.eventstartdate,
       this.eventenddate,
+      this.mapx,
+      this.mapy,
       this.readcount,
       this.timestamp,
       this.reference);
@@ -34,6 +38,8 @@ class FireModel {
     eventstartdate = json['eventstartdate'];
     eventenddate = json['eventenddate'];
     readcount = json['readcount'];
+    mapx = json['mapx'];
+    mapy = json['mapy'];
     timestamp = json['timestamp'];
   }
 
@@ -84,7 +90,7 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    curuser = "sdjmc30412@naver.com";
+    curuser = "wjdtpdus828@naver.com";
 
     recentList = readData();
   }
@@ -109,6 +115,8 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
           fireModel.eventstartdate,
           fireModel.eventenddate,
           fireModel.readcount,
+          fireModel.mapx,
+          fireModel.mapy,
           fireModel.timestamp,
           fireModel.reference));
       if (tmp.length > 3) {

@@ -17,14 +17,14 @@ class _NoticeState extends State<NoticePage> {
         title: Text(
           '공지사항',
           style: TextStyle(
-              fontSize: 18.0, 
-              fontWeight: FontWeight.bold, 
-              color: Colors.black,
-              letterSpacing:1.0,
-              ),
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            letterSpacing: 1.0,
+          ),
         ),
-        centerTitle:true,
-        elevation:1.0,
+        centerTitle: true,
+        elevation: 1.0,
         toolbarHeight: 50.0,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(
@@ -36,72 +36,77 @@ class _NoticeState extends State<NoticePage> {
   }
 }
 
-
 class NoticeList extends StatelessWidget {
   const NoticeList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color:Colors.white,
-      width:double.infinity,
-      height:double.infinity,
-      margin:EdgeInsets.fromLTRB(10, 0, 10, 0),
+      color: Colors.white,
+      width: double.infinity,
+      height: double.infinity,
+      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: ListView.builder(
         itemCount: Noticeitem.length,
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
-            onTap:(){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> NoticeDetail(data:Noticeitem[index])));
-            },
-            child:Container(
-              color:Colors.white,
-              width:double.infinity,
-              margin:EdgeInsets.fromLTRB(10, 10, 0, 10),
-              child:Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // Container(
-                        //   width:double.infinity,
-                        //   height:50,
-                        //   child: Row(
-                        //     children: [
-                        //       Expanded(
-                        //         child:Container(
-                        //           child:Text(("[공지사항] "+Noticeitem[index].title))),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        Container(
-                          width:300,
-                          child:Text(("[공지사항] "+Noticeitem[index].title),
-                          overflow:TextOverflow.ellipsis)
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top:5),
-                          child: Text(Noticeitem[index].writer,style:TextStyle(color:Colors.grey,fontSize: 13)),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top:5),
-                          child: Text(Noticeitem[index].day,style:TextStyle(color:Colors.grey,fontSize: 13)),
-                        ),
-                      ]
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: null, 
-                    icon: Icon(Icons.navigate_next,color:Colors.grey[800]),
-                    )
-                ],
-              )
-            )
-          );
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            NoticeDetail(data: Noticeitem[index])));
+              },
+              child: Container(
+                  color: Colors.white,
+                  width: double.infinity,
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Container(
+                              //   width:double.infinity,
+                              //   height:50,
+                              //   child: Row(
+                              //     children: [
+                              //       Expanded(
+                              //         child:Container(
+                              //           child:Text(("[공지사항] "+Noticeitem[index].title))),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              Container(
+                                  width: 300,
+                                  child: Text(
+                                      ("[공지사항] " + Noticeitem[index].title),
+                                      overflow: TextOverflow.ellipsis)),
+                              Padding(
+                                padding: EdgeInsets.only(top: 5),
+                                child: Text(Noticeitem[index].writer,
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 13)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 5),
+                                child: Text(Noticeitem[index].day,
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 13)),
+                              ),
+                            ]),
+                      ),
+                      IconButton(
+                        onPressed: null,
+                        icon:
+                            Icon(Icons.navigate_next, color: Colors.grey[800]),
+                      )
+                    ],
+                  )));
         },
       ),
     );
@@ -165,26 +170,25 @@ class NoticeList extends StatelessWidget {
 //                                   ],
 //                                 ),
 //                               )
-                              
+
 //                             ],
 //                           )
-                        
+
 //                       ),
 //                     ],
 //                   ),
 //                 ]
 //               )
 //             ),
-          
+
 //           ]
 //         )
 //       ));
 //     }
 // }
 
-
 class NoticeModel {
-  const NoticeModel(this.title, this.day, this.writer,this.desc);
+  const NoticeModel(this.title, this.day, this.writer, this.desc);
   final String title;
   final String day;
   final String writer;
@@ -192,37 +196,36 @@ class NoticeModel {
 }
 
 const Noticeitem = [
-  NoticeModel(
-      "긴급점검 (23일 18:00 ~ 21:00)", "2022-08-23", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 긴급점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기dddddddddddddddddddddddddd점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-  NoticeModel(
-      "정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자","안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
-
+  NoticeModel("긴급점검 (23일 18:00 ~ 21:00)", "2022-08-23", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 긴급점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
+  NoticeModel("정기점검 안내 (8/29 18:00 ~ 21:00)", "2022-08-29", "작성자 : Fing-관리자",
+      "안녕하세요 Fing입니다.\n\n더욱 안정적인 서비스 제공을 위한 정기점검이 있겠습니다.\n\n서비스 이용에 불편을 드려 죄송합니다.\n"),
 ];

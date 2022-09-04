@@ -54,7 +54,6 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
 
   late Future<DetailFestival> futureDetailFestival;
 
-
   @override
   void initState() {
     super.initState();
@@ -64,7 +63,6 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
     );
   }
 
-    
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -75,20 +73,21 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
 
     // 임시 로그인
     String curuser = "wjdtpdus828@naver.com";
-    
+
     // FireBase 에서 찜 목록 확인
     FirebaseFirestore.instance
-    .collection('User')
-    .doc(curuser)
-    .collection('MyFavorite')
-    .where("contentid",isEqualTo:widget.contentid.toString())
-    .get().then((res)=>{
-      if(res.docs.isNotEmpty){
-        heartcheck = true,
-      }
-    }
-    );
-    
+        .collection('User')
+        .doc(curuser)
+        .collection('MyFavorite')
+        .where("contentid", isEqualTo: widget.contentid.toString())
+        .get()
+        .then((res) => {
+              if (res.docs.isNotEmpty)
+                {
+                  heartcheck = true,
+                }
+            });
+
     return FutureBuilder<DetailFestival>(
         future: futureDetailFestival,
         builder: (context, snapshot) {
@@ -143,7 +142,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             ),
                           ),
                           FavoriteButton(
-                            isFavorite: heartcheck?true:false,
+                            isFavorite: heartcheck ? true : false,
                             valueChanged: (isFavorite) async {
                               print("Is Favorite : $isFavorite");
                               //로그인하면 자동으로 생김 최종 때 무조건 주석 풀어야함
@@ -162,9 +161,11 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   "title": widget.title,
                                   "addr1": widget.addr1,
                                   "contentid": widget.contentid,
-                                  "eventstartdate": "20220902",
-                                  "eventenddate": "20220905",
-                                  "readcount": "100" //string으로 바꿔서 보내기
+                                  "eventstartdate":
+                                      detailfestival_modal.eventstartdate,
+                                  "eventenddate":
+                                      detailfestival_modal.eventenddate,
+                                  //string으로 바꿔서 보내기
                                 }, SetOptions(merge: true));
                               }
                               //안좋아요
@@ -421,7 +422,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   text: '전통시장',
                                   icon: Icon(Icons.storefront_rounded)),
                             ]),
-                      ),                     
+                      ),
                     ],
                   ),
                 )),

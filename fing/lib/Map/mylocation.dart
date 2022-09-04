@@ -141,7 +141,7 @@ class _MyLocationState extends State<MyLocation> {
               testMarker.setMap(map); 
               markers.push(testMarker);
               kakao.maps.event.addListener(testMarker, 'click', function (mouseEvent) {
-                                           onTapMarker.postMessage(title+'-'+addr1+'-'+contentid+'-'+firstimage);
+                                           onTapMarker.postMessage(title+'-'+addr1+'-'+contentid+'-'+firstimage+'-'+position.getLng()+'-'+position.getLat());
               });
              }
 
@@ -179,6 +179,7 @@ class _MyLocationState extends State<MyLocation> {
           lat: initLat,
           lng: initLng,
           onTapMarker: (message) {
+            print(message.message);
             var fest = message.message.split('-');
             String name = fest[0];
             String address = fest[1];
@@ -186,7 +187,8 @@ class _MyLocationState extends State<MyLocation> {
             String firstimage = fest[3];
             String mapX = fest[4];
             String mapY = fest[5];
-            festivalInfo(context, name, address, contentid, firstimage,mapX,mapY)
+            festivalInfo(
+                    context, name, address, contentid, firstimage, mapX, mapY)
                 .then((value) {
               setState(() {});
             });
@@ -213,7 +215,7 @@ for(let i=0;i<markers.length;i++){
   }
 
   Future<void> festivalInfo(BuildContext context, String name, String address,
-      String contentid, String firstimage,String mapX, String mapY) {
+      String contentid, String firstimage, String mapX, String mapY) {
     return showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.white,
@@ -232,8 +234,8 @@ for(let i=0;i<markers.length;i++){
                             title: name,
                             addr1: address,
                             contentid: contentid,
-                            mapx:mapX,
-                            mapy:mapY)))),
+                            mapx: mapX,
+                            mapy: mapY)))),
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.25,
                   child: Row(

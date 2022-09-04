@@ -72,7 +72,7 @@ class LikedList extends StatefulWidget {
 
 class _LikedListState extends State<LikedList> {
   late Future<List<FireModel>> favoritelist;
-  String curuser = "sdjmc30412@naver.com";
+  String curuser = "wjdtpdus828@naver.com";
   @override
   void initState() {
     super.initState();
@@ -182,7 +182,7 @@ class _LikedListState extends State<LikedList> {
     return SizedBox(
       width: size.width * 0.23,
       height: size.height * 0.13,
-      child: Image.asset(list[index].firstimage.toString(), fit: BoxFit.fill),
+      child: Image.network(list[index].firstimage.toString(), fit: BoxFit.fill),
     );
   }
 

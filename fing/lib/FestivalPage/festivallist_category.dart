@@ -176,7 +176,7 @@ class _FestivalItemState extends State<FestivalItem> {
           current_fast.add(widget.item.title.toString());
         }
         print(current_fast);
-        String curuser = "sdjmc30412@naver.com";
+        String curuser = "wjdtpdus828@naver.com";
         FirebaseFirestore.instance
             .collection('User')
             .doc(curuser)
@@ -189,12 +189,14 @@ class _FestivalItemState extends State<FestivalItem> {
           "contentid": widget.item.contentid,
           "eventstartdate": widget.item.eventstartdate,
           "eventenddate": widget.item.eventenddate,
-          "readcount": widget.item.readcount.toString(),
+          "mapx": widget.item.mapx,
+          "mapy": widget.item.mapy,
+          // "readcount": widget.item.readcount.toString(),
           "timestamp": DateTime.now()
         }, SetOptions(merge: true));
         if (current_fast.length > 3) {
           print("hi");
-          String curuser = "sdjmc30412@naver.com";
+          String curuser = "wjdtpdus828@naver.com";
           FirebaseFirestore.instance
               .collection('User')
               .doc(curuser)
