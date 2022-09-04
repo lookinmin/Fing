@@ -56,7 +56,7 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
     CollectionReference<Map<String, dynamic>> collectionReference =
         FirebaseFirestore.instance
             .collection("User")
-            .doc("wjdtpdus828@naver.com")
+            .doc(curuser)
             .collection("MyCurrent");
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
         await collectionReference.get();

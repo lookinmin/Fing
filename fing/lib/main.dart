@@ -45,12 +45,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      builder: (context, child) => MediaQuery(
-        data: MediaQuery.of(context).copyWith(
-          textScaleFactor: 0.8,
-        ),
-        child: child!,
-      ),
       debugShowCheckedModeBanner: false,
       title: "FING",
       initialRoute: '/',

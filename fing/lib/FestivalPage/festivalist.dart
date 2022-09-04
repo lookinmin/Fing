@@ -152,10 +152,9 @@ class _FestivalItemState extends State<FestivalItem> {
           "contentid": widget.item.contentid,
           "eventstartdate": widget.item.eventstartdate,
           "eventenddate": widget.item.eventenddate,
-          "readcount": widget.item.readcount.toString()
+          "readcount": widget.item.readcount.toString(),
         }, SetOptions(merge: true));
-        print(current_fast);
-        print(current_fast.length);
+        print('asdfasdadsf: ${widget.item.firstimage}');
         if (current_fast.length > 3) {
           print("hi");
           String curuser = "wjdtpdus828@naver.com";
