@@ -1,10 +1,14 @@
+import 'dart:ffi';
+import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fing/Mypage/favorite.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:favorite_button/favorite_button.dart'; //favorite_button package사용
 
-void main() {
-  runApp(const LikedPage());
-}
-
+// void main() {
+//   runApp(const LikedPage());
+// }
 class LikedPage extends StatelessWidget {
   const LikedPage({Key? key}) : super(key: key);
 
@@ -33,33 +37,177 @@ class LikedPage extends StatelessWidget {
   }
 }
 
-class LikedList extends StatelessWidget {
+class LikedList extends StatefulWidget {
   const LikedList({Key? key}) : super(key: key);
 
   @override
+  State<LikedList> createState() => _LikedListState();
+}
+
+class _LikedListState extends State<LikedList> {
+  late Future<List<FireModel>> favoritelist;
+  String curuser = "wjdtpdus828@naver.com";
+  @override
+  void initState() {
+    super.initState();
+    favoritelist = readData();
+  }
+
+  Future<List<FireModel>> readData() async {
+    CollectionReference<Map<String, dynamic>> collectionReference =
+        FirebaseFirestore.instance
+            .collection("User")
+            .doc(curuser)
+            .collection("MyFavorite");
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await collectionReference.get();
+
+    List<FireModel> tmp = [];
+    for (var doc in querySnapshot.docs) {
+      FireModel fireModel = FireModel.fromQuerySnapshot(doc);
+      tmp.add(FireModel(
+          fireModel.addr1,
+          fireModel.firstimage,
+          fireModel.title,
+          fireModel.contentid,
+          fireModel.eventstartdate,
+          fireModel.eventenddate,
+          fireModel.readcount,
+          fireModel.reference));
+    }
+    return tmp;
+  }
+
+  bool favoriteBtn = true;
+
+  @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.all(5),
-      child: ListView.builder(
-        itemCount: likeditem.length,
-        itemBuilder: (BuildContext context, int index) {
-          return LikedItem(item: likeditem[index]);
-        },
-      ),
+        margin: EdgeInsets.all(5),
+        child: FutureBuilder<List<FireModel>>(
+          future: favoritelist,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<FireModel> list = snapshot.data!;
+              return ListView.builder(
+                  itemCount: list.length,
+                  itemBuilder: ((context, index) {
+                    var favoriteButton = FavoriteButton(
+                      //플러터 패키지 쓴 favorite_button임
+                      isFavorite: true,
+                      valueChanged: (isFavorite) async {
+                        print("Is Favorite : $isFavorite");
+                        if (!isFavorite) {
+                          // String curuser = "wjdtpdus828@naver.com";
+                          await FirebaseFirestore.instance
+                              .collection('User')
+                              .doc(curuser)
+                              .collection("MyFavorite")
+                              .doc(list[index].title.toString())
+                              .delete();
+
+                          setState(() {
+                            favoriteBtn = !favoriteBtn;
+                            list.removeAt(index);
+                          });
+                        }
+                      },
+                      iconSize: 50,
+                    );
+                    return InkWell(
+                      onTap: () {
+                        //          Navigator.push(
+                        // context,
+                        // MaterialPageRoute(
+                        //     builder: (context) =>DetailPage())
+                        //     );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                favoriteImg(size, list, index),
+                                favoriteInfo(size, list, index),
+                                favoriteButton,
+                              ],
+                            ),
+                            Padding(padding: EdgeInsets.only(bottom: 15)),
+                            Divider(
+                              thickness: 1,
+                              color: Color.fromARGB(102, 192, 190, 190),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }));
+            } else if (snapshot.hasError) {
+              return Text('error${snapshot.error}');
+            }
+            return Center(child: CupertinoActivityIndicator());
+          },
+        ));
+  }
+
+  SizedBox favoriteImg(var size, List<FireModel> list, int index) {
+    return SizedBox(
+      width: size.width * 0.23,
+      height: size.height * 0.13,
+      child: Image.asset(list[index].firstimage.toString(), fit: BoxFit.fill),
     );
+  }
+
+  Container favoriteInfo(var size, List<FireModel> list, int index) {
+    return Container(
+        width: size.width * 0.52,
+        padding: EdgeInsets.only(left: 13, right: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Text(
+                list[index].title.toString(),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              width: size.width * 0.6,
+              padding: EdgeInsets.only(top: 20),
+              child: Text(
+                '${StringToDate(list[index].eventstartdate.toString())} ~ ${StringToDate(list[index].eventenddate.toString())}',
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5),
+              child: Text(
+                list[index].addr1.toString(),
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+          ],
+        ));
   }
 }
 
 //찜한 페스티벌 아이템
 class LikedItem extends StatefulWidget {
-  const LikedItem({Key? key, required this.item}) : super(key: key);
+  const LikedItem({Key? key, required this.item, required this.curuser})
+      : super(key: key);
   final item;
+  final curuser;
 
   @override
   State<LikedItem> createState() => _LikedItemState();
 }
 
 class _LikedItemState extends State<LikedItem> {
+  bool flag = true;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -106,16 +254,24 @@ class _LikedItemState extends State<LikedItem> {
                         ),
                       ),
                     ],
-                  )
-              ),
+                  )),
               // SizedBox(
               //   width: 20,
               // ),
               FavoriteButton(
                 //플러터 패키지 쓴 favorite_button임
                 isFavorite: true,
-                valueChanged: (_isFavorite) {
-                  print("Is Favorite : $_isFavorite");
+                valueChanged: (isFavorite) async {
+                  print("Is Favorite : $isFavorite");
+                  if (isFavorite) {
+                    // String curuser = "wjdtpdus828@naver.com";
+                    await FirebaseFirestore.instance
+                        .collection('User')
+                        .doc(widget.curuser)
+                        .collection("MyFavorite")
+                        .doc(widget.item.title)
+                        .delete();
+                  }
                 },
                 iconSize: 50,
               ),
@@ -131,6 +287,7 @@ class _LikedItemState extends State<LikedItem> {
     );
   }
 }
+
 String StringToDate(eventenddate) {
   var date = DateTime.parse(eventenddate).toString().split(' ');
   return date[0];
@@ -147,8 +304,7 @@ class ListModel {
 }
 
 const likeditem = [
-  ListModel("assets/images/waterbombDaegu.png", "WATERBOMB(대구)",
-      "20220723",
+  ListModel("assets/images/waterbombDaegu.png", "WATERBOMB(대구)", "20220723",
       "20220725", "대구광역시 대구스타디움"),
   ListModel("assets/images/jazzfestival.png", "자라섬 재즈 페스티벌페스티벌페스티벌", "20220823",
       "20220923", "가평군 가평읍 달전리 자라섬자라섬자라섬자라섬"),
