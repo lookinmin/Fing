@@ -59,7 +59,7 @@ Future<List<SearchFestival>> fetchSearchFestival(
   queryParams +=
       "&arrange=$arrange&areaCode=$areaCode&sigunguCode=$sigunguCode&eventStartDate=$eventStartDate&eventEndDate=$eventEndDate";
 
-  print('api 호출$Url$queryParams');
+  // print('api 호출$Url$queryParams');
 
   final response = await http.get(Uri.parse(Url + queryParams));
 
@@ -68,7 +68,7 @@ Future<List<SearchFestival>> fetchSearchFestival(
 
     var modelObject = SearchFestival.fromJson(fes);
     String totalNum = modelObject.response!.body!.totalCount!.toString();
-    print(totalNum);
+    // print(totalNum);
 
     if (totalNum == "0") {
       print('tatalnum=0');
@@ -81,12 +81,12 @@ Future<List<SearchFestival>> fetchSearchFestival(
       queryParams = "$queryParams&numOfRows=$totalNum";
       queryParams = "$queryParams&pageNo=1";
 
-      print('총개수만큼 api 호출\n$Url$queryParams');
+      // print('총개수만큼 api 호출\n$Url$queryParams');
 
       final res = await http.get(Uri.parse(Url + queryParams));
 
       if (res.statusCode == 200) {
-        print('api 호출 성공');
+        // print('api 호출 성공');
         return (jsonDecode("[${utf8.decode(res.bodyBytes)}]") as List<dynamic>)
             .map((e) => SearchFestival.fromJson(e))
             .toList();

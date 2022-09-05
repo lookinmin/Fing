@@ -22,12 +22,10 @@ class FestivalModel {
 }
 
 class FestivalPage extends StatefulWidget {
-  const FestivalPage(
-      {Key? key, required this.type, required this.region, required this.city})
+  const FestivalPage({Key? key, required this.type, required this.code})
       : super(key: key);
   final type;
-  final region;
-  final city;
+  final code;
 
   @override
   State<FestivalPage> createState() => _FestivalState();
@@ -51,17 +49,18 @@ class _FestivalState extends State<FestivalPage> {
           color: Colors.grey,
         ),
       ),
-      body: FestivalList(region: widget.region, city: widget.city),
+      body: FestivalList(code: widget.code),
     );
   }
 }
 
 //페스티벌 리스트뷰 -> 페스티벌 갯수만큼 아이템들을 리스트뷰로 생성
 class FestivalList extends StatefulWidget {
-  FestivalList({Key? key, required this.region, required this.city})
-      : super(key: key);
-  final region;
-  final city;
+  FestivalList({
+    Key? key,
+    required this.code,
+  }) : super(key: key);
+  final code;
 
   @override
   State<FestivalList> createState() => _FestivalListState();
@@ -75,8 +74,8 @@ class _FestivalListState extends State<FestivalList> {
     super.initState();
     futureSearchFestival = fetchSearchFestival(
         arrange: "B",
-        areaCode: widget.region,
-        sigunguCode: widget.city,
+        areaCode: "",
+        sigunguCode: "",
         eventStartDate: "20220901",
         eventEndDate: "");
   }
@@ -91,18 +90,32 @@ class _FestivalListState extends State<FestivalList> {
                 child: Text('예정중인 페스티벌이 없습니다'),
               );
             }
-            List<Item> searchfestivalModel =
+            List<Item> searchfestival_model =
                 snapshot.data![0].response!.body!.items!.item!;
 
-            return Container(
-              margin: EdgeInsets.all(5),
-              child: ListView.builder(
-                itemCount: searchfestivalModel.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return FestivalItem(item: searchfestivalModel[index]);
-                },
-              ),
-            );
+            List<Item> category_festival_model = [];
+
+            for (int i = 0; i < searchfestival_model.length; i++) {
+              if (searchfestival_model[i].cat3 == widget.code) {
+                category_festival_model.add(searchfestival_model[i]);
+              }
+            }
+
+            if (category_festival_model.length == 0) {
+              return Center(
+                child: Text('예정중인 페스티벌이 없습니다'),
+              );
+            } else {
+              return Container(
+                margin: EdgeInsets.all(5),
+                child: ListView.builder(
+                  itemCount: category_festival_model.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return FestivalItem(item: category_festival_model[index]);
+                  },
+                ),
+              );
+            }
           } else if (snapshot.hasError) {
             return Text('error${snapshot.error}');
           }
@@ -120,10 +133,25 @@ class FestivalItem extends StatefulWidget {
   State<FestivalItem> createState() => _FestivalItemState();
 }
 
+// class current_Model {
+//   Uri? current_image;
+//   String? current_title;
+//   String? current_address;
+
+//   current_Model({this.current_image, this.current_title, this.current_address});
+
+//   Map<String, dynamic> toJson() {
+//     final map = <String, dynamic>{};
+//     map['current_image'] = current_image;
+//     map['current_title'] = current_title;
+//     map['current_address'] = current_address;
+//     return map;
+//   }
+// }
+
 class _FestivalItemState extends State<FestivalItem> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -138,8 +166,17 @@ class _FestivalItemState extends State<FestivalItem> {
                       mapy: widget.item.mapy,
                     )));
         //큐를 기반으로한 최근 본 축제
-
-        current_fast.add(widget.item.title.toString());
+        bool flag = true;
+        for (int i = 0; i < current_fast.length; i++) {
+          if (widget.item.title.toString() == current_fast[i]) {
+            flag = false;
+            break;
+          }
+        }
+        if (flag) {
+          current_fast.add(widget.item.title.toString());
+        }
+        print(current_fast);
         String curuser = "wjdtpdus828@naver.com";
         FirebaseFirestore.instance
             .collection('User')
@@ -158,6 +195,7 @@ class _FestivalItemState extends State<FestivalItem> {
           "timestamp": DateTime.now()
         }, SetOptions(merge: true));
         if (current_fast.length > 3) {
+          print("hi");
           String curuser = "wjdtpdus828@naver.com";
           FirebaseFirestore.instance
               .collection('User')
@@ -166,29 +204,33 @@ class _FestivalItemState extends State<FestivalItem> {
               .doc(current_fast[0].toString())
               .delete();
           current_fast.removeAt(0);
+          print(current_fast);
         }
       },
       child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                Container(
-                    height: 300,
-                    width: double.infinity,
-                    // color: Color.fromARGB(255, 227, 227, 227),
-                    child: CachedNetworkImage(
-                      imageUrl: widget.item.firstimage,
-                      errorWidget: ((context, url, error) => Image(
-                          image: AssetImage('assets/images/DefaultImage.png'))),
-                      fit: BoxFit.contain,
-                    )),
-                dDay()
-              ],
+            Container(
+              child: Stack(
+                children: [
+                  Container(
+                      height: 300,
+                      width: double.infinity,
+                      // color: Color.fromARGB(255, 227, 227, 227),
+                      child: CachedNetworkImage(
+                        imageUrl: widget.item.firstimage,
+                        errorWidget: ((context, url, error) => Image(
+                            image:
+                                AssetImage('assets/images/DefaultImage.png'))),
+                        fit: BoxFit.contain,
+                      )),
+                  dDay()
+                ],
+              ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 10, top: 10),
+              padding: EdgeInsets.only(left: 10, top: 15),
               child: Text(widget.item.title,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
@@ -235,7 +277,6 @@ class _FestivalItemState extends State<FestivalItem> {
               color: Colors.white)),
     );
   }
-
 
   Row location() {
     var size = MediaQuery.of(context).size;

@@ -5,7 +5,7 @@ import 'dart:convert'; //json으로 바꿔주기 위해 필요한 패키지
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; // api 호출 위해 필요한 패키지
 
 void main() {
@@ -29,38 +29,37 @@ class MyApp extends StatelessWidget {
 }
 
 // api 호출
-Future<List<SearchKeyword>> fetchSearchKeyword({required String arrange, required String keyword}) async {
-
+Future<List<SearchKeyword>> fetchSearchKeyword(
+    {required String arrange, required String keyword}) async {
   final encodekeyword = Uri.encodeFull(keyword);
   String Url = "https://apis.data.go.kr/B551011/KorService/searchKeyword";
-  String queryParams = "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
+  String queryParams =
+      "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
   queryParams += "&_type=json&MobileOS=ETC&MobileApp=Fing&contentTypeId=15";
   queryParams += "&arrange=$arrange&keyword=$encodekeyword";
 
-  print('api 호출$Url$queryParams');
+  // print('api 호출$Url$queryParams');
 
-  final response = await http.get(
-      Uri.parse(Url+queryParams)
-  );
+  final response = await http.get(Uri.parse(Url + queryParams));
 
-  if(response.statusCode == 200){
-    Map<String,dynamic> fes = jsonDecode(response.body);
+  if (response.statusCode == 200) {
+    Map<String, dynamic> fes = jsonDecode(response.body);
     var modelObject = SearchKeyword.fromJson(fes);
     String totalNum = modelObject.response!.body!.totalCount!.toString();
 
     queryParams = "$queryParams&numOfRows=$totalNum";
     queryParams = "$queryParams&pageNo=1";
-   
-    print('총개수만큼 api 호출\n$Url$queryParams');
-   
-    final res = await http.get(Uri.parse(Url+queryParams));
-    
-    if (res.statusCode == 200){
-      print('api 호출 성공');
+
+    // print('총개수만큼 api 호출\n$Url$queryParams');
+
+    final res = await http.get(Uri.parse(Url + queryParams));
+
+    if (res.statusCode == 200) {
+      // print('api 호출 성공');
       return (jsonDecode("[${utf8.decode(res.bodyBytes)}]") as List<dynamic>)
-        .map((e) => SearchKeyword.fromJson(e))
-        .toList();
-    }else{
+          .map((e) => SearchKeyword.fromJson(e))
+          .toList();
+    } else {
       throw Exception("Failed to load data");
     }
   } else {
@@ -78,49 +77,49 @@ class SearchKeywordWidget extends StatefulWidget {
 
 class _SearchKeywordWidgetState extends State<SearchKeywordWidget> {
   late Future<List<SearchKeyword>> futureSearchKeyword;
-  
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     // 여기 적혀 있는 변수들 다 넣어야됨
     futureSearchKeyword = fetchSearchKeyword(
-      arrange:"A",
-      keyword:"강원",
+      arrange: "A",
+      keyword: "강원",
     );
   }
 
   Widget build(BuildContext context) {
     return FutureBuilder<List<SearchKeyword>>(
-      future:futureSearchKeyword,
-      builder:(context,snapshot){
-        if(snapshot.hasData){
-          print('hasData');
+        future: futureSearchKeyword,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print('hasData');
 
-          // tranditional_festival_model[index].변수명 으로 쓰면 됨
-          List<Item> searchkeyword_model = snapshot.data![0].response!.body!.items!.item!;
-          print(searchkeyword_model.length);
+            // tranditional_festival_model[index].변수명 으로 쓰면 됨
+            List<Item> searchkeyword_model =
+                snapshot.data![0].response!.body!.items!.item!;
+            print(searchkeyword_model.length);
 
-          return Container(
-            color:Colors.white,
-            child:ListView.builder(
-            itemCount:searchkeyword_model.length,
-            itemBuilder:(BuildContext context, index)=>Card(
-              margin:const EdgeInsets.all(10),
-              child:ListTile(
-                contentPadding:const EdgeInsets.all(10),
-                title:Text(searchkeyword_model[index].title.toString()),
-                subtitle:Text(searchkeyword_model[index].addr1.toString()),
-              )
-            )
-          ));
-        }else if(snapshot.hasError){
-          print('error');
-          print(snapshot.error);
-          return Text('error${snapshot.error}');
-        }
-        return Center(child: CupertinoActivityIndicator());
-      }
-      );
+            return Container(
+                color: Colors.white,
+                child: ListView.builder(
+                    itemCount: searchkeyword_model.length,
+                    itemBuilder: (BuildContext context, index) => Card(
+                        margin: const EdgeInsets.all(10),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(10),
+                          title:
+                              Text(searchkeyword_model[index].title.toString()),
+                          subtitle:
+                              Text(searchkeyword_model[index].addr1.toString()),
+                        ))));
+          } else if (snapshot.hasError) {
+            print('error');
+            print(snapshot.error);
+            return Text('error${snapshot.error}');
+          }
+          return Center(child: CupertinoActivityIndicator());
+        });
   }
 }
 

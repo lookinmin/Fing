@@ -1,4 +1,4 @@
-// 지역코드조회
+// 반복정보조회
 
 // import packages
 import 'dart:convert'; //json으로 바꿔주기 위해 필요한 패키지
@@ -23,42 +23,53 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const AreaCodeWidget(),
+      home: const DetailInfoWidget(),
     );
   }
 }
 
 // api 호출
-Future<List<AreaCode>> fetchAreaCode({required String areaCode}) async {
-  String Url = "https://apis.data.go.kr/B551011/KorService/areaCode";
+Future<List<DetailInfo>> fetchDetailInfo({required String contentId}) async {
+  String Url = "https://apis.data.go.kr/B551011/KorService/detailInfo";
   String queryParams =
       "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
   queryParams += "&_type=json&MobileOS=ETC&MobileApp=Fing";
-  queryParams += "&areaCode=$areaCode";
+  queryParams += "&contentTypeId=15&contentId=$contentId";
 
-  print('api 호출$Url$queryParams');
+  // print('api 호출$Url$queryParams');
 
   final response = await http.get(Uri.parse(Url + queryParams));
 
   if (response.statusCode == 200) {
     Map<String, dynamic> fes = jsonDecode(response.body);
-    var modelObject = AreaCode.fromJson(fes);
+
+    var modelObject = DetailInfo.fromJson(fes);
     String totalNum = modelObject.response!.body!.totalCount!.toString();
+    print(totalNum);
 
-    queryParams = "$queryParams&numOfRows=$totalNum";
-    queryParams = "$queryParams&pageNo=1";
-
-    print('총개수만큼 api 호출\n$Url$queryParams');
-
-    final res = await http.get(Uri.parse(Url + queryParams));
-
-    if (res.statusCode == 200) {
-      print('api 호출 성공');
-      return (jsonDecode("[${utf8.decode(res.bodyBytes)}]") as List<dynamic>)
-          .map((e) => AreaCode.fromJson(e))
+    if (totalNum == "0") {
+      // print('tatalnum=0');
+      return ([
+        {'response': null}
+      ] as List<dynamic>)
+          .map((e) => DetailInfo.fromJson(e))
           .toList();
     } else {
-      throw Exception("Failed to load data");
+      queryParams = "$queryParams&numOfRows=$totalNum";
+      queryParams = "$queryParams&pageNo=1";
+
+      // print('총개수만큼 api 호출\n$Url$queryParams');
+
+      final res = await http.get(Uri.parse(Url + queryParams));
+
+      if (res.statusCode == 200) {
+        // print('api 호출 성공');
+        return (jsonDecode("[${utf8.decode(res.bodyBytes)}]") as List<dynamic>)
+            .map((e) => DetailInfo.fromJson(e))
+            .toList();
+      } else {
+        throw Exception("Failed to load data");
+      }
     }
   } else {
     throw Exception('Failed to load data');
@@ -66,48 +77,50 @@ Future<List<AreaCode>> fetchAreaCode({required String areaCode}) async {
 }
 
 // widget example
-class AreaCodeWidget extends StatefulWidget {
-  const AreaCodeWidget({Key? key}) : super(key: key);
+class DetailInfoWidget extends StatefulWidget {
+  const DetailInfoWidget({Key? key}) : super(key: key);
 
   @override
-  State<AreaCodeWidget> createState() => _AreaCodeWidgetState();
+  State<DetailInfoWidget> createState() => _DetailInfoWidgetState();
 }
 
-class _AreaCodeWidgetState extends State<AreaCodeWidget> {
-  late Future<List<AreaCode>> futureAreaCode;
+class _DetailInfoWidgetState extends State<DetailInfoWidget> {
+  late Future<List<DetailInfo>> futureDetailInfo;
 
   @override
   void initState() {
     super.initState();
     // 여기 적혀 있는 변수들 다 넣어야됨
-    futureAreaCode = fetchAreaCode(
-      areaCode: "1",
-    );
+    futureDetailInfo = fetchDetailInfo(contentId: "506545");
   }
 
   Widget build(BuildContext context) {
-    return FutureBuilder<List<AreaCode>>(
-        future: futureAreaCode,
+    return FutureBuilder<List<DetailInfo>>(
+        future: futureDetailInfo,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             print('hasData');
+            if ((snapshot.data![0].response) == null) {
+              return Center(child: Text('이거눈 데이터가 없어용 앙앙'));
+            } else {
+              List<Item> detailInfo_model =
+                  snapshot.data![0].response!.body!.items!.item!;
+              print(detailInfo_model.length);
 
-            // tranditional_festival_model[index].변수명 으로 쓰면 됨
-            List<Item> areacode_model =
-                snapshot.data![0].response!.body!.items!.item!;
-            print(areacode_model.length);
-
-            return Container(
-                color: Colors.white,
-                child: ListView.builder(
-                    itemCount: areacode_model.length,
-                    itemBuilder: (BuildContext context, index) => Card(
-                        margin: const EdgeInsets.all(10),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(10),
-                          title: Text(areacode_model[index].name.toString()),
-                          subtitle: Text(areacode_model[index].code.toString()),
-                        ))));
+              return Container(
+                  color: Colors.white,
+                  child: ListView.builder(
+                      itemCount: detailInfo_model.length,
+                      itemBuilder: (BuildContext context, index) => Card(
+                          margin: const EdgeInsets.all(10),
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.all(10),
+                            title: Text(
+                                detailInfo_model[index].infoname.toString()),
+                            subtitle: Text(
+                                detailInfo_model[index].infotext.toString()),
+                          ))));
+            }
           } else if (snapshot.hasError) {
             print('error');
             print(snapshot.error);
@@ -118,13 +131,12 @@ class _AreaCodeWidgetState extends State<AreaCodeWidget> {
   }
 }
 
-// json to dart
-class AreaCode {
+class DetailInfo {
   Response? response;
 
-  AreaCode({this.response});
+  DetailInfo({this.response});
 
-  AreaCode.fromJson(Map<String, dynamic> json) {
+  DetailInfo.fromJson(Map<String, dynamic> json) {
     response = json['response'] != null
         ? new Response.fromJson(json['response'])
         : null;
@@ -191,7 +203,9 @@ class Body {
   Body({this.items, this.numOfRows, this.pageNo, this.totalCount});
 
   Body.fromJson(Map<String, dynamic> json) {
-    items = json['items'] != null ? new Items.fromJson(json['items']) : null;
+    items = json['items'].toString().length != 0
+        ? new Items.fromJson(json['items'])
+        : null;
     numOfRows = json['numOfRows'];
     pageNo = json['pageNo'];
     totalCount = json['totalCount'];
@@ -233,23 +247,38 @@ class Items {
 }
 
 class Item {
-  int? rnum;
-  String? code;
-  String? name;
+  String? contentid;
+  String? contenttypeid;
+  String? serialnum;
+  String? infoname;
+  String? infotext;
+  String? fldgubun;
 
-  Item({this.rnum, this.code, this.name});
+  Item(
+      {this.contentid,
+      this.contenttypeid,
+      this.serialnum,
+      this.infoname,
+      this.infotext,
+      this.fldgubun});
 
   Item.fromJson(Map<String, dynamic> json) {
-    rnum = json['rnum'];
-    code = json['code'];
-    name = json['name'];
+    contentid = json['contentid'];
+    contenttypeid = json['contenttypeid'];
+    serialnum = json['serialnum'];
+    infoname = json['infoname'];
+    infotext = json['infotext'];
+    fldgubun = json['fldgubun'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['rnum'] = this.rnum;
-    data['code'] = this.code;
-    data['name'] = this.name;
+    data['contentid'] = this.contentid;
+    data['contenttypeid'] = this.contenttypeid;
+    data['serialnum'] = this.serialnum;
+    data['infoname'] = this.infoname;
+    data['infotext'] = this.infotext;
+    data['fldgubun'] = this.fldgubun;
     return data;
   }
 }

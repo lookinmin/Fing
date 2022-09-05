@@ -42,23 +42,17 @@ Future<List<LocationBasedList>> fetchLocationBasedList(
   queryParams =
       "$queryParams&arrange=$arrange&contentTypeId=$contentTypeId&mapX=$mapX&mapY=$mapY&radius=$radius";
 
-  print('api 호출$Url$queryParams');
+  // print('api 호출$Url$queryParams');
 
   final response = await http.get(Uri.parse(Url + queryParams));
 
   if (response.statusCode == 200) {
-    print('1');
     Map<String, dynamic> fes = jsonDecode(response.body);
-    print('2');
-    print(response);
-    print(fes);
     var modelObject = LocationBasedList.fromJson(fes);
-    print('3');
     String totalNum = modelObject.response!.body!.totalCount!.toString();
-    print('4');
 
     if (totalNum == "0") {
-      print('tatalnum=0');
+      // print('tatalnum=0');
       return ([
         {'response': null}
       ] as List<dynamic>)
@@ -68,11 +62,11 @@ Future<List<LocationBasedList>> fetchLocationBasedList(
       queryParams = "$queryParams&numOfRows=$totalNum";
       queryParams = "$queryParams&pageNo=1";
 
-      print('총개수만큼 api 호출\n$Url$queryParams');
+      // print('총개수만큼 api 호출\n$Url$queryParams');
 
       final res = await http.get(Uri.parse(Url + queryParams));
       if (res.statusCode == 200) {
-        print('api 호출 성공');
+        // print('api 호출 성공');
         return (jsonDecode("[${utf8.decode(res.bodyBytes)}]") as List<dynamic>)
             .map((e) => LocationBasedList.fromJson(e))
             .toList();

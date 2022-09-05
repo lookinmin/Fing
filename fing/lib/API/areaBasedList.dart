@@ -1,4 +1,4 @@
-// 관광정보 동기화 목록 조회
+// 지역기반 관광정보조회
 
 // import packages
 import 'dart:convert'; //json으로 바꿔주기 위해 필요한 패키지
@@ -23,22 +23,22 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const AreaBasedSyncListWidget(),
+      home: const AreaBasedListWidget(),
     );
   }
 }
 
 // api 호출
-Future<List<AreaBasedSyncList>> fetchAreaBasedSyncList(
-    {required String arrange,
-    required String areaCode,
-    required String cat3}) async {
-  String Url = "https://apis.data.go.kr/B551011/KorService/areaBasedSyncList";
+Future<List<AreaBasedList>> fetchAreaBasedList({
+  required String cat1,
+  required String cat2,
+  required String cat3,
+}) async {
+  String Url = "https://apis.data.go.kr/B551011/KorService/areaBasedList";
   String queryParams =
       "?serviceKey=mNbd2x4ks2HlhJCaa9VeqYslDUC%2Bdnzj4IOybVIFeSRU5tZtINpW3B2FMpDs8Mc0%2FMxp24VxxqWpuveYOmV%2FDA%3D%3D";
-  queryParams +=
-      "&_type=json&MobileOS=ETC&MobileApp=Fing&showflag=1&contentTypeId=15";
-  queryParams += "&arrange=$arrange&areaCode=$areaCode&cat3=$cat3";
+  queryParams += "&_type=json&MobileOS=ETC&MobileApp=Fing";
+  queryParams += "&arrange=A&contentTypeId=15&cat1=$cat1&cat2=$cat2&cat3=$cat3";
 
   // print('api 호출$Url$queryParams');
 
@@ -46,14 +46,17 @@ Future<List<AreaBasedSyncList>> fetchAreaBasedSyncList(
 
   if (response.statusCode == 200) {
     Map<String, dynamic> fes = jsonDecode(response.body);
-    var modelObject = AreaBasedSyncList.fromJson(fes);
+
+    var modelObject = AreaBasedList.fromJson(fes);
     String totalNum = modelObject.response!.body!.totalCount!.toString();
+    print(totalNum);
+
     if (totalNum == "0") {
       print('tatalnum=0');
       return ([
         {'response': null}
       ] as List<dynamic>)
-          .map((e) => AreaBasedSyncList.fromJson(e))
+          .map((e) => AreaBasedList.fromJson(e))
           .toList();
     } else {
       queryParams = "$queryParams&numOfRows=$totalNum";
@@ -66,7 +69,7 @@ Future<List<AreaBasedSyncList>> fetchAreaBasedSyncList(
       if (res.statusCode == 200) {
         print('api 호출 성공');
         return (jsonDecode("[${utf8.decode(res.bodyBytes)}]") as List<dynamic>)
-            .map((e) => AreaBasedSyncList.fromJson(e))
+            .map((e) => AreaBasedList.fromJson(e))
             .toList();
       } else {
         throw Exception("Failed to load data");
@@ -78,50 +81,54 @@ Future<List<AreaBasedSyncList>> fetchAreaBasedSyncList(
 }
 
 // widget example
-class AreaBasedSyncListWidget extends StatefulWidget {
-  const AreaBasedSyncListWidget({Key? key}) : super(key: key);
+class AreaBasedListWidget extends StatefulWidget {
+  const AreaBasedListWidget({Key? key}) : super(key: key);
 
   @override
-  State<AreaBasedSyncListWidget> createState() =>
-      _AreaBasedSyncListWidgetState();
+  State<AreaBasedListWidget> createState() => _AreaBasedListWidgetState();
 }
 
-class _AreaBasedSyncListWidgetState extends State<AreaBasedSyncListWidget> {
-  late Future<List<AreaBasedSyncList>> futureAreaBasedSyncList;
+class _AreaBasedListWidgetState extends State<AreaBasedListWidget> {
+  late Future<List<AreaBasedList>> futureAreaBasedList;
 
   @override
   void initState() {
     super.initState();
     // 여기 적혀 있는 변수들 다 넣어야됨
-    futureAreaBasedSyncList =
-        fetchAreaBasedSyncList(arrange: "A", areaCode: "1", cat3: "A02070200");
+    futureAreaBasedList = fetchAreaBasedList(
+      cat1: "A02",
+      cat2: "A0207",
+      cat3: "A02070100",
+    );
   }
 
   Widget build(BuildContext context) {
-    return FutureBuilder<List<AreaBasedSyncList>>(
-        future: futureAreaBasedSyncList,
+    return FutureBuilder<List<AreaBasedList>>(
+        future: futureAreaBasedList,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             print('hasData');
+            if ((snapshot.data![0].response) == null) {
+              return Center(child: Text('이거눈 데이터가 없어용 앙앙'));
+            } else {
+              List<Item> areabasedlink_model =
+                  snapshot.data![0].response!.body!.items!.item!;
+              print(areabasedlink_model.length);
 
-            // tranditional_festival_model[index].변수명 으로 쓰면 됨
-            List<Item> areabasedsynclist_model =
-                snapshot.data![0].response!.body!.items!.item!;
-            print(areabasedsynclist_model.length);
-
-            return Container(
-                color: Colors.white,
-                child: ListView.builder(
-                    itemCount: areabasedsynclist_model.length,
-                    itemBuilder: (BuildContext context, index) => Card(
-                        margin: const EdgeInsets.all(10),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(10),
-                          title: Text(
-                              areabasedsynclist_model[index].title.toString()),
-                          subtitle: Text(
-                              areabasedsynclist_model[index].addr1.toString()),
-                        ))));
+              return Container(
+                  color: Colors.white,
+                  child: ListView.builder(
+                      itemCount: areabasedlink_model.length,
+                      itemBuilder: (BuildContext context, index) => Card(
+                          margin: const EdgeInsets.all(10),
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.all(10),
+                            title: Text(
+                                areabasedlink_model[index].title.toString()),
+                            subtitle: Text(
+                                areabasedlink_model[index].addr1.toString()),
+                          ))));
+            }
           } else if (snapshot.hasError) {
             print('error');
             print(snapshot.error);
@@ -133,12 +140,12 @@ class _AreaBasedSyncListWidgetState extends State<AreaBasedSyncListWidget> {
 }
 
 // json to dart
-class AreaBasedSyncList {
+class AreaBasedList {
   Response? response;
 
-  AreaBasedSyncList({this.response});
+  AreaBasedList({this.response});
 
-  AreaBasedSyncList.fromJson(Map<String, dynamic> json) {
+  AreaBasedList.fromJson(Map<String, dynamic> json) {
     response = json['response'] != null
         ? new Response.fromJson(json['response'])
         : null;
@@ -270,7 +277,6 @@ class Item {
   String? tel;
   String? title;
   String? zipcode;
-  String? showflag;
 
   Item(
       {this.addr1,
@@ -293,8 +299,7 @@ class Item {
       this.sigungucode,
       this.tel,
       this.title,
-      this.zipcode,
-      this.showflag});
+      this.zipcode});
 
   Item.fromJson(Map<String, dynamic> json) {
     addr1 = json['addr1'];
@@ -318,7 +323,6 @@ class Item {
     tel = json['tel'];
     title = json['title'];
     zipcode = json['zipcode'];
-    showflag = json['showflag'];
   }
 
   Map<String, dynamic> toJson() {
@@ -344,7 +348,6 @@ class Item {
     data['tel'] = this.tel;
     data['title'] = this.title;
     data['zipcode'] = this.zipcode;
-    data['showflag'] = this.showflag;
     return data;
   }
 }
