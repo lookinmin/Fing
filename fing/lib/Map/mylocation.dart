@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/FestivalPage/detail/detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -39,13 +41,15 @@ class _MyLocationState extends State<MyLocation> {
     bool serviceEnabled;
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
+    // if (!serviceEnabled) {
+    //   return Future.error('Location services are disabled.');
+    // }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
+
       if (permission == LocationPermission.denied) {
+        Get.snackbar('', 'Location Permission Denied');
         return Future.error('Location permissions are denied');
       }
     }
@@ -197,16 +201,16 @@ class _MyLocationState extends State<MyLocation> {
             int level = int.parse(p0.message);
             if (level >= 9) {
               _mapController?.runJavascript('''
-for(let i=0;i<markers.length;i++){
-  markers[i].setMap(null);
-}      
-''');
+                for(let i=0;i<markers.length;i++){
+                  markers[i].setMap(null);
+                }      
+              ''');
             } else {
               _mapController?.runJavascript('''
-for(let i=0;i<markers.length;i++){
-  markers[i].setMap(map);
-}      
-''');
+                for(let i=0;i<markers.length;i++){
+                  markers[i].setMap(map);
+                }      
+              ''');
             }
           },
         ),
@@ -226,16 +230,36 @@ for(let i=0;i<markers.length;i++){
       builder: (BuildContext context) {
         return StatefulBuilder(
             builder: (BuildContext context, setState) => InkWell(
-                onTap: (() => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DetailPage(
-                            firstimage: firstimage,
-                            title: name,
-                            addr1: address,
-                            contentid: contentid,
-                            mapx: mapX,
-                            mapy: mapY)))),
+                onTap: () {
+                  String curuser = "wjdtpdus828@naver.com";
+                  FirebaseFirestore.instance
+                      .collection('User')
+                      .doc(curuser)
+                      .collection("MyCurrent")
+                      .doc(name)
+                      .set({
+                    "firstimage": firstimage,
+                    "title": name,
+                    "addr1": address,
+                    "contentid": contentid,
+                    // "eventstartdate": widget.item.eventstartdate,
+                    // "eventenddate": widget.item.eventenddate,
+                    "mapx": mapX,
+                    "mapy": mapY,
+                    // "readcount": widget.item.readcount.toString(),
+                    "timestamp": DateTime.now()
+                  }, SetOptions(merge: true));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DetailPage(
+                              firstimage: firstimage,
+                              title: name,
+                              addr1: address,
+                              contentid: contentid,
+                              mapx: mapX,
+                              mapy: mapY)));
+                },
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.25,
                   child: Row(

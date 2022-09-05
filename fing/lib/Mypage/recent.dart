@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fing/FestivalPage/RecentFestival.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../FestivalPage/festivalist.dart';
@@ -119,7 +120,7 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
           fireModel.mapy,
           fireModel.timestamp,
           fireModel.reference));
-      if (tmp.length > 3) {
+      if (tmp.length > 10) {
         tmp.removeAt(tmp.length - 1);
         FirebaseFirestore.instance
             .collection('User')
@@ -151,7 +152,7 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
                         //     builder: (context) =>DetailPage())
                         //     );
                       },
-                      child: FestivalItem(item: list[index]),
+                      child: RecentFestivalItem(item: list[index]),
                     )));
           } else if (snapshot.hasError) {
             return Text('error${snapshot.error}');

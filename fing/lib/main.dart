@@ -78,6 +78,7 @@ class _RootState extends State<Root> {
 
   static get data => null;
 
+  int flagCnt = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -118,9 +119,16 @@ class _RootState extends State<Root> {
                   int index = _pages.indexOf(page);
                   return Navigator(
                     key: _navigatorKeyList[index],
-                    onGenerateRoute: (_) {
-                      return MaterialPageRoute(builder: (context) => page);
-                    },
+                    onGenerateRoute: _currentIndex == 3
+                        ? (_) {
+                            return MaterialPageRoute(
+                                builder: (context) => LikedPage(),
+                                maintainState: true);
+                          }
+                        : (_) {
+                            return MaterialPageRoute(
+                                builder: (context) => page);
+                          },
                   );
                 }).toList(),
               ),
