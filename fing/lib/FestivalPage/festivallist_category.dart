@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/API/searchFestival.dart';
@@ -208,7 +209,6 @@ class _FestivalItemState extends State<FestivalItem> {
         }
       },
       child: Container(
-        padding: EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -218,29 +218,34 @@ class _FestivalItemState extends State<FestivalItem> {
                   Container(
                       height: 300,
                       width: double.infinity,
-                      color: Color.fromARGB(255, 227, 227, 227),
-                      child: Image.network(widget.item.firstimage,
-                          fit: BoxFit.contain)),
+                      // color: Color.fromARGB(255, 227, 227, 227),
+                      child: CachedNetworkImage(
+                        imageUrl: widget.item.firstimage,
+                        errorWidget: ((context, url, error) => Image(
+                            image:
+                                AssetImage('assets/images/DefaultImage.png'))),
+                        fit: BoxFit.contain,
+                      )),
                   dDay()
                 ],
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(left: 10, top: 15),
               child: Text(widget.item.title,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(left: 10, top: 10),
               child: Text(
                 '${strToDate(widget.item.eventstartdate)} ~ ${strToDate(widget.item.eventenddate)}',
                 style: TextStyle(fontSize: 15, color: Colors.grey),
               ),
             ),
             location(),
-            Padding(padding: EdgeInsets.only(bottom: 10)),
+            Padding(padding: EdgeInsets.only(bottom: 20)),
             Divider(
-              thickness: 1,
+              thickness: 1.5,
               color: Color.fromARGB(102, 192, 190, 190),
             ),
           ],
@@ -275,24 +280,44 @@ class _FestivalItemState extends State<FestivalItem> {
   }
 
   Row location() {
+    var size = MediaQuery.of(context).size;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          widget.item.addr1,
-          style: TextStyle(fontSize: 15, color: Colors.grey),
-        ),
-        Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-          Icon(
-            Icons.visibility,
-            color: Color.fromRGBO(255, 126, 0, 1),
-            size: 17,
+        Container(
+          padding: EdgeInsets.only(left: 10, top: 2),
+          width: size.width * 0.65,
+          child: Text(
+            widget.item.addr1,
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.grey,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-          Container(
-              margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
-              child: Text(widget.item.readcount.toString(),
-                  style: TextStyle(fontSize: 15))),
-        ])
+        ),
+        Container(
+          width: size.width * 0.3,
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  child: Icon(
+                    Icons.visibility,
+                    color: Color.fromRGBO(255, 126, 0, 1),
+                    size: 17,
+                  ),
+                ),
+                Container(
+                    padding: EdgeInsets.only(right: 10, top: 2),
+                    child: Text(
+                      widget.item.readcount.toString(),
+                      style: TextStyle(fontSize: 15),
+                      overflow: TextOverflow.ellipsis,
+                    )),
+              ]),
+        )
       ],
     );
   }
