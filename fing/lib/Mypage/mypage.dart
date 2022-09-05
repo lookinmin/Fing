@@ -1,14 +1,21 @@
 import 'package:fing/Firebase/fing_db.dart';
 import 'package:fing/Mypage/recent.dart';
+import 'package:fing/google_ads.dart';
+import 'package:fing/google_ads_inline.dart';
 import 'package:flutter/material.dart';
 import 'package:fing/Mypage/favorite.dart';
 import 'package:fing/Mypage/notice.dart';
 import 'package:fing/Mypage/FAQ.dart';
 import 'package:fing/Mypage/personal.dart';
 import 'package:fing/Mypage/service.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:kakao_flutter_sdk_talk/kakao_flutter_sdk_talk.dart';
 
-void main() => runApp(MyPageMain());
+void main() {
+  MobileAds.instance.initialize();
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyPageMain());
+}
 
 class MyPageMain extends StatelessWidget {
   @override
@@ -20,10 +27,9 @@ class MyPageMain extends StatelessWidget {
         '/': (context) => MyPage(),
         '/recent': (context) => Recent(),
         '/favorite': (context) => Favorite(),
-        '/notice': ((context) => NoticePage()),
-        '/faq': (context) => FaqPage(),
+        '/notice': (context) => NoticePage(),
         '/service': (context) => ServicePage(),
-        '/persoanl': (context) => PersonalPage(),
+        '/personal': (context) => PersonalPage(),
       },
     );
   }
@@ -110,19 +116,18 @@ class _MyPageState extends State<MyPage> {
                       Navigator.pushNamed(context, '/recent');
                     },
                   ),
-                  // ListTile(
-                  //   //dense: true,
-                  //   minLeadingWidth: 0,
-                  //   leading: Icon(Icons.favorite_border_outlined, size: 17),
-                  //   title: Text('찜한 페스티벌'),
-                  //   trailing: Icon(Icons.chevron_right),
-                  //   onTap: () {
-                  //     // Navigator.push(context, MaterialPageRoute(builder: (context)=> 어쩌구()));
-                  //     Navigator.pushNamed(context, '/favorite');
-                  //   },
-                  // ),
                   ListTile(
                     //dense: true,
+                    minLeadingWidth: 0,
+                    leading: Icon(Icons.favorite_border_outlined, size: 17),
+                    title: Text('찜한 페스티벌'),
+                    trailing: Icon(Icons.chevron_right),
+                    onTap: () {
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=> 어쩌구()));
+                      Navigator.pushNamed(context, '/favorite');
+                    },
+                  ),
+                  ListTile(
                     minLeadingWidth: 0,
                     leading: Icon(Icons.notifications_outlined, size: 17),
                     title: Text('알림설정'),
@@ -135,7 +140,6 @@ class _MyPageState extends State<MyPage> {
                                   change_alram(_isNotificationOn); //알람뽑는거요
                                 }))),
                     onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=> 어쩌구()));
                     },
                   ),
                   Divider(
@@ -163,16 +167,6 @@ class _MyPageState extends State<MyPage> {
                       Navigator.pushNamed(context, '/notice');
                     },
                   ),
-                  // ListTile(
-                  //   //dense: true,
-                  //   minLeadingWidth: 0,
-                  //   leading: Icon(Icons.help_outline_outlined, size: 17),
-                  //   title: Text('FAQ'),
-                  //   trailing: Icon(Icons.chevron_right),
-                  //   onTap: () {
-                  //     Navigator.pushNamed(context, '/faq');
-                  //   },
-                  // ),
                   ListTile(
                     //dense: true,
                     minLeadingWidth: 0,
@@ -181,78 +175,19 @@ class _MyPageState extends State<MyPage> {
                     trailing: Icon(Icons.chevron_right),
                     onTap: () async {
                       Uri url = await TalkApi.instance.addChannelUrl('_jMfVxj');
-
                       try {
-                        Channels relations = await TalkApi.instance.channels();
-                        print('채널 관계 확인 성공'
-                            '\n${relations.channels}');
+                        await launchBrowserTab(url);
                       } catch (error) {
-                        print('채널 관계 확인 실패 $error');
+                        print('카카오톡 채널 추가 실패 $error');
                       }
                     },
                   ),
-                  // ListTile(
-                  //   //dense: true,
-                  //   minLeadingWidth: 0,
-                  //   leading: Icon(Icons.call_outlined, size: 17),
-                  //   title: Text('상담원 연결'),
-                  //   trailing: Icon(Icons.chevron_right),
-                  //   onTap: () {
-                  //     showModalBottomSheet<void>(
-                  //         context: context,
-                  //         builder: (BuildContext context) {
-                  //           return Container(
-                  //             height: 130,
-                  //             color: Color(0xFF737373),
-                  //             child: Column(children: [
-                  //               Container(
-                  //                   height: 55,
-                  //                   padding: EdgeInsets.zero,
-                  //                   margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                  //                   decoration: BoxDecoration(
-                  //                       color: Colors.white,
-                  //                       borderRadius: BorderRadius.all(
-                  //                           Radius.circular(15))),
-                  //                   child: Row(
-                  //                     children: [
-                  //                       Container(
-                  //                           padding: EdgeInsets.fromLTRB(
-                  //                               30, 0, 0, 0),
-                  //                           child: Icon(Icons.phone,
-                  //                               color: Colors.grey[700],
-                  //                               size: 30)),
-                  //                       Container(
-                  //                           padding: EdgeInsets.fromLTRB(
-                  //                               20, 0, 0, 0),
-                  //                           child: Text("통화 010-0000-0000",
-                  //                               style: TextStyle(
-                  //                                   color: Colors.blue[600],
-                  //                                   fontSize: 18)))
-                  //                     ],
-                  //                   )),
-                  //               InkWell(
-                  //                 onTap: () => Navigator.pop(context),
-                  //                 child: Container(
-                  //                   height: 55,
-                  //                   padding: EdgeInsets.zero,
-                  //                   margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                  //                   decoration: BoxDecoration(
-                  //                       color: Colors.white,
-                  //                       borderRadius: BorderRadius.all(
-                  //                           Radius.circular(15))),
-                  //                   child: Center(
-                  //                       child: Text('취소',
-                  //                           style: TextStyle(
-                  //                               color: Colors.blue[600],
-                  //                               fontSize: 19,
-                  //                               fontWeight: FontWeight.w600))),
-                  //                 ),
-                  //               ),
-                  //             ]),
-                  //           );
-                  //         });
-                  //   },
-                  // ),
+                  Container(
+                    constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height * 0.3),
+                        alignment: Alignment.center,
+                    child: GoogleInline(),
+                  ),
                   Divider(
                     height: 50,
                     color: Colors.grey[500],
@@ -300,6 +235,10 @@ class _MyPageState extends State<MyPage> {
                     onTap: () {
                       Navigator.pushNamed(context, '/personal');
                     },
+                  ),
+                  Container(
+                    height: 50,
+                    child: GoogleAds(),
                   ),
                 ],
               )
