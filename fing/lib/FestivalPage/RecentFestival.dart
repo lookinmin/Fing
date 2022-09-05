@@ -44,16 +44,26 @@ class _RecentFestivalItemState extends State<RecentFestivalItem> {
           Row(
             children: [
               Container(
-                width: size.width * 0.3,
-                height: size.height * 0.15,
-                padding: EdgeInsets.all(12),
-                child: CachedNetworkImage(
-                  imageUrl: widget.item.firstimage,
-                  errorWidget: ((context, url, error) => Image(
-                      image: AssetImage('assets/images/DefaultImage.png'))),
-                  fit: BoxFit.contain,
-                ),
-              ),
+                  width: size.width * 0.3,
+                  height: size.height * 0.15,
+                  padding: EdgeInsets.all(12),
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 300,
+                        width: double.infinity,
+                        color: Color.fromARGB(255, 227, 227, 227),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.item.firstimage,
+                          errorWidget: ((context, url, error) => Image(
+                              image: AssetImage(
+                                  'assets/images/DefaultImage.png'))),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      dDay()
+                    ],
+                  )),
               Container(
                 padding: EdgeInsets.only(left: 5, right: 10),
                 width: size.width * 0.65,
@@ -78,6 +88,15 @@ class _RecentFestivalItemState extends State<RecentFestivalItem> {
                           style: TextStyle(
                               fontSize: 14, overflow: TextOverflow.ellipsis),
                         )),
+                    Padding(
+                        padding: EdgeInsets.only(top: 5),
+                        child: FittedBox(
+                          fit: BoxFit.fill,
+                          child: Text(
+                            '${strToDate(widget.item.eventstartdate)} ~ ${strToDate(widget.item.eventenddate)}',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        )),
                   ],
                 ),
               )
@@ -92,4 +111,43 @@ class _RecentFestivalItemState extends State<RecentFestivalItem> {
       ),
     );
   }
+
+  Container dDay() {
+    return Container(
+      margin: EdgeInsets.only(left: 5),
+      padding: EdgeInsets.fromLTRB(5, 3, 5, 3),
+      decoration: BoxDecoration(
+          color: Colors.pink[500],
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+                color: Color.fromARGB(255, 49, 48, 48).withOpacity(0.4),
+                spreadRadius: 1, //퍼지는거리
+                blurRadius: 5, //흐림정도
+                offset: Offset(2, 4)) //그림자위치
+          ]),
+      child: Text(getDDay(widget.item.eventstartdate),
+          style: TextStyle(
+              letterSpacing: 0.7,
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: Colors.white)),
+    );
+  }
+}
+
+String strToDate(eventenddate) {
+  var date = DateTime.parse(eventenddate).toString().split(' ');
+  return date[0];
+}
+
+String getDDay(eventstartdate) {
+  int diff =
+      DateTime.now().difference(DateTime.parse(eventstartdate)).inDays - 1;
+  if (diff >= 0) {
+    return "진행중";
+  }
+  return 'D$diff';
 }
