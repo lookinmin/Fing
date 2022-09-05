@@ -76,95 +76,92 @@ class GoodsMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-              child: ListView.builder(
-                  itemCount: productList.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom:
-                                  BorderSide(width: 1.0, color: Colors.black))),
-                      margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                      height: 200,
-                      padding: EdgeInsets.fromLTRB(10, 10, 5, 0),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            productList[index].imageUrl,
-                            width: 150,
-                          ),
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                                    child: Text(
-                                      productList[index].title,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(5, 20, 0, 30),
-                                    child: Text(
-                                      productList[index].desc1,
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(50, 20, 0, 0),
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          RaisedButton(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                  //화면전환
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          productList[index]
-                                                              .router1));
-                                            },
-
-                                            color:
-                                                Color.fromRGBO(255, 126, 0, 1),
-                                            child: Text(
-                                              "구매하기",
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                            // 테두리 모서리
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.5),
-                                            ),
-                                          )
-                                        ]),
-                                  )
-                                ],
+      width:size.width,
+      child: ListView.builder(
+          itemCount: productList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              width:size.width,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width:size.width*0.5,
+                        padding:EdgeInsets.all(5),
+                        child: Image.asset(
+                          productList[index].imageUrl,
+                        ),
+                      ),
+                      Container(
+                        width:size.width*0.5,
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding:EdgeInsets.only(top:10),
+                              child: Text(
+                                productList[index].title,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                    );
-                  })),
-        ],
-      ),
+                            Container(
+                              padding:EdgeInsets.only(top:10),
+                              child: Text(
+                                productList[index].desc1,
+                                style: TextStyle(
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding:EdgeInsets.only(top:20),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.end,
+                                  children: [
+                                    RaisedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            //화면전환
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    productList[index]
+                                                        .router1));
+                                      },
+                                      color:
+                                          Color.fromRGBO(255, 126, 0, 1),
+                                      child: Text(
+                                        "구매하기",
+                                        style: TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                      // 테두리 모서리
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.5),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Divider(thickness: 2,indent: 10,endIndent: 10,),
+                ],
+              ),
+              
+            );
+          }),
     );
   }
 }
