@@ -413,16 +413,17 @@ a:hover::after {
 .pic-ctn {
   position: relative;
   height: 300px;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 0rem;
+  margin-bottom: 3.5rem;
 }
 
 .pic-ctn > img {
   position: absolute;
   top: 0;
-  left: calc(50% - 7vw);
+  left: calc(50% - 10.6vw);
   opacity: 0;
   animation: display 10s infinite;
+  height: 350px;
 }
 
 .pic-ctn > img:nth-child(2) {
@@ -601,6 +602,18 @@ a:hover::after {
   flex-flow: column wrap;
   font-family: 'Pretendard-Regular';
   font-size: 0.8rem;
+}
+
+.txtz2{
+  display: flex;
+  flex-flow: row wrap;
+  font-family: 'Pretendard-Regular';
+  font-size: 1rem;
+}
+
+.txtz2 p{
+  margin-right: 5rem;
+  cursor: pointer;
 }
 
 .txts .TT{

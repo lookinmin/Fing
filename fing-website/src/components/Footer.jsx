@@ -1,8 +1,9 @@
 import React from 'react'
-import { IoLogoInstagram, IoLogoGooglePlaystore,IoLogoGithub } from "react-icons/io5";
+import { IoLogoInstagram, IoLogoGithub } from "react-icons/io5";
 import { GrAppleAppStore } from "react-icons/gr";
 import { useMediaQuery } from 'react-responsive';
 import { RiKakaoTalkFill, RiGooglePlayFill } from "react-icons/ri";
+import { useNavigate } from 'react-router-dom';
 
 export const Footer = () => {
 
@@ -28,6 +29,17 @@ export const Footer = () => {
         window.open('http://pf.kakao.com/_jMfVxj');
         break;
     }
+  }
+
+  let navigate = useNavigate();
+  function handleClick(e) {
+    if(e===1){
+      navigate("/personal");
+    }
+    else{
+      navigate("/service")
+    }
+  
   }
 
   
@@ -60,11 +72,14 @@ export const Footer = () => {
             
             <div className="div3">
               <p><span className='TT'>Leader.</span>조민수</p>
-              <p>@ Copyright 2022 Fing All rights reserved</p>
             </div>
           </div>
 
-        
+          <div className="txtz2">
+            <p>@ Copyright 2022 Fing All rights reserved</p>
+            <p onClick={() => handleClick(1)}>개인정보 처리방침</p>
+            <p onClick={() =>handleClick(2)}>서비스 이용약관</p>
+          </div>
         </div>
       }
       {isShort &&
@@ -94,8 +109,13 @@ export const Footer = () => {
             
             <div className="div3">
               <p><span className='TT'>Leader.</span>조민수</p>
-              <p>@ Copyright 2022 Fing All rights reserved</p>
             </div>
+          </div>
+
+          <div className="txtz2">
+            <p>@ Copyright 2022 Fing All rights reserved</p>
+            <p>개인정보 처리방침</p>
+            <p>서비스 이용약관</p>
           </div>
         </div>
 
@@ -126,8 +146,13 @@ export const Footer = () => {
             
             <div className="div3">
               <p><span className='TT'>Leader.</span>조민수</p>
-              <p>@ Copyright 2022 Fing All rights reserved</p>
             </div>
+          </div>
+
+          <div className="txtz2">
+            <p>@ Copyright 2022 Fing All rights reserved</p>
+            <p>개인정보 처리방침</p>
+            <p>서비스 이용약관</p>
           </div>
         </div>
       }

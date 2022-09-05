@@ -18,11 +18,11 @@ export const Goods = () => {
           <div id="item1">
             <h2>F-ING 텀블러</h2>
             <div className="pic-ctn">
-              <img src="https://picsum.photos/200/300?t=1" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=2" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=3" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=4" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=5" alt="" class="pic"></img>
+              <img src="./img/tum1.png" alt="" class="pic"></img>
+              <img src="./img/tum2.png" alt="" class="pic"></img>
+              <img src="./img/tum1.png" alt="" class="pic"></img>
+              <img src="./img/tum2.png" alt="" class="pic"></img>
+              <img src="./img/tum1.png" alt="" class="pic"></img>
             </div>
           
             <div className='GtxtBox'>
@@ -44,11 +44,11 @@ export const Goods = () => {
           <div id="item2">
             <h2>F-ING 에코백</h2>
             <div className="pic-ctn">
-              <img src="https://picsum.photos/200/300?t=1" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=2" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=3" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=4" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=5" alt="" class="pic"></img>
+              <img src="./img/echo01.png" alt="" className="pic"></img>
+              <img src="./img/echo02.png" alt="" className="pic"></img>
+              <img src="./img/echo03.png" alt="" className="pic"></img>
+              <img src="./img/echo04.png" alt="" className="pic"></img>
+              <img src="./img/echo05.png" alt="" className="pic"></img>
             </div>
             <div className='GtxtBox'>
               <h3>KRW 7,000</h3>
@@ -73,11 +73,11 @@ export const Goods = () => {
           <div id="item1">
             <h2>F-ING 텀블러</h2>
             <div className="pic-ctn">
-              <img src="https://picsum.photos/200/300?t=1" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=2" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=3" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=4" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=5" alt="" class="pic"></img>
+              <img src="./img/tum1.png" alt="" class="pic"></img>
+              <img src="./img/tum2.png" alt="" class="pic"></img>
+              <img src="./img/tum1.png" alt="" class="pic"></img>
+              <img src="./img/tum2.png" alt="" class="pic"></img>
+              <img src="./img/tum1.png" alt="" class="pic"></img>
             </div>
           
             <div className='GtxtBox'>
@@ -99,11 +99,11 @@ export const Goods = () => {
           <div id="item2">
             <h2>F-ING 에코백</h2>
             <div className="pic-ctn">
-              <img src="https://picsum.photos/200/300?t=1" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=2" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=3" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=4" alt="" class="pic"></img>
-              <img src="https://picsum.photos/200/300?t=5" alt="" class="pic"></img>
+            <img src="./img/echo01.png" alt="" className="pic"></img>
+              <img src="./img/echo02.png" alt="" className="pic"></img>
+              <img src="./img/echo03.png" alt="" className="pic"></img>
+              <img src="./img/echo04.png" alt="" className="pic"></img>
+              <img src="./img/echo05.png" alt="" className="pic"></img>
             </div>
             <div className='GtxtBox'>
               <h3>KRW 7,000</h3>
@@ -124,12 +124,7 @@ export const Goods = () => {
         </div> 
       }
       
-
-     
-      
-      
       <Menu/>
-
       
       {isNormal && 
         <div className="toDownload">
