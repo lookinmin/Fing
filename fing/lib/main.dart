@@ -5,14 +5,16 @@ import 'package:fing/FestivalPage/detail/detail.dart';
 import 'package:fing/MainPage/mainpage.dart';
 import 'package:fing/Mypage/favorite.dart';
 import 'package:fing/Mypage/mypage.dart';
+import 'package:fing/Mypage/notice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'LikedPage/likedpage.dart';
 import 'package:fing/login/intro_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+//import 'firebase_options.dart';
 import 'Region/RegionPage.dart';
 import 'Map/mylocation.dart';
 
@@ -30,11 +32,13 @@ class MyHttpOverrides extends HttpOverrides {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   KakaoSdk.init(nativeAppKey: 'a0f1222696827f5577c696088787bc1f');
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform
-      //DefaultFirebaseOptions.currentPlatform,
-      );
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform
+  //     //DefaultFirebaseOptions.currentPlatform,
+  //     );
   HttpOverrides.global = new MyHttpOverrides();
   // WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+  WidgetsFlutterBinding.ensureInitialized();
 
   // ByteData data =
   //     await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
@@ -54,7 +58,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       debugShowMaterialGrid: false,
       routes: {
-        '/': (context) => Intro(),
+        '/': (context) => NoticePage()//Intro(),
       },
     );
   }

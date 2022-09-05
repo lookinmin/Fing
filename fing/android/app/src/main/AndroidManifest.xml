@@ -47,6 +47,9 @@
         <meta-data
                      android:name="com.kakao.sdk.AppKey"
               android:value="a0f1222696827f5577c696088787bc1f"/>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9891670690103089~4089358324"/>    
             
     </application>
 </manifest>

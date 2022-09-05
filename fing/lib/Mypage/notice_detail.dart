@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'notice.dart';
 
 class NoticeDetail extends StatelessWidget {
-  const NoticeDetail({Key? key, required NoticeModel this.data}) : super(key: key);
+  const NoticeDetail({Key? key, required NoticeModel this.data})
+      : super(key: key);
   final data;
 
   @override
@@ -40,30 +41,50 @@ class NoticeDetail extends StatelessWidget {
           children: [
             // 카테고리
             Container(
-              margin:EdgeInsets.only(bottom:5),
-              child:Text("[공지사항]",style:TextStyle(color:Colors.grey,fontSize: 13)),
+              margin: EdgeInsets.only(bottom: 5),
+              child: Text(
+                "[공지사항]",
+                style: TextStyle(color: Colors.grey, fontSize: 13),
+                overflow: TextOverflow.clip,
+                maxLines: 1,
+                softWrap: false,
+              ),
             ),
             // 제목
             Container(
-              margin:EdgeInsets.only(bottom:5),
-              child:Text(data.title,style:TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
+              margin: EdgeInsets.only(bottom: 5),
+              child: Text(
+                data.title,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                overflow: TextOverflow.clip,
+                maxLines: 2,
+                
+              ),
             ),
             // 날짜, 작성자
             Container(
-              margin:EdgeInsets.only(bottom:5),
-              child:Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(data.writer,style:TextStyle(color:Colors.grey,fontSize: 13)),
-                  Text(data.day,style:TextStyle(color:Colors.grey,fontSize: 13)),
-                ],
-              )
-            ),
+                margin: EdgeInsets.only(bottom: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(data.writer,
+                        style: TextStyle(color: Colors.grey, fontSize: 13)),
+                    Text(data.day,
+                        style: TextStyle(color: Colors.grey, fontSize: 13)),
+                  ],
+                )),
             Divider(thickness: 1),
             // 내용
-            Container(
-              margin:EdgeInsets.all(10),
-              child:Text(data.desc,style:TextStyle(color:Colors.grey[600])),
+            Expanded(
+              child: Container(
+                alignment: Alignment.topLeft,
+                margin: EdgeInsets.all(10),
+                child: Text(
+                  data.desc,
+                  style: TextStyle(color: Colors.grey[600]),
+  
+                ),
+              ),
             ),
           ],
         ),
