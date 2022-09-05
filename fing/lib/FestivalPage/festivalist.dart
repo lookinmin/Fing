@@ -150,11 +150,10 @@ class _FestivalItemState extends State<FestivalItem> {
           "title": widget.item.title,
           "addr1": widget.item.addr1,
           "contentid": widget.item.contentid,
-          // "eventstartdate": widget.item.eventstartdate,
-          // "eventenddate": widget.item.eventenddate,
           "mapx": widget.item.mapx,
           "mapy": widget.item.mapy,
-          // "readcount": widget.item.readcount.toString(),
+          "eventstartdate": widget.item.eventstartdate,
+          "eventenddate": widget.item.eventenddate,
           "timestamp": DateTime.now()
         }, SetOptions(merge: true));
         if (current_fast.length > 3) {

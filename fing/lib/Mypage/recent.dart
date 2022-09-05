@@ -10,11 +10,10 @@ class FireModel {
   String? firstimage;
   String? title;
   String? contentid;
-  String? eventstartdate;
-  String? eventenddate;
   String? mapx;
   String? mapy;
-  String? readcount;
+  String? eventstartdate;
+  String? eventenddate;
   Timestamp? timestamp;
   DocumentReference? reference;
 
@@ -23,11 +22,10 @@ class FireModel {
       this.firstimage,
       this.title,
       this.contentid,
-      this.eventstartdate,
-      this.eventenddate,
       this.mapx,
       this.mapy,
-      this.readcount,
+      this.eventstartdate,
+      this.eventenddate,
       this.timestamp,
       this.reference);
 
@@ -36,11 +34,10 @@ class FireModel {
     firstimage = json['firstimage'];
     title = json['title'];
     contentid = json['contentid'];
-    eventstartdate = json['eventstartdate'];
-    eventenddate = json['eventenddate'];
-    readcount = json['readcount'];
     mapx = json['mapx'];
     mapy = json['mapy'];
+    eventstartdate = json['eventstartdate'];
+    eventenddate = json['eventenddate'];
     timestamp = json['timestamp'];
   }
 
@@ -113,11 +110,10 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
           fireModel.firstimage,
           fireModel.title,
           fireModel.contentid,
-          fireModel.eventstartdate,
-          fireModel.eventenddate,
-          fireModel.readcount,
           fireModel.mapx,
           fireModel.mapy,
+          fireModel.eventstartdate,
+          fireModel.eventenddate,
           fireModel.timestamp,
           fireModel.reference));
       if (tmp.length > 10) {

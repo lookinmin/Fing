@@ -165,6 +165,8 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                       detailfestival_modal.eventstartdate,
                                   "eventenddate":
                                       detailfestival_modal.eventenddate,
+                                  "mapx": widget.mapx,
+                                  "mapy": widget.mapy,
                                   //string으로 바꿔서 보내기
                                 }, SetOptions(merge: true));
                               }
