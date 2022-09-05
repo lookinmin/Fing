@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/Mypage/favorite.dart';
 import 'package:flutter/cupertino.dart';
@@ -195,7 +196,14 @@ class _LikedListState extends State<LikedList> {
     return SizedBox(
       width: size.width * 0.23,
       height: size.height * 0.13,
-      child: Image.network(list[index].firstimage.toString(), fit: BoxFit.fill),
+        child: CachedNetworkImage(
+          placeholder: (context, url) => CircularProgressIndicator(),
+          imageUrl: list[index].firstimage.toString(),
+          errorWidget: ((context, url, error) =>
+              Image(image: AssetImage('assets/images/DefaultImage.png'))),
+          fit: BoxFit.fill,
+        )
+        // child: Image.network(list[index].firstimage.toString(), fit: BoxFit.fill),
     );
   }
 

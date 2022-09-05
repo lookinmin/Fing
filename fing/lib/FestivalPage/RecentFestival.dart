@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/API/searchFestival.dart';
@@ -37,53 +38,57 @@ class _RecentFestivalItemState extends State<RecentFestivalItem> {
                       mapy: widget.item.mapy,
                     )));
       },
-      child: Container(
-        padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: size.width * 0.23,
-                  height: size.height * 0.13,
-                  child:
-                      Image.network(widget.item.firstimage, fit: BoxFit.fill),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: size.width * 0.3,
+                height: size.height * 0.15,
+                padding: EdgeInsets.all(12),
+                child: CachedNetworkImage(
+                  imageUrl: widget.item.firstimage,
+                  errorWidget: ((context, url, error) => Image(
+                      image: AssetImage('assets/images/DefaultImage.png'))),
+                  fit: BoxFit.contain,
                 ),
-                Container(
-                    width: size.width * 0.65,
-                    padding: EdgeInsets.only(left: 13, right: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: Text(
-                            widget.item.title,
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(top: 5),
-                            child: FittedBox(
-                              fit: BoxFit.fill,
-                              child: Text(
-                                widget.item.addr1,
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            )),
-                      ],
-                    )),
-              ],
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 15)),
-            Divider(
-              thickness: 1,
-              color: Color.fromARGB(102, 192, 190, 190),
-            ),
-          ],
-        ),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 5, right: 10),
+                width: size.width * 0.65,
+                // padding: EdgeInsets.only(left: 13, right: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 7),
+                      child: Text(
+                        widget.item.title,
+                        style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis),
+                      ),
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(top: 7.5),
+                        child: Text(
+                          widget.item.addr1,
+                          style: TextStyle(
+                              fontSize: 14, overflow: TextOverflow.ellipsis),
+                        )),
+                  ],
+                ),
+              )
+            ],
+          ),
+          // Paddirng(padding: EdgeInsets.only(bottom: 15)),
+          Divider(
+            thickness: 1,
+            color: Color.fromARGB(102, 192, 190, 190),
+          ),
+        ],
       ),
     );
   }

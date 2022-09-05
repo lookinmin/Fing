@@ -193,7 +193,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                 )),
                 SliverToBoxAdapter(
                     child: Container(
-                  padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -212,7 +212,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   color: const Color(0xffff7e00),
                                 ),
                                 Container(
-                                  width: size.width * 0.25,
+                                  width: size.width * 0.27,
                                   child: Text(
                                     ' 이용요금',
                                     style: TextStyle(
@@ -225,7 +225,8 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   width: size.width * 0.6,
                                   child: Text(
                                     detailfestival_modal.usetimefestival
-                                        .toString(),
+                                        .toString()
+                                        .replaceAll('<br>', ' '),
                                     style: TextStyle(
                                         fontSize: 16, color: Colors.black),
                                   ),
@@ -249,7 +250,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                       color: const Color(0xffff7e00),
                                     ),
                                     Container(
-                                      width: size.width * 0.25,
+                                      width: size.width * 0.27,
                                       child: Text(
                                         ' 개요',
                                         style: TextStyle(
@@ -263,7 +264,9 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                 Container(
                                   width: size.width * 0.6,
                                   child: Text(
-                                    detailfestival_modal.infotext.toString(),
+                                    detailfestival_modal.infotext
+                                        .toString()
+                                        .replaceAll('<br>', ' '),
                                     style: TextStyle(
                                         fontSize: 16, color: Colors.black),
                                   ),
@@ -272,7 +275,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -283,7 +286,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   color: const Color(0xffff7e00),
                                 ),
                                 Container(
-                                  width: size.width * 0.25,
+                                  width: size.width * 0.27,
                                   child: Text(
                                     ' 주소',
                                     style: TextStyle(
@@ -304,7 +307,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -315,7 +318,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   color: const Color(0xffff7e00),
                                 ),
                                 Container(
-                                  width: size.width * 0.25,
+                                  width: size.width * 0.27,
                                   child: Text(
                                     ' 행사 장소',
                                     style: TextStyle(
@@ -336,7 +339,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -347,7 +350,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   color: const Color(0xffff7e00),
                                 ),
                                 Container(
-                                  width: size.width * 0.25,
+                                  width: size.width * 0.27,
                                   child: Text(
                                     ' 행사 시작일',
                                     style: TextStyle(
@@ -369,7 +372,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -380,7 +383,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   color: const Color(0xffff7e00),
                                 ),
                                 Container(
-                                  width: size.width * 0.25,
+                                  width: size.width * 0.27,
                                   child: Text(
                                     ' 행사 종료일',
                                     style: TextStyle(
@@ -538,12 +541,13 @@ class _PlaceListState extends State<PlaceList> {
   }
 
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.topRight,
-          child: DropDown(),
-        ),
+    return
+        // Column(
+        //   children: [
+        //     Align(
+        //       alignment: Alignment.topRight,
+        //       child: DropDown(),
+        //     ),
         FutureBuilder<List<local.LocationBasedList>>(
             future: widget.type == 1 ? futureHotel : futureRestaurant,
             builder: (context, snapshot) {
@@ -572,9 +576,9 @@ class _PlaceListState extends State<PlaceList> {
                 return Text('error${snapshot.error}');
               }
               return Center(child: CupertinoActivityIndicator());
-            }),
-      ],
-    );
+            });
+    // ],
+    // );
   }
 }
 
@@ -593,7 +597,7 @@ class _ListItemState extends State<ListItem> {
     return InkWell(
       onTap: () async {
         bool result = await NaviApi.instance.isKakaoNaviInstalled();
-        var title = "어디로 갈까";
+        var title = widget.item.title;
         var lat = widget.item.mapy;
         var long = widget.item.mapx;
         if (result) {
@@ -608,25 +612,26 @@ class _ListItemState extends State<ListItem> {
         }
       },
       child: Container(
-        padding: EdgeInsets.all(10),
+        // padding: EdgeInsets.all(10),
         child: Column(
           children: [
             Row(
               children: [
                 Container(
+                    padding: EdgeInsets.only(top: 10),
                     width: size.width * 0.22,
-                    height: size.height * 0.1,
+                    height: size.height * 0.15,
                     child: CachedNetworkImage(
                       placeholder: (context, url) =>
                           CircularProgressIndicator(),
                       imageUrl: widget.item.firstimage,
                       errorWidget: ((context, url, error) => Image(
-                          image: AssetImage('assets/images/Fing_Default.png'))),
-                      fit: BoxFit.fill,
+                          image: AssetImage('assets/images/DefaultImage.png'))),
+                      fit: BoxFit.contain,
                     )),
                 Container(
                   width: size.width * 0.6,
-                  padding: EdgeInsets.only(left: 15, right: 10),
+                  padding: EdgeInsets.only(left: 15, right: 10, top: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -694,9 +699,7 @@ class _MarketListState extends State<MarketList> {
             print(snapshot.data![0]);
             print("시장갯수 ${snapshot.data!.length}");
             return Container(
-                margin: EdgeInsets.all(5),
                 child: ListView.builder(
-                  // physics: NeverScrollableScrollPhysics(),
                   itemCount: snapshot.data!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return MarketItem(item: snapshot.data![index]);
@@ -728,8 +731,8 @@ class _MarketItemState extends State<MarketItem> {
       onTap: () async {
         bool result = await NaviApi.instance.isKakaoNaviInstalled();
         var title = "어디로 갈까";
-        var lat = '36.6617';
-        var long = '127.539913';
+        var lat = widget.item.mapy;
+        var long = widget.item.mapx;
         if (result) {
           await NaviApi.instance.shareDestination(
               destination: Location(name: title, x: '$long', y: '$lat'),
@@ -742,18 +745,17 @@ class _MarketItemState extends State<MarketItem> {
         }
       },
       child: Container(
-        padding: EdgeInsets.all(8),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(3),
+            Container(
+              padding: const EdgeInsets.all(10),
+              margin: EdgeInsets.only(left: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.verified_rounded,
-                    //Icons.workspace_premium_rounded,
                     size: 18.0,
                     color: const Color(0xffff7e00),
                   ),
@@ -773,14 +775,14 @@ class _MarketItemState extends State<MarketItem> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(3),
+            Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: size.width * 0.2,
+                  Container(                    
+                    width: size.width * 0.35,
+                    padding: EdgeInsets.only(top: 7, left: 10),
                     child: Text(
                       ' 도로명주소',
                       style: TextStyle(
@@ -789,23 +791,31 @@ class _MarketItemState extends State<MarketItem> {
                     ),
                   ),
                   Container(
-                    width: size.width * 0.6,
-                    child: Text(
-                      widget.item.rdnmadr,
-                      style: TextStyle(fontSize: 14, color: Colors.black),
+                    width: size.width * 0.53,
+                    padding: EdgeInsets.only(top: 7),
+                    child: Container(
+                      child: Text(
+                        widget.item.rdnmadr,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(3),
+            Container(
+              // padding: const EdgeInsets.all(3),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: size.width * 0.2,
+                    width: size.width * 0.35,
+                    padding: EdgeInsets.only(top: 7, left: 10),
                     child: Text(
                       ' 개설주기',
                       style: TextStyle(
@@ -814,7 +824,8 @@ class _MarketItemState extends State<MarketItem> {
                     ),
                   ),
                   Container(
-                    width: size.width * 0.6,
+                    width: size.width * 0.53,
+                    padding: EdgeInsets.only(top: 7, right: 3),
                     child: Text(
                       widget.item.mrktEstblCycle,
                       style: TextStyle(fontSize: 14, color: Colors.black),
@@ -823,14 +834,14 @@ class _MarketItemState extends State<MarketItem> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(3),
+            Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: size.width * 0.2,
+                    width: size.width * 0.35,
+                    padding: EdgeInsets.only(top: 7, left: 10),
                     child: Text(
                       ' 주차장여부',
                       style: TextStyle(
@@ -839,7 +850,7 @@ class _MarketItemState extends State<MarketItem> {
                     ),
                   ),
                   Container(
-                      padding: EdgeInsets.only(top: 3),
+                      padding: EdgeInsets.only(top: 7, right: 3),
                       child: ChgIcon(widget.item.prkplcYn.toString())),
                 ],
               ),
