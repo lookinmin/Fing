@@ -1,5 +1,7 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fing/FestivalPage/detail/detail.dart';
 import 'package:fing/Mypage/favorite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +18,20 @@ class FireModel {
   String? contentid;
   String? eventstartdate;
   String? eventenddate;
+  String? mapx;
+  String? mapy;
   DocumentReference? reference;
 
-  FireModel(this.addr1, this.firstimage, this.title, this.contentid,
-      this.eventstartdate, this.eventenddate, this.reference);
+  FireModel(
+      this.addr1,
+      this.firstimage,
+      this.title,
+      this.contentid,
+      this.eventstartdate,
+      this.eventenddate,
+      this.mapx,
+      this.mapy,
+      this.reference);
 
   FireModel.fromJson(dynamic json, this.reference) {
     addr1 = json['addr1'];
@@ -28,6 +40,8 @@ class FireModel {
     contentid = json['contentid'];
     eventstartdate = json['eventstartdate'];
     eventenddate = json['eventenddate'];
+    mapx = json['mapx'];
+    mapy = json['mapy'];
   }
 
   FireModel.fromQuerySnapshot(
@@ -73,9 +87,11 @@ class LikedList extends StatefulWidget {
 class _LikedListState extends State<LikedList> {
   late Future<List<FireModel>> favoritelist;
   String curuser = "wjdtpdus828@naver.com";
+
   @override
   void initState() {
     super.initState();
+    print('likepage initstate');
     favoritelist = readData();
   }
 
@@ -98,12 +114,13 @@ class _LikedListState extends State<LikedList> {
           fireModel.contentid,
           fireModel.eventstartdate,
           fireModel.eventenddate,
+          fireModel.mapx,
+          fireModel.mapy,
           fireModel.reference));
     }
+
     return tmp;
   }
-
-  bool favoriteBtn = true;
 
   @override
   Widget build(BuildContext context) {
@@ -118,35 +135,18 @@ class _LikedListState extends State<LikedList> {
               return ListView.builder(
                   itemCount: list.length,
                   itemBuilder: ((context, index) {
-                    var favoriteButton = FavoriteButton(
-                      //플러터 패키지 쓴 favorite_button임
-                      isFavorite: true,
-                      valueChanged: (isFavorite) async {
-                        print("Is Favorite : $isFavorite");
-                        if (!isFavorite) {
-                          // String curuser = "wjdtpdus828@naver.com";
-                          await FirebaseFirestore.instance
-                              .collection('User')
-                              .doc(curuser)
-                              .collection("MyFavorite")
-                              .doc(list[index].title.toString())
-                              .delete();
-
-                          setState(() {
-                            favoriteBtn = !favoriteBtn;
-                            list.removeAt(index);
-                          });
-                        }
-                      },
-                      iconSize: 50,
-                    );
                     return InkWell(
                       onTap: () {
-                        //          Navigator.push(
-                        // context,
-                        // MaterialPageRoute(
-                        //     builder: (context) =>DetailPage())
-                        //     );
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DetailPage(
+                                    firstimage: list[index].firstimage,
+                                    title: list[index].title,
+                                    addr1: list[index].addr1,
+                                    contentid: list[index].contentid,
+                                    mapx: list[index].mapx,
+                                    mapy: list[index].mapy)));
                       },
                       child: Container(
                         padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
@@ -157,7 +157,28 @@ class _LikedListState extends State<LikedList> {
                               children: [
                                 favoriteImg(size, list, index),
                                 favoriteInfo(size, list, index),
-                                favoriteButton,
+                                FavoriteButton(
+                                  isFavorite: true,
+                                  iconDisabledColor: Colors.red,
+                                  valueChanged: (isFavorite) async {
+                                    if (!isFavorite) {
+                                      // isFavorite = true;
+                                      await FirebaseFirestore.instance
+                                          .collection('User')
+                                          .doc(curuser)
+                                          .collection("MyFavorite")
+                                          .doc(list[index].title.toString())
+                                          .delete();
+
+                                      setState(() {
+                                        list.remove(list[index]);
+                                        // change_zzim(
+                                        //     isFavorite, list[index].title);
+                                      });
+                                    }
+                                  },
+                                  iconSize: 50,
+                                )
                               ],
                             ),
                             Padding(padding: EdgeInsets.only(bottom: 15)),
@@ -182,7 +203,14 @@ class _LikedListState extends State<LikedList> {
     return SizedBox(
       width: size.width * 0.23,
       height: size.height * 0.13,
-      child: Image.network(list[index].firstimage.toString(), fit: BoxFit.fill),
+        child: CachedNetworkImage(
+          placeholder: (context, url) => CircularProgressIndicator(),
+          imageUrl: list[index].firstimage.toString(),
+          errorWidget: ((context, url, error) =>
+              Image(image: AssetImage('assets/images/DefaultImage.png'))),
+          fit: BoxFit.fill,
+        )
+        // child: Image.network(list[index].firstimage.toString(), fit: BoxFit.fill),
     );
   }
 
@@ -218,119 +246,91 @@ class _LikedListState extends State<LikedList> {
           ],
         ));
   }
+
+  void showPopup(BuildContext context, bool value, String festival_name) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          if (value) {
+            return Dialog(
+                child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 150,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10), color: Colors.white),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '$festival_name',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            '을 찜목록에 추가하였습니다!',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      )),
+                ],
+              ),
+            ));
+          } else {
+            return Dialog(
+                child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 150,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10), color: Colors.white),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '$festival_name',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            '을 찜목록에서 제거하였습니다!',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      )),
+                ],
+              ),
+            ));
+          }
+        });
+  }
 }
-
-//찜한 페스티벌 아이템
-// class LikedItem extends StatefulWidget {
-//   const LikedItem({Key? key, required this.item, required this.curuser})
-//       : super(key: key);
-//   final item;
-//   final curuser;
-
-//   @override
-//   State<LikedItem> createState() => _LikedItemState();
-// }
-
-// class _LikedItemState extends State<LikedItem> {
-//   bool flag = true;
-//   @override
-//   Widget build(BuildContext context) {
-//     var size = MediaQuery.of(context).size;
-//     // var screenWidth = MediaQuery.of(context).size.width;
-//     return Container(
-//       padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Row(
-//             children: [
-//               Container(
-//                 width: size.width * 0.23,
-//                 height: size.height * 0.13,
-//                 child: Image.asset(widget.item.firstimage, fit: BoxFit.fill),
-//               ),
-//               Container(
-//                   width: size.width * 0.52,
-//                   padding: EdgeInsets.only(left: 13, right: 15),
-//                   child: Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       Padding(
-//                         padding: EdgeInsets.only(top: 10),
-//                         child: Text(
-//                           widget.item.title,
-//                           style: TextStyle(
-//                               fontSize: 18, fontWeight: FontWeight.bold),
-//                         ),
-//                       ),
-//                       Container(
-//                         width: size.width * 0.6,
-//                         padding: EdgeInsets.only(top: 20),
-//                         child: Text(
-//                           '${StringToDate(widget.item.eventstartdate)} ~ ${StringToDate(widget.item.eventenddate)}',
-//                           style: TextStyle(fontSize: 14),
-//                         ),
-//                       ),
-//                       Padding(
-//                         padding: EdgeInsets.only(top: 5),
-//                         child: Text(
-//                           widget.item.addr1,
-//                           style: TextStyle(fontSize: 14),
-//                         ),
-//                       ),
-//                     ],
-//                   )),
-//               // SizedBox(
-//               //   width: 20,
-//               // ),
-//               FavoriteButton(
-//                 //플러터 패키지 쓴 favorite_button임
-//                 isFavorite: true,
-//                 valueChanged: (isFavorite) async {
-//                   print("Is Favorite : $isFavorite");
-//                   if (isFavorite) {
-//                     // String curuser = "wjdtpdus828@naver.com";
-//                     await FirebaseFirestore.instance
-//                         .collection('User')
-//                         .doc(widget.curuser)
-//                         .collection("MyFavorite")
-//                         .doc(widget.item.title)
-//                         .delete();
-//                   }
-//                 },
-//                 iconSize: 50,
-//               ),
-//             ],
-//           ),
-//           Padding(padding: EdgeInsets.only(bottom: 15)),
-//           Divider(
-//             thickness: 1,
-//             color: Color.fromARGB(102, 192, 190, 190),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 String StringToDate(eventenddate) {
   var date = DateTime.parse(eventenddate).toString().split(' ');
   return date[0];
 }
-
-// class ListModel {
-//   const ListModel(this.firstimage, this.title, this.eventstartdate,
-//       this.eventenddate, this.addr1);
-//   final String firstimage;
-//   final String title;
-//   final String eventstartdate;
-//   final String eventenddate;
-//   final String addr1;
-// }
-
-// const likeditem = [
-//   ListModel("assets/images/waterbombDaegu.png", "WATERBOMB(대구)", "20220723",
-//       "20220725", "대구광역시 대구스타디움"),
-//   ListModel("assets/images/jazzfestival.png", "자라섬 재즈 페스티벌페스티벌페스티벌", "20220823",
-//       "20220923", "가평군 가평읍 달전리 자라섬자라섬자라섬자라섬"),
-// ];

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fing/FestivalPage/RecentFestival.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../FestivalPage/festivalist.dart';
@@ -9,11 +10,10 @@ class FireModel {
   String? firstimage;
   String? title;
   String? contentid;
-  String? eventstartdate;
-  String? eventenddate;
   String? mapx;
   String? mapy;
-  String? readcount;
+  String? eventstartdate;
+  String? eventenddate;
   Timestamp? timestamp;
   DocumentReference? reference;
 
@@ -22,11 +22,10 @@ class FireModel {
       this.firstimage,
       this.title,
       this.contentid,
-      this.eventstartdate,
-      this.eventenddate,
       this.mapx,
       this.mapy,
-      this.readcount,
+      this.eventstartdate,
+      this.eventenddate,
       this.timestamp,
       this.reference);
 
@@ -35,11 +34,10 @@ class FireModel {
     firstimage = json['firstimage'];
     title = json['title'];
     contentid = json['contentid'];
-    eventstartdate = json['eventstartdate'];
-    eventenddate = json['eventenddate'];
-    readcount = json['readcount'];
     mapx = json['mapx'];
     mapy = json['mapy'];
+    eventstartdate = json['eventstartdate'];
+    eventenddate = json['eventenddate'];
     timestamp = json['timestamp'];
   }
 
@@ -112,14 +110,13 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
           fireModel.firstimage,
           fireModel.title,
           fireModel.contentid,
-          fireModel.eventstartdate,
-          fireModel.eventenddate,
-          fireModel.readcount,
           fireModel.mapx,
           fireModel.mapy,
+          fireModel.eventstartdate,
+          fireModel.eventenddate,
           fireModel.timestamp,
           fireModel.reference));
-      if (tmp.length > 3) {
+      if (tmp.length > 10) {
         tmp.removeAt(tmp.length - 1);
         FirebaseFirestore.instance
             .collection('User')
@@ -151,7 +148,7 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
                         //     builder: (context) =>DetailPage())
                         //     );
                       },
-                      child: FestivalItem(item: list[index]),
+                      child: RecentFestivalItem(item: list[index]),
                     )));
           } else if (snapshot.hasError) {
             return Text('error${snapshot.error}');

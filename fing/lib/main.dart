@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:fing/FestivalPage/detail/detail.dart';
 import 'package:fing/MainPage/mainpage.dart';
 import 'package:fing/Mypage/favorite.dart';
 import 'package:fing/Mypage/mypage.dart';
 import 'package:fing/Mypage/notice.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -15,6 +17,8 @@ import 'package:firebase_core/firebase_core.dart';
 //import 'firebase_options.dart';
 import 'Region/RegionPage.dart';
 import 'Map/mylocation.dart';
+
+import 'package:fing/API/searchFestival.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -82,6 +86,7 @@ class _RootState extends State<Root> {
 
   static get data => null;
 
+  int flagCnt = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -122,9 +127,16 @@ class _RootState extends State<Root> {
                   int index = _pages.indexOf(page);
                   return Navigator(
                     key: _navigatorKeyList[index],
-                    onGenerateRoute: (_) {
-                      return MaterialPageRoute(builder: (context) => page);
-                    },
+                    onGenerateRoute: _currentIndex == 3
+                        ? (_) {
+                            return MaterialPageRoute(
+                                builder: (context) => LikedPage(),
+                                maintainState: true);
+                          }
+                        : (_) {
+                            return MaterialPageRoute(
+                                builder: (context) => page);
+                          },
                   );
                 }).toList(),
               ),
@@ -271,88 +283,140 @@ class SearchList extends StatefulWidget {
 
 class _SearchListState extends State<SearchList> {
   bool flag = true;
-  static const List<String> festList = <String>[
+  late Future<List<SearchFestival>> futureSearchFestival;
+
+  @override
+  void initState() {
+    super.initState();
+    futureSearchFestival = fetchSearchFestival(
+        arrange: "A",
+        areaCode: "",
+        sigunguCode: "",
+        eventStartDate: "20220901",
+        eventEndDate: "");
+  }
+
+  List<String> festList = <String>[
     'aardvark',
     'bobcat',
     'chameleon',
   ];
 
   var searchResult;
-  @override
+
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            iconTheme: IconThemeData(color: Colors.grey),
-            backgroundColor: Colors.white,
-            title: Autocomplete<String>(
-              optionsMaxHeight: 0,
-              optionsBuilder: (TextEditingValue textEditingValue) {
-                if (textEditingValue.text == '') {
-                  return const Iterable<String>.empty();
-                }
-                setState(() {
-                  searchResult = festList.where((String option) {
-                    return option.contains(textEditingValue.text);
-                  }).toList();
-                });
-                return searchResult;
-              },
-              onSelected: (String selection) {
-                debugPrint('You just selected $selection');
-              },
-            )),
-        body: searchResult == null
-            ? Center(
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.search_outlined,
-                        size: 25,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        '페스티벌을 검색하세요',
-                        style: TextStyle(fontSize: 20, color: Colors.grey),
-                      )
-                    ]),
-              )
-            : ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: searchResult.length,
-                itemBuilder: ((context, index) {
-                  return InkWell(
-                      onTap: (() {}),
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        margin: EdgeInsets.fromLTRB(20, 5, 30, 5),
-                        height: 50,
-                        alignment: Alignment(-1.0, 0.0),
-                        // decoration: BoxDecoration(
-                        //     border: Border(
-                        //   bottom: BorderSide(
-                        //       color: Color.fromARGB(255, 129, 129, 129),
-                        //       width: 1),
-                        // )),
-                        child: Row(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                                child: Icon(
-                                  Icons.search,
-                                  color: Colors.grey,
-                                )),
-                            Text(
-                              searchResult[index],
-                              style: TextStyle(fontSize: 20),
+    var screen = MediaQuery.of(context).size;
+    return FutureBuilder<List<SearchFestival>>(
+      future:futureSearchFestival,
+      builder: (context,snapshot) {
+        if(snapshot.hasData){
+          List<Item> searchfestival_model =
+                  snapshot.data![0].response!.body!.items!.item!;
+          for(int i=0;i<searchfestival_model.length;i++){
+            festList.add(searchfestival_model[i].title.toString());
+          }
+          return Scaffold(
+            appBar: AppBar(
+                iconTheme: IconThemeData(color: Colors.grey),
+                backgroundColor: Colors.white,
+                title: Autocomplete<String>(
+                  optionsMaxHeight: 0,
+                  optionsBuilder: (TextEditingValue textEditingValue) {
+                    if (textEditingValue.text == '') {
+                      return const Iterable<String>.empty();
+                    }
+                    setState(() {
+                      searchResult = festList.where((String option) {
+                        return option.contains(textEditingValue.text);
+                      }).toList();
+                    });
+                    return searchResult;
+                  },
+                  onSelected: (String selection) {
+                    debugPrint('You just selected $selection');
+                  },
+                )),
+            body: searchResult == null
+                ? Center(
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.search_outlined,
+                            size: 25,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            '페스티벌을 검색하세요',
+                            style: TextStyle(fontSize: 20, color: Colors.grey),
+                          )
+                        ]),
+                  )
+                : ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: searchResult.length,
+                    itemBuilder: ((context, index) {
+                      return InkWell(
+                          onTap: (()=> {
+                            for(int i=0;i<searchfestival_model.length;i++){
+                              if(searchfestival_model[i].title.toString()==searchResult[index]){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DetailPage(
+                                            firstimage: searchfestival_model[i].firstimage,
+                                            title: searchfestival_model[i].title,
+                                            addr1: searchfestival_model[i].addr1,
+                                            contentid: searchfestival_model[i].contentid,
+                                            mapx: searchfestival_model[i].mapx,
+                                            mapy: searchfestival_model[i].mapy,
+                                          ),),),
+                              }
+                            }
+                          }),
+                          child: Container(
+                            width:screen.width,
+                            margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                            height: 50,
+                            alignment: Alignment(-1.0, 0.0),
+                            // decoration: BoxDecoration(
+                            //     border: Border(
+                            //   bottom: BorderSide(
+                            //       color: Color.fromARGB(255, 129, 129, 129),
+                            //       width: 1),
+                            // )),
+                            child: Row(
+                              children: [
+                                Container(
+                                    width:screen.width*0.2,
+                                    // margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                    child: Icon(
+                                      Icons.search,
+                                      color: Colors.grey,
+                                    )),
+                                Container(
+                                  width:screen.width*0.75,
+                                  padding:EdgeInsets.fromLTRB(0, 0, screen.width*0.05, 0),
+                                  child: Text(
+                                    searchResult[index],
+                                    style: TextStyle(fontSize: 17),
+                                    overflow: TextOverflow.ellipsis
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ));
-                })));
+                          ));
+                    })));
+
+        }else if(snapshot.hasError){
+          return Text('error${snapshot.error}');
+        }
+        return Center(child:CupertinoActivityIndicator());
+              }
+    );
   }
 }

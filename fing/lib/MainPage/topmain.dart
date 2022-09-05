@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -228,7 +229,13 @@ class FestivalCarousel extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.symmetric(horizontal: 5.0),
                 decoration: BoxDecoration(color: Colors.white),
-                child: Image.network(i),
+                child: CachedNetworkImage(
+                  // placeholder: (context, url) => CircularProgressIndicator(),
+                  imageUrl: i,
+                  errorWidget: ((context, url, error) => Image(
+                      image: AssetImage('assets/images/DefaultImage.png'))),
+                  fit: BoxFit.contain,
+                ),
               );
             },
           );
