@@ -23,7 +23,7 @@ class MyPageMain extends StatelessWidget {
         '/notice': ((context) => NoticePage()),
         '/faq': (context) => FaqPage(),
         '/service': (context) => ServicePage(),
-        '/persoanl': (context) => PersonalPage(),
+        '/personal': (context) => PersonalPage(),
       },
     );
   }

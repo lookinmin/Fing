@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fing/FestivalPage/detail/detail.dart';
 import 'package:fing/Mypage/favorite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,20 @@ class FireModel {
   String? contentid;
   String? eventstartdate;
   String? eventenddate;
+  String? mapx;
+  String? mapy;
   DocumentReference? reference;
 
-  FireModel(this.addr1, this.firstimage, this.title, this.contentid,
-      this.eventstartdate, this.eventenddate, this.reference);
+  FireModel(
+      this.addr1,
+      this.firstimage,
+      this.title,
+      this.contentid,
+      this.eventstartdate,
+      this.eventenddate,
+      this.mapx,
+      this.mapy,
+      this.reference);
 
   FireModel.fromJson(dynamic json, this.reference) {
     addr1 = json['addr1'];
@@ -29,6 +40,8 @@ class FireModel {
     contentid = json['contentid'];
     eventstartdate = json['eventstartdate'];
     eventenddate = json['eventenddate'];
+    mapx = json['mapx'];
+    mapy = json['mapy'];
   }
 
   FireModel.fromQuerySnapshot(
@@ -78,10 +91,9 @@ class _LikedListState extends State<LikedList> {
   @override
   void initState() {
     super.initState();
+    print('likepage initstate');
     favoritelist = readData();
   }
-
-  List<bool> like = [];
 
   Future<List<FireModel>> readData() async {
     CollectionReference<Map<String, dynamic>> collectionReference =
@@ -102,12 +114,11 @@ class _LikedListState extends State<LikedList> {
           fireModel.contentid,
           fireModel.eventstartdate,
           fireModel.eventenddate,
+          fireModel.mapx,
+          fireModel.mapy,
           fireModel.reference));
     }
 
-    for (int i = 0; i < tmp.length; i++) {
-      like.add(true);
-    }
     return tmp;
   }
 
@@ -121,17 +132,21 @@ class _LikedListState extends State<LikedList> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<FireModel> list = snapshot.data!;
-
               return ListView.builder(
                   itemCount: list.length,
                   itemBuilder: ((context, index) {
                     return InkWell(
                       onTap: () {
-                        //          Navigator.push(
-                        // context,
-                        // MaterialPageRoute(
-                        //     builder: (context) =>DetailPage())
-                        //     );
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DetailPage(
+                                    firstimage: list[index].firstimage,
+                                    title: list[index].title,
+                                    addr1: list[index].addr1,
+                                    contentid: list[index].contentid,
+                                    mapx: list[index].mapx,
+                                    mapy: list[index].mapy)));
                       },
                       child: Container(
                         padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
@@ -143,11 +158,11 @@ class _LikedListState extends State<LikedList> {
                                 favoriteImg(size, list, index),
                                 favoriteInfo(size, list, index),
                                 FavoriteButton(
-                                  //플러터 패키지 쓴 favorite_button임
-                                  isFavorite: like[index],
+                                  isFavorite: true,
+                                  iconDisabledColor: Colors.red,
                                   valueChanged: (isFavorite) async {
-                                    if (like[index]) {
-                                      // String curuser = "wjdtpdus828@naver.com";
+                                    if (!isFavorite) {
+                                      // isFavorite = true;
                                       await FirebaseFirestore.instance
                                           .collection('User')
                                           .doc(curuser)
@@ -156,19 +171,11 @@ class _LikedListState extends State<LikedList> {
                                           .delete();
 
                                       setState(() {
-                                        list.removeAt(index);
-                                      });
-                                      setState(() {
-                                        like.removeAt(index);
+                                        list.remove(list[index]);
+                                        // change_zzim(
+                                        //     isFavorite, list[index].title);
                                       });
                                     }
-                                    for (int i = 0; i < like.length; i++) {
-                                      print('flag: ${like[i]}');
-                                    }
-
-                                    // for (int i = 0; i < like.length; i++) {
-                                    //   like[i] = true;
-                                    // }
                                   },
                                   iconSize: 50,
                                 )
@@ -238,6 +245,88 @@ class _LikedListState extends State<LikedList> {
             ),
           ],
         ));
+  }
+
+  void showPopup(BuildContext context, bool value, String festival_name) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          if (value) {
+            return Dialog(
+                child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 150,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10), color: Colors.white),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '$festival_name',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            '을 찜목록에 추가하였습니다!',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      )),
+                ],
+              ),
+            ));
+          } else {
+            return Dialog(
+                child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 150,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10), color: Colors.white),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '$festival_name',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            '을 찜목록에서 제거하였습니다!',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      )),
+                ],
+              ),
+            ));
+          }
+        });
   }
 }
 

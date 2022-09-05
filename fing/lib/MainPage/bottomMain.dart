@@ -118,8 +118,11 @@ class GoodsButton extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
       child: OutlinedButton(
         onPressed: () {
-          Navigator.of(context, rootNavigator: true).push(
-            MaterialPageRoute(builder: (context) => GoodsPage()),
+          Navigator.of(context, rootNavigator: false).push(
+            MaterialPageRoute(
+                builder: (context) => GoodsPage(),
+                fullscreenDialog: true,
+                maintainState: true),
           );
         },
         // ignore: sort_child_properties_last
@@ -197,7 +200,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) =>
-                      FestivalPage(type: type, code:'A02070200')));
+                      FestivalPage(type: type, code: 'A02070200')));
             },
             child: Container(
               padding: EdgeInsets.all(5),
@@ -486,8 +489,10 @@ Widget CatBtn(int id, BuildContext context, type) {
           InkWell(
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
-                  builder: (context) =>
-                      FestivalPage(type: type, code: 'A02081000',)));
+                  builder: (context) => FestivalPage(
+                        type: type,
+                        code: 'A02081000',
+                      )));
             },
             child: Container(
               padding: EdgeInsets.all(7),
@@ -544,8 +549,10 @@ Widget CatBtn(int id, BuildContext context, type) {
           InkWell(
             onTap: () {
               Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
-                  builder: (context) =>
-                      FestivalPage(type: type, code: 'A02081200',)));
+                  builder: (context) => FestivalPage(
+                        type: type,
+                        code: 'A02081200',
+                      )));
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),

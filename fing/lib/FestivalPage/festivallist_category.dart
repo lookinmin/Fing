@@ -133,21 +133,21 @@ class FestivalItem extends StatefulWidget {
   State<FestivalItem> createState() => _FestivalItemState();
 }
 
-class current_Model {
-  Uri? current_image;
-  String? current_title;
-  String? current_address;
+// class current_Model {
+//   Uri? current_image;
+//   String? current_title;
+//   String? current_address;
 
-  current_Model({this.current_image, this.current_title, this.current_address});
+//   current_Model({this.current_image, this.current_title, this.current_address});
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['current_image'] = current_image;
-    map['current_title'] = current_title;
-    map['current_address'] = current_address;
-    return map;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final map = <String, dynamic>{};
+//     map['current_image'] = current_image;
+//     map['current_title'] = current_title;
+//     map['current_address'] = current_address;
+//     return map;
+//   }
+// }
 
 class _FestivalItemState extends State<FestivalItem> {
   @override
@@ -188,11 +188,10 @@ class _FestivalItemState extends State<FestivalItem> {
           "title": widget.item.title,
           "addr1": widget.item.addr1,
           "contentid": widget.item.contentid,
-          // "eventstartdate": widget.item.eventstartdate,
-          // "eventenddate": widget.item.eventenddate,
           "mapx": widget.item.mapx,
           "mapy": widget.item.mapy,
-          // "readcount": widget.item.readcount.toString(),
+          "eventstartdate": widget.item.eventstartdate,
+          "eventenddate": widget.item.eventenddate,
           "timestamp": DateTime.now()
         }, SetOptions(merge: true));
         if (current_fast.length > 3) {
