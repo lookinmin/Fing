@@ -52,10 +52,9 @@ class GoodsShow extends State<state> {
           Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
         Container(
           height: screen.height * 0.3,
-          width: screen.height * 0.2,
           child: Image.asset(
             'assets/images/tumbler.png',
-            fit: BoxFit.fill,
+            fit: BoxFit.fitHeight,
           ),
         ),
         Container(
