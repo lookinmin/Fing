@@ -5,9 +5,9 @@ import { Footer } from './Footer';
 import { useMediaQuery } from 'react-responsive';
 
 export const Goods = () => {
-  const isNormal = useMediaQuery({minWidth : 1550})
-  const isTooBig = useMediaQuery({maxWidth:1549.9999, minWidth:1000})
-  const isSmall = useMediaQuery({maxWidth:999.999})
+  const isNormal = useMediaQuery({minWidth : 1201})
+  const isTooBig = useMediaQuery({maxWidth:1200, minWidth:500})
+  const isSmall = useMediaQuery({maxWidth:499})
   return (
     <div className="goods">
       <div className="txtForTop">
@@ -72,7 +72,7 @@ export const Goods = () => {
         <div className="goodsItems2">
           <div id="item1">
             <h2>F-ING 텀블러</h2>
-            <div className="pic-ctn">
+            <div className="pic-ctn2">
               <img src="./img/tum1.png" alt="" class="pic"></img>
               <img src="./img/tum2.png" alt="" class="pic"></img>
               <img src="./img/tum1.png" alt="" class="pic"></img>
@@ -98,7 +98,7 @@ export const Goods = () => {
           </div>
           <div id="item2">
             <h2>F-ING 에코백</h2>
-            <div className="pic-ctn">
+            <div className="pic-ctn2">
             <img src="./img/echo01.png" alt="" className="pic"></img>
               <img src="./img/echo02.png" alt="" className="pic"></img>
               <img src="./img/echo03.png" alt="" className="pic"></img>
