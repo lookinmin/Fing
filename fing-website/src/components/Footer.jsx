@@ -16,11 +16,8 @@ export const Footer = () => {
       case 1:
         window.open('https://www.instagram.com/festival_ing/');
         break;
-      case 2:
-        window.open('https://www.apple.com/kr/app-store/');
-        break;
       case 3:
-        window.open('https://play.google.com/store/games?hl=ko');
+        window.open('https://play.google.com/store/apps/details?id=com.PingPong.fing');
         break;
       case 4:
         window.open('https://github.com/lookinmin/Fing');
@@ -49,7 +46,6 @@ export const Footer = () => {
         <div className="footer">
           <div className="pageIcons">
             <IoLogoInstagram color='#faf5e4' size={40} onClick={() => move(1)}/>
-            <GrAppleAppStore color='#faf5e4' size={40} onClick={() => move(2)}/>
             <RiGooglePlayFill color='#faf5e4' size={40} onClick={() => move(3)}/>  
             <IoLogoGithub color='#faf5e4' size={40} onClick={() => move(4)}/>
             <RiKakaoTalkFill color='#faf5e4' size={40} onClick={() => move(5)}/>
@@ -86,7 +82,6 @@ export const Footer = () => {
         <div className="footer2">
           <div className="pageIcons">
             <IoLogoInstagram color='#faf5e4' size={40} onClick={() => move(1)}/>
-            <GrAppleAppStore color='#faf5e4' size={40} onClick={() => move(2)}/>
             <RiGooglePlayFill color='#faf5e4' size={40} onClick={() => move(3)}/>  
             <IoLogoGithub color='#faf5e4' size={40} onClick={() => move(4)}/>
             <RiKakaoTalkFill color='#faf5e4' size={40} onClick={() => move(5)}/>
@@ -124,7 +119,6 @@ export const Footer = () => {
         <div className="footer3">
           <div className="pageIcons">
           <IoLogoInstagram color='#faf5e4' size={40} onClick={() => move(1)}/>
-            <GrAppleAppStore color='#faf5e4' size={40} onClick={() => move(2)}/>
             <RiGooglePlayFill color='#faf5e4' size={40} onClick={() => move(3)}/>  
             <IoLogoGithub color='#faf5e4' size={40} onClick={() => move(4)}/>
             <RiKakaoTalkFill color='#faf5e4' size={40} onClick={() => move(5)}/>

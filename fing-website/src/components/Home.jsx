@@ -6,6 +6,7 @@ import { useMediaQuery } from 'react-responsive';
 import React, { useRef, useState, useEffect } from 'react';
 import { useIntersectionObserver } from './useIntersectionObserver.ts';
 import { IoAnalyticsOutline,IoPartlySunnyOutline, IoHeartOutline,IoLogoGooglePlaystore } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 
 
 export const Home = () => {
@@ -49,6 +50,12 @@ export const Home = () => {
   useIntersectionObserver(img2, styles.imgAni);
   useIntersectionObserver(img3, styles.imgAni);
 
+  function handleClick(e) {
+    if(e===1){
+      window.open('https://play.google.com/store/apps/details?id=com.PingPong.fing');
+    }
+  }
+
   return (
     <div className="home">
       <div className='mainPage'>
@@ -71,21 +78,21 @@ export const Home = () => {
       <Menu/>
 
       {isNormal && 
-        <div className="toDownload">
+        <div className="toDownload" onClick={() => handleClick(1)}>
           <img src="./img/fingLogo.png" alt="fing" height="70px"/>
           <h2 style={{paddingRight : "15px"}}>Fing Download</h2>
           <IoLogoGooglePlaystore color='#fff' size={40} />
         </div>
       }
       {isTooBig &&
-        <div className="toDownload">
+        <div className="toDownload" onClick={() => handleClick(1)}>
           <img src="./img/fingLogo.png" alt="fing" height="50px"/>
           <h2 style={{paddingRight : "10px", fontSize: "1.3rem"}}>Fing Download</h2>
           <IoLogoGooglePlaystore color='#fff' size={30} />
         </div>
       }
       {isSmall &&
-        <div className="toDownload">
+        <div className="toDownload" onClick={() => handleClick(1)}>
           <img src="./img/fingLogo.png" alt="fing" height="50px"/>
           <h2 style={{paddingRight : "10px", fontSize: "1.3rem"}}>Download</h2>
           <IoLogoGooglePlaystore color='#fff' size={25} />
