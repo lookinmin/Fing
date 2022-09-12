@@ -149,12 +149,15 @@ class _RootState extends State<Root> {
           currentIndex: _currentIndex,
           type: BottomNavigationBarType.fixed,
           onTap: (index) {
-            setState(() {
+            setState(() async {
               if (index == 0) {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Root()));
               } else if (index == 2) {
-                LocationPermission permission = getpermission();
+                bool serviceEnabled;
+                LocationPermission permission;
+                serviceEnabled = await Geolocator.isLocationServiceEnabled();
+                permission = await Geolocator.checkPermission();
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -276,16 +279,13 @@ class FestivalSearch extends StatelessWidget {
   }
 }
 
-getpermission() async {
-  bool serviceEnabled;
-  LocationPermission permission;
-  serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  // if (!serviceEnabled) {
-  //  return Future.error('Location services are disabled.');
-  // }
-  permission = await Geolocator.checkPermission();
-  return permission;
-}
+// getpermission() async {
+//   bool serviceEnabled;
+//   LocationPermission permission;
+//   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+//   permission = await Geolocator.checkPermission();
+//   return permission;
+// }
 
 Widget logo() {
   return Image.asset(
