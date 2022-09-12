@@ -12,7 +12,7 @@ export const Menu = () => {
       navigate("/goods");
     }
     else{
-      navigate("/service");
+      navigate("/about");
     }
   }
   return (
