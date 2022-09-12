@@ -116,17 +116,17 @@ class _MyPageState extends State<MyPage> {
                       Navigator.pushNamed(context, '/recent');
                     },
                   ),
-                  ListTile(
-                    //dense: true,
-                    minLeadingWidth: 0,
-                    leading: Icon(Icons.favorite_border_outlined, size: 17),
-                    title: Text('찜한 페스티벌'),
-                    trailing: Icon(Icons.chevron_right),
-                    onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=> 어쩌구()));
-                      Navigator.pushNamed(context, '/favorite');
-                    },
-                  ),
+                  // ListTile(
+                  //   //dense: true,
+                  //   minLeadingWidth: 0,
+                  //   leading: Icon(Icons.favorite_border_outlined, size: 17),
+                  //   title: Text('찜한 페스티벌'),
+                  //   trailing: Icon(Icons.chevron_right),
+                  //   onTap: () {
+                  //     // Navigator.push(context, MaterialPageRoute(builder: (context)=> 어쩌구()));
+                  //     Navigator.pushNamed(context, '/favorite');
+                  //   },
+                  // ),
                   ListTile(
                     minLeadingWidth: 0,
                     leading: Icon(Icons.notifications_outlined, size: 17),
@@ -139,8 +139,7 @@ class _MyPageState extends State<MyPage> {
                                   _isNotificationOn = value;
                                   change_alram(_isNotificationOn); //알람뽑는거요
                                 }))),
-                    onTap: () {
-                    },
+                    onTap: () {},
                   ),
                   Divider(
                     height: 50,
@@ -185,7 +184,7 @@ class _MyPageState extends State<MyPage> {
                   Container(
                     constraints: BoxConstraints(
                         maxHeight: MediaQuery.of(context).size.height * 0.3),
-                        alignment: Alignment.center,
+                    alignment: Alignment.center,
                     child: GoogleInline(),
                   ),
                   Divider(
