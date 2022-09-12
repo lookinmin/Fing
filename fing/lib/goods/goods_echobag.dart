@@ -69,7 +69,7 @@ class GoodsShow extends State<state> {
                 'Fing Echobag',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height:10),
+              SizedBox(height: 10),
               Text(
                 'KRW 15,000',
                 style: TextStyle(
@@ -79,12 +79,12 @@ class GoodsShow extends State<state> {
               Divider(
                 thickness: 1,
               ),
-                            SizedBox(height:10),
+              SizedBox(height: 10),
               Text(
                 'Fing 로고가 박힌 화이트 에코백,\n친환경적인 페스티벌에 한발짝\nFing 에코백과 함께 페스티벌을 즐겨보세요.',
                 style: TextStyle(
                   fontSize: 16,
-                  color:Colors.grey[600],
+                  color: Colors.grey[600],
                 ),
               ),
             ],
@@ -97,28 +97,28 @@ class GoodsShow extends State<state> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-          FlatButton(
-              onPressed: () {
-                setState(() {
-                  number++;
-                });
-              },
-              child: Icon(Icons.add)),
-          Container(
-            child: Text(
-              '$number',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-          FlatButton(
-              onPressed: () {
-                setState(() {
-                  if (number > 0) {
-                    number--;
-                  }
-                });
-              },
-              child: Icon(Icons.remove)),
+              TextButton(
+                  onPressed: () {
+                    setState(() {
+                      number++;
+                    });
+                  },
+                  child: Icon(Icons.add)),
+              Container(
+                child: Text(
+                  '$number',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              TextButton(
+                  onPressed: () {
+                    setState(() {
+                      if (number > 0) {
+                        number--;
+                      }
+                    });
+                  },
+                  child: Icon(Icons.remove)),
             ],
           ),
         ),
@@ -168,14 +168,14 @@ class GoodsShow extends State<state> {
                   print('hi');
                 },
                 style: ElevatedButton.styleFrom(
-                    minimumSize: Size(screen.width*0.8, screen.height*0.07),
+                    minimumSize: Size(screen.width * 0.8, screen.height * 0.07),
                     primary: Color.fromRGBO(255, 126, 0, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.5),
                     )),
                 child: Text(
                   "구매하기",
-                  style: TextStyle(color: Colors.white,fontSize: 18),
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ),
             ],

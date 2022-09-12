@@ -97,7 +97,7 @@ class GoodsShow extends State<state> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-          FlatButton(
+          TextButton(
               onPressed: () {
                 setState(() {
                   number++;
@@ -110,7 +110,7 @@ class GoodsShow extends State<state> {
               style: TextStyle(fontSize: 16),
             ),
           ),
-          FlatButton(
+          TextButton(
               onPressed: () {
                 setState(() {
                   if (number > 0) {

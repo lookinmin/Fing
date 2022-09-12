@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "FING",
       routes: {
-        '/':(context)=>GoodsPage(),
+        '/': (context) => GoodsPage(),
         '/goods_tumbler': (BuildContext context) => goods_tumbler(),
         '/goods_echobag': (BuildContext context) => goods_echobag()
       },
@@ -33,11 +33,9 @@ class ProductModel {
 }
 
 const productList = [
-  ProductModel(
-      "assets/images/echobag.png", "Fing Echobag", "KRW 15,000",
+  ProductModel("assets/images/echobag.png", "Fing Echobag", "KRW 15,000",
       goods_echobag()),
-  ProductModel(
-      "assets/images/tumbler.png", "Fing Tumbler", "KRW 8,000",
+  ProductModel("assets/images/tumbler.png", "Fing Tumbler", "KRW 8,000",
       goods_tumbler()),
 ];
 
@@ -52,14 +50,14 @@ class GoodsPage extends StatelessWidget {
         title: Text(
           'Fing Market',
           style: TextStyle(
-              fontSize: 18.0, 
-              fontWeight: FontWeight.bold, 
-              color: Colors.black,
-              letterSpacing:1.0,
-              ),
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            letterSpacing: 1.0,
+          ),
         ),
-        centerTitle:true,
-        elevation:1.0,
+        centerTitle: true,
+        elevation: 1.0,
         toolbarHeight: 50.0,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(
@@ -78,40 +76,39 @@ class GoodsMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      width:size.width,
+      width: size.width,
       child: ListView.builder(
           itemCount: productList.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-              width:size.width,
+              width: size.width,
               child: Column(
                 children: [
                   Row(
                     children: [
                       Container(
-                        width:size.width*0.5,
-                        padding:EdgeInsets.all(5),
+                        width: size.width * 0.5,
+                        padding: EdgeInsets.all(5),
                         child: Image.asset(
                           productList[index].imageUrl,
                         ),
                       ),
                       Container(
-                        width:size.width*0.5,
+                        width: size.width * 0.5,
                         padding: EdgeInsets.all(10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              padding:EdgeInsets.only(top:10),
+                              padding: EdgeInsets.only(top: 10),
                               child: Text(
                                 productList[index].title,
                                 style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Container(
-                              padding:EdgeInsets.only(top:10),
+                              padding: EdgeInsets.only(top: 10),
                               child: Text(
                                 productList[index].desc1,
                                 style: TextStyle(
@@ -120,46 +117,47 @@ class GoodsMenu extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              padding:EdgeInsets.only(top:20),
+                              padding: EdgeInsets.only(top: 20),
                               child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.end,
-                                  children: [
-                                    RaisedButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            //화면전환
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    productList[index]
-                                                        .router1));
-                                      },
-                                      color:
-                                          Color.fromRGBO(255, 126, 0, 1),
-                                      child: Text(
-                                        "구매하기",
-                                        style: TextStyle(
-                                            color: Colors.white),
-                                      ),
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          //화면전환
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  productList[index].router1));
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color.fromRGBO(255, 126, 0, 1),
                                       // 테두리 모서리
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(10.5),
                                       ),
-                                    )
-                                  ],
-                                ),
+                                    ),
+                                    child: Text(
+                                      "구매하기",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ],
                         ),
                       )
                     ],
                   ),
-                  Divider(thickness: 2,indent: 10,endIndent: 10,),
+                  Divider(
+                    thickness: 2,
+                    indent: 10,
+                    endIndent: 10,
+                  ),
                 ],
               ),
-              
             );
           }),
     );
