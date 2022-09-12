@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/FestivalPage/detail/detail.dart';
 import 'package:fing/MainPage/mainpage.dart';
 import 'package:fing/Mypage/favorite.dart';
@@ -9,6 +10,7 @@ import 'package:fing/Mypage/notice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'LikedPage/likedpage.dart';
@@ -76,7 +78,7 @@ class _RootState extends State<Root> {
   final _pages = [
     MainTopBottom(),
     RegionPageMain(),
-    MyLocation(),
+    Container(),
     // Favorite(), //LikePage -> Favorite
     LikedPage(),
     MyPageMain()
@@ -147,10 +149,19 @@ class _RootState extends State<Root> {
           currentIndex: _currentIndex,
           type: BottomNavigationBarType.fixed,
           onTap: (index) {
-            setState(() {
+            setState(() async {
               if (index == 0) {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Root()));
+              } else if (index == 2) {
+                bool serviceEnabled;
+                LocationPermission permission;
+                serviceEnabled = await Geolocator.isLocationServiceEnabled();
+                permission = await Geolocator.checkPermission();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyLocation(permission)));
               } else {
                 _currentIndex = index;
               }
@@ -267,6 +278,14 @@ class FestivalSearch extends StatelessWidget {
     );
   }
 }
+
+// getpermission() async {
+//   bool serviceEnabled;
+//   LocationPermission permission;
+//   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+//   permission = await Geolocator.checkPermission();
+//   return permission;
+// }
 
 Widget logo() {
   return Image.asset(
