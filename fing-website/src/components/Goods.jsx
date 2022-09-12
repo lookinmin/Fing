@@ -37,7 +37,9 @@ export const Goods = () => {
                 <span className="circle" aria-hidden="true">
                   <span className="icon arrow"></span>
                 </span>
-                <span className="button-text">구매하러 앱으로 이동하기</span>
+                <span className="button-text" onClick={()=>{
+                          window.open('https://play.google.com/store/apps/details?id=com.PingPong.fing');
+                }}>구매하러 앱으로 이동하기</span>
               </button>
             </div>
           </div>
@@ -62,7 +64,9 @@ export const Goods = () => {
                 <span class="circle" aria-hidden="true">
                   <span class="icon arrow"></span>
                 </span>
-                <span class="button-text">구매하러 앱으로 이동하기</span>
+                <span class="button-text" onClick={()=>{
+                          window.open('https://play.google.com/store/apps/details?id=com.PingPong.fing');
+                }}>구매하러 앱으로 이동하기</span>
               </button>
             </div>
           </div>
@@ -92,7 +96,9 @@ export const Goods = () => {
                 <span className="circle" aria-hidden="true">
                   <span className="icon arrow"></span>
                 </span>
-                <span className="button-text">구매하러 앱으로 이동하기</span>
+                <span className="button-text" onClick={()=>{
+                          window.open('https://play.google.com/store/apps/details?id=com.PingPong.fing');
+                }}>구매하러 앱으로 이동하기</span>
               </button>
             </div>
           </div>
@@ -117,7 +123,9 @@ export const Goods = () => {
                 <span class="circle" aria-hidden="true">
                   <span class="icon arrow"></span>
                 </span>
-                <span class="button-text">구매하러 앱으로 이동하기</span>
+                <span class="button-text" onClick={()=>{
+                          window.open('https://play.google.com/store/apps/details?id=com.PingPong.fing');
+                }}>구매하러 앱으로 이동하기</span>
               </button>
             </div>
           </div>
@@ -127,23 +135,29 @@ export const Goods = () => {
       <Menu/>
       
       {isNormal && 
-        <div className="toDownload">
+        <div className="toDownload" >
           <img src="./img/fingLogo.png" alt="fing" height="70px"/>
-          <h2 style={{paddingRight : "15px"}}>Fing Download</h2>
+          <h2 style={{paddingRight : "15px"}}onClick={()=>{
+          window.open('https://play.google.com/store/apps/details?id=com.PingPong.fing');
+        }}>Fing Download</h2>
           <IoLogoGooglePlaystore color='#fff' size={40} />
         </div>
       }
       {isTooBig &&
-        <div className="toDownload">
+        <div className="toDownload" >
           <img src="./img/fingLogo.png" alt="fing" height="50px"/>
-          <h2 style={{paddingRight : "10px", fontSize: "1.3rem"}}>Fing Download</h2>
+          <h2 style={{paddingRight : "10px", fontSize: "1.3rem"}}onClick={()=>{
+          window.open('https://play.google.com/store/apps/details?id=com.PingPong.fing');
+        }}>Fing Download</h2>
           <IoLogoGooglePlaystore color='#fff' size={30} />
         </div>
       }
       {isSmall &&
-        <div className="toDownload">
+        <div className="toDownload" >
           <img src="./img/fingLogo.png" alt="fing" height="50px"/>
-          <h2 style={{paddingRight : "10px", fontSize: "1.3rem"}}>Download</h2>
+          <h2 style={{paddingRight : "10px", fontSize: "1.3rem"}}onClick={()=>{
+          window.open('https://play.google.com/store/apps/details?id=com.PingPong.fing');
+        }}>Download</h2>
           <IoLogoGooglePlaystore color='#fff' size={25} />
         </div>
       }

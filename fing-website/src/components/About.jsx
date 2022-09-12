@@ -105,7 +105,7 @@ export const About = () => {
             <h2>페스티벌 굿즈도 <span className='t2'>Fing</span>과 함께</h2>
             <h2><span className='t2'>Fing</span> 텀블러와 에코백으로 환경까지</h2>
           </div>
-          <a id="button-1" class="buttonSS" onClick={()=>handleClick(1)}>F-ING Market<img id="arrow-hover" src="https://github.com/atloomer/atloomer.github.io/blob/master/img/iconmonstr-paper-plane-1-120.png?raw=true"/></a>
+          <a id="button-1" class="buttonSS" style={{"cursor": "pointer"}} onClick={()=>handleClick(1)}>F-ING Market<img id="arrow-hover" src="https://github.com/atloomer/atloomer.github.io/blob/master/img/iconmonstr-paper-plane-1-120.png?raw=true"/></a>
         </div>
         <div className="men3">
           <div className="aboutTxt3" id='target3'>
