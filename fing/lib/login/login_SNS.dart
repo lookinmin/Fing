@@ -25,6 +25,22 @@ class Login_SNS extends StatelessWidget {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
+
+    fing_db_user.add(fing_db(googleUser?.displayName.toString(),
+        googleUser!.email.toString(), "google"));
+    print("login추가됨됨됨" + fing_db_user.length.toString());
+    print(googleUser!.email.toString());
+
+    await FirebaseFirestore.instance
+        .collection('User')
+        .doc(googleUser!.email.toString())
+        .collection("Privacy")
+        .doc("Main")
+        .set({
+      "name": googleUser?.displayName.toString(),
+      "email": googleUser!.email.toString()
+    });
+
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
@@ -97,7 +113,7 @@ class Login_SNS extends StatelessWidget {
                 "Fing(Festival-ing)에 오신 것을 환영합니다.",
                 style: TextStyle(
                   letterSpacing: 0.0,
-                    fontSize: 15.0,
+                  fontSize: 15.0,
                   color: Color.fromARGB(255, 70, 70, 70),
                 ),
               )
@@ -159,8 +175,11 @@ class Login_SNS extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    signInWithGoogle();
-                    Navigator.push(context,
+                    // signInWithGoogle();
+
+                    Navigator.push(
+                        //화면전환
+                        context,
                         MaterialPageRoute(builder: (context) => Root()));
                   },
                   style: ElevatedButton.styleFrom(
@@ -220,7 +239,8 @@ class Login_SNS extends StatelessWidget {
 
                         fing_db_user.add(fing_db(
                             user.kakaoAccount!.profile!.nickname.toString(),
-                            user.kakaoAccount!.email.toString()));
+                            user.kakaoAccount!.email.toString(),
+                            "kakao"));
                         print("login추가됨됨됨" + fing_db_user.length.toString());
 
                         //await addinfo().createUser(_fing_db.toJson(),user.kakaoAccount!.email.toString());
@@ -228,16 +248,17 @@ class Login_SNS extends StatelessWidget {
                             .collection('User')
                             .doc(user.kakaoAccount!.email.toString())
                             .collection("Privacy")
-                            .add({
+                            .doc("Main")
+                            .set({
                           "name":
                               user.kakaoAccount?.profile?.nickname.toString(),
                           "email": user.kakaoAccount?.email.toString()
                         });
 
-                        Navigator.push(
-                            //화면전환
-                            context,
-                            MaterialPageRoute(builder: (context) => Root()));
+                        // Navigator.push(
+                        //     //화면전환
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => Root()));
                       } catch (error) {
                         print('카카오톡으로 로그인 실패 $error');
 
@@ -262,9 +283,12 @@ class Login_SNS extends StatelessWidget {
 
                           //fing_db_user.add(fing_db(name: user.kakaoAccount!.profile!.nickname.toString(), email: user.kakaoAccount!.email.toString()));
                           //fing_db_user.add(user.kakaoAccount!.email.toString());
-                          fing_db_user.add(fing_db(
-                              user.kakaoAccount!.profile!.nickname.toString(),
-                              user.kakaoAccount!.email.toString()));
+                          fing_db_user.add(
+                            fing_db(
+                                user.kakaoAccount!.profile!.nickname.toString(),
+                                user.kakaoAccount!.email.toString(),
+                                "kakao"),
+                          );
                           print("login추가됨됨됨" + fing_db_user.length.toString());
 
                           await FirebaseFirestore.instance
@@ -277,10 +301,10 @@ class Login_SNS extends StatelessWidget {
                             "email": user.kakaoAccount?.email.toString()
                           });
 
-                          Navigator.push(
-                              //화면전환
-                              context,
-                              MaterialPageRoute(builder: (context) => Root()));
+                          // Navigator.push(
+                          //     //화면전환
+                          //     context,
+                          //     MaterialPageRoute(builder: (context) => Root()));
                         } catch (error) {
                           print('카카오계정으로 로그인 실패 $error');
                         }
@@ -306,7 +330,8 @@ class Login_SNS extends StatelessWidget {
                         //await addinfo().createUser(_fireModel.toJson(),user.kakaoAccount!.email.toString());
                         fing_db_user.add(fing_db(
                             user.kakaoAccount!.profile!.nickname.toString(),
-                            user.kakaoAccount!.email.toString()));
+                            user.kakaoAccount!.email.toString(),
+                            "kakao"));
                         print("login추가됨됨됨" + fing_db_user.length.toString());
 
                         await FirebaseFirestore.instance
@@ -324,10 +349,10 @@ class Login_SNS extends StatelessWidget {
 
                         await FirebaseAuth.instance
                             .signInWithCustomToken(token);
-                        Navigator.push(
-                            //화면전환
-                            context,
-                            MaterialPageRoute(builder: (context) => Root()));
+                        // Navigator.push(
+                        //     //화면전환
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => Root()));
                       } catch (error) {
                         print('카카오계정으로 로그인 실패 $error');
                       }
@@ -416,11 +441,13 @@ class Login_SNS extends StatelessWidget {
 class FireModel {
   String? name;
   String? email;
+  DocumentReference? reference;
 
-  FireModel({
+  FireModel(
     this.name,
     this.email,
-  });
+    this.reference,
+  );
 
   Map<String, String> toJson() {
     final map = <String, String>{};
@@ -428,7 +455,18 @@ class FireModel {
     map['email'] = email!;
     return map;
   }
+
+  FireModel.fromJson(dynamic json, this.reference) {
+    name = json['name'];
+    email = json['email'];
+  }
+
+  FireModel.fromQuerySnapshot(
+      QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
+      : this.fromJson(snapshot.data(), snapshot.reference);
 }
+
+ 
 
 // class addinfo {
 //   static final addinfo _fireService = addinfo._internal();

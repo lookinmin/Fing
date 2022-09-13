@@ -149,20 +149,27 @@ class _RootState extends State<Root> {
           currentIndex: _currentIndex,
           type: BottomNavigationBarType.fixed,
           onTap: (index) {
-            setState(() async {
+            setState(() {
               if (index == 0) {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Root()));
-              } else if (index == 2) {
-                bool serviceEnabled;
-                LocationPermission permission;
-                serviceEnabled = await Geolocator.isLocationServiceEnabled();
-                permission = await Geolocator.checkPermission();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyLocation(permission)));
-              } else {
+              }
+              // 안됨
+              // else if (index == 2) {
+              //   bool serviceEnabled;
+              //   LocationPermission permission;
+              //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+              //   permission = await Geolocator.checkPermission();
+              //   Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) => MyLocation(permission)));
+              // }
+              // else if (index == 3) {
+              //   Navigator.push(context,
+              //       MaterialPageRoute(builder: (context) => LikedPage()));
+              // }
+              else {
                 _currentIndex = index;
               }
             });
