@@ -39,7 +39,7 @@ void main() async {
       );
   HttpOverrides.global = new MyHttpOverrides();
   // WidgetsFlutterBinding.ensureInitialized();
-WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 // ByteData data =
   //     await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
   // SecurityContext.defaultContext

@@ -19,17 +19,17 @@ class RegionPageMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveWrapper.builder(
-          RegionPage(),
-          maxWidth: 1200,
-          minWidth: 480,
-          defaultScale: true,
-          defaultScaleFactor: 2,
-          breakpoints: [
-            ResponsiveBreakpoint.resize(480, name: MOBILE),
-            ResponsiveBreakpoint.autoScale(800, name: TABLET),
-            ResponsiveBreakpoint.resize(1000, name: DESKTOP),
-          ],
-          );
+      RegionPage(),
+      maxWidth: 1200,
+      minWidth: 480,
+      defaultScale: true,
+      defaultScaleFactor: 2,
+      breakpoints: [
+        ResponsiveBreakpoint.resize(480, name: MOBILE),
+        ResponsiveBreakpoint.autoScale(800, name: TABLET),
+        ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+      ],
+    );
     //       MaterialApp(
     //   builder: (context, child) => ResponsiveWrapper.builder(
     //       child,
@@ -48,7 +48,7 @@ class RegionPageMain extends StatelessWidget {
     //   routes: {
     //     '/': (context) => RegionPage(),
     //   },
-    // ); 
+    // );
   }
 }
 
@@ -61,17 +61,17 @@ class RegionPage extends StatefulWidget {
 
 class _RegionPageState extends State<RegionPage> {
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var mobileWidth = 700;
     bool isWeb = true;
     size.width > mobileWidth ? isWeb = true : isWeb = false;
-    return Scaffold(     
+    return Scaffold(
       appBar: AppBar(
         title: Text(
           '지역',
           style: TextStyle(
-            fontSize: isWeb ?  30 : 18,
+            fontSize: isWeb ? 30 : 18,
             letterSpacing: 1.0,
             fontWeight: FontWeight.bold,
             color: Colors.black,
@@ -84,7 +84,7 @@ class _RegionPageState extends State<RegionPage> {
         elevation: 1.0, // 그림자 제거
         toolbarHeight: 50.0,
       ),
-      resizeToAvoidBottomInset : false,
+      resizeToAvoidBottomInset: false,
       body: Region(),
     );
   }
@@ -175,10 +175,8 @@ class _RegionState extends State<Region> {
     bool isWeb = true;
     screen.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
-      constraints: BoxConstraints(
-        maxWidth: double.infinity,
-        maxHeight: double.infinity
-      ),
+      constraints:
+          BoxConstraints(maxWidth: double.infinity, maxHeight: double.infinity),
       color: Colors.white,
       width: screen.width * 0.65,
       padding:
@@ -202,7 +200,7 @@ class _RegionState extends State<Region> {
           child: Expanded(
             child: Container(
                 width: double.infinity,
-                height: isWeb? screen.height * 0.1:screen.height * 0.07,
+                height: isWeb ? screen.height * 0.1 : screen.height * 0.07,
                 decoration: BoxDecoration(
                     border: Border(
                         bottom: BorderSide(
@@ -216,7 +214,7 @@ class _RegionState extends State<Region> {
                     Text(
                       areadetailcode_model[index].name.toString(),
                       style: TextStyle(
-                        fontSize: isWeb ?  27 : 15,
+                        fontSize: isWeb ? 27 : 15,
                       ),
                     ),
                   ],
@@ -233,17 +231,14 @@ class _RegionState extends State<Region> {
     screen.width > mobileWidth ? isWeb = true : isWeb = false;
 
     return Container(
-      constraints: BoxConstraints(
-        maxWidth: double.infinity,
-        maxHeight: double.infinity
-      ),
+      constraints:
+          BoxConstraints(maxWidth: double.infinity, maxHeight: double.infinity),
       height: double.infinity,
       color: Colors.grey[100],
       width: screen.width * 0.35,
       padding:
           EdgeInsets.fromLTRB(screen.width * 0.03, 0, screen.width * 0.03, 0),
       child: ListView.builder(
-        
         itemCount: areacodeModel.length,
         itemBuilder: (BuildContext context, index) => InkWell(
           onTap: () => {
@@ -257,7 +252,7 @@ class _RegionState extends State<Region> {
           },
           child: Container(
             width: double.infinity,
-            height: isWeb? screen.height * 0.1:screen.height * 0.07,
+            height: isWeb ? screen.height * 0.1 : screen.height * 0.07,
             decoration: BoxDecoration(
                 border: Border(
                     bottom: BorderSide(
@@ -267,7 +262,7 @@ class _RegionState extends State<Region> {
             child: Center(
               child: Text(areacodeModel[index].name.toString(),
                   style: TextStyle(
-                      fontSize: isWeb ?  27 : 15,
+                      fontSize: isWeb ? 27 : 15,
                       fontWeight: FontWeight.w600,
                       color: Colors.grey[700]),
                   textAlign: TextAlign.center),

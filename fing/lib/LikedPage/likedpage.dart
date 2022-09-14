@@ -129,94 +129,91 @@ class _LikedListState extends State<LikedList> {
     bool isWeb = true;
     size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
-        
         child: FutureBuilder<List<FireModel>>(
-          future: favoritelist,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              List<FireModel> list = snapshot.data!;
-              return ListView.builder(
-                
-                  itemCount: list.length,
-                  itemBuilder: ((context, index) {
-                    return InkWell(
-                      
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DetailPage(
-                                    firstimage: list[index].firstimage,
-                                    title: list[index].title,
-                                    addr1: list[index].addr1,
-                                    contentid: list[index].contentid,
-                                    mapx: list[index].mapx,
-                                    mapy: list[index].mapy)));
-                      },
-                      child: Container(
-                      
-                        child: Column(
-                          
-                          crossAxisAlignment: CrossAxisAlignment.start,
+      future: favoritelist,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<FireModel> list = snapshot.data!;
+          return ListView.builder(
+              itemCount: list.length,
+              itemBuilder: ((context, index) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailPage(
+                                firstimage: list[index].firstimage,
+                                title: list[index].title,
+                                addr1: list[index].addr1,
+                                contentid: list[index].contentid,
+                                mapx: list[index].mapx,
+                                mapy: list[index].mapy)));
+                  },
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              
-                              children: [
-                                favoriteImg(size, list, index),
-                                favoriteInfo(size, list, index),
-                                Container(
-                                  //  width: isWeb ? (size.width*0.1) : (size.width*0.3),
-                                  //   padding: isWeb
-                                  //         ? EdgeInsets.fromLTRB(80.0, 100.0, 80.0, 100.0)
-                                  //         : EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                                  //   margin: EdgeInsets.all(5),
-                                  child: FavoriteButton(
-                                    
-                                    isFavorite: true,
-                                    iconDisabledColor: Colors.red,
-                                    valueChanged: (isFavorite) async {
-                                      if (!isFavorite) {
-                                        // isFavorite = true;
-                                        await FirebaseFirestore.instance
-                                            .collection('User')
-                                            .doc(curuser)
-                                            .collection("MyFavorite")
-                                            .doc(list[index].title.toString())
-                                            .delete();
+                            favoriteImg(size, list, index),
+                            favoriteInfo(size, list, index),
+                            Container(
+                              //  width: isWeb ? (size.width*0.1) : (size.width*0.3),
+                              //   padding: isWeb
+                              //         ? EdgeInsets.fromLTRB(80.0, 100.0, 80.0, 100.0)
+                              //         : EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                              //   margin: EdgeInsets.all(5),
+                              child: FavoriteButton(
+                                isFavorite: true,
+                                iconDisabledColor: Colors.red,
+                                valueChanged: (isFavorite) async {
+                                  if (!isFavorite) {
+                                    // isFavorite = true;
+                                    await FirebaseFirestore.instance
+                                        .collection('User')
+                                        .doc(curuser)
+                                        .collection("MyFavorite")
+                                        .doc(list[index].title.toString())
+                                        .delete();
 
-                                        setState(() {
-                                          list.remove(list[index]);
-                                          // change_zzim(
-                                          //     isFavorite, list[index].title);
-                                        });
-                                      }
-                                    },
-                                    iconSize: 50,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Padding(padding: EdgeInsets.only(bottom: 15)),
-                            Divider(
-                              thickness: 1,
-                              color: Color.fromARGB(102, 192, 190, 190),
-                            ),
+                                    setState(() {
+                                      list.remove(list[index]);
+                                      // change_zzim(
+                                      //     isFavorite, list[index].title);
+                                    });
+                                  }
+                                },
+                                iconSize: 50,
+                              ),
+                            )
                           ],
                         ),
-                      ),
-                    );
-                  }));
-            } else if (snapshot.hasError) {
-              return Text('error${snapshot.error}');
-            }
-            return Center(child: CupertinoActivityIndicator());
-          },
-        ));
+                        Padding(padding: EdgeInsets.only(bottom: 15)),
+                        Divider(
+                          thickness: 1,
+                          color: Color.fromARGB(102, 192, 190, 190),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }));
+        } else if (snapshot.hasError) {
+          return Text('error${snapshot.error}');
+        }
+        return Center(child: CupertinoActivityIndicator());
+      },
+    ));
   }
 
   SizedBox favoriteImg(var size, List<FireModel> list, int index) {
+    var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     return SizedBox(
-        width: size.width * 0.13,
+        width: isWeb ? size.width * 0.13 : size.width * 0.23,
         height: size.height * 0.13,
         child: CachedNetworkImage(
           placeholder: (context, url) => CircularProgressIndicator(),
@@ -230,8 +227,12 @@ class _LikedListState extends State<LikedList> {
   }
 
   Container favoriteInfo(var size, List<FireModel> list, int index) {
+    var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
-        width: size.width * 0.32,
+        width: isWeb ? size.width * 0.32 : size.width * 0.52,
         padding: EdgeInsets.only(left: 13, right: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

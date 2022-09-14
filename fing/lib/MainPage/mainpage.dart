@@ -40,9 +40,7 @@ class _MainTopBottom extends State<MainTopBottom> {
                 height: size.height * 0.4,
               ),
               Container(
-                constraints: BoxConstraints(
-                  maxHeight: double.infinity
-                ),
+                constraints: BoxConstraints(maxHeight: double.infinity),
                 child: BottomMain(),
               ),
             ],
