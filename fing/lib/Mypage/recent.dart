@@ -139,6 +139,7 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
           if (snapshot.hasData) {
             List<FireModel> list = snapshot.data!;
             return ListView.builder(
+                shrinkWrap: true,
                 itemCount: list.length,
                 itemBuilder: ((context, index) => InkWell(
                       onTap: () {
