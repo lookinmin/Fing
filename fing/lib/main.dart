@@ -260,8 +260,9 @@ class FestivalSearch extends StatelessWidget {
         width: 2.0,
       ))),
       child: Padding(
-        padding:
-            isWeb ? EdgeInsets.fromLTRB(200, 0, 200, 0) : EdgeInsets.all(0),
+        padding: isWeb
+            ? EdgeInsets.fromLTRB(size.width * 0.2, 0, size.width * 0.2, 0)
+            : EdgeInsets.all(0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
