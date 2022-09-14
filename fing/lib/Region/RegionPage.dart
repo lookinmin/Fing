@@ -18,8 +18,18 @@ class RegionPageMain extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return 
-          RegionPage();
+    return ResponsiveWrapper.builder(
+          RegionPage(),
+          maxWidth: 1200,
+          minWidth: 480,
+          defaultScale: true,
+          defaultScaleFactor: 2,
+          breakpoints: [
+            ResponsiveBreakpoint.resize(480, name: MOBILE),
+            ResponsiveBreakpoint.autoScale(800, name: TABLET),
+            ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+          ],
+          );
     //       MaterialApp(
     //   builder: (context, child) => ResponsiveWrapper.builder(
     //       child,
@@ -114,11 +124,10 @@ class _RegionState extends State<Region> {
     return SizedBox(
         width: MediaQuery.of(context).size.width,
         height: double.infinity,
-        child: Flexible(
+        child: Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              
               //도
               futureBuilderRegion(screen),
               //도시
@@ -162,7 +171,6 @@ class _RegionState extends State<Region> {
   }
 
   Container city(Size screen, List<Item> areadetailcode_model) {
-    final size=MediaQuery.of(context).size.width;
     var mobileWidth = 700;
     bool isWeb = true;
     screen.width > mobileWidth ? isWeb = true : isWeb = false;
@@ -172,9 +180,9 @@ class _RegionState extends State<Region> {
         maxHeight: double.infinity
       ),
       color: Colors.white,
-      width: isWeb? size* 0.65 :screen.width * 0.65,
+      width: screen.width * 0.65,
       padding:
-          EdgeInsets.fromLTRB(screen.width * 0.05, 0,screen.width * 0.05, 0),
+          EdgeInsets.fromLTRB(screen.width * 0.05, 0, screen.width * 0.05, 0),
       child: ListView.builder(
         itemCount: areadetailcode_model.length,
         itemBuilder: (BuildContext context, index) => InkWell(
@@ -220,7 +228,6 @@ class _RegionState extends State<Region> {
   }
 
   Container region(Size screen, List<Item> areacodeModel) {
-    final size=MediaQuery.of(context).size.width;
     var mobileWidth = 700;
     bool isWeb = true;
     screen.width > mobileWidth ? isWeb = true : isWeb = false;
@@ -232,9 +239,9 @@ class _RegionState extends State<Region> {
       ),
       height: double.infinity,
       color: Colors.grey[100],
-      width: isWeb? size * 0.35: screen.width * 0.35,
+      width: screen.width * 0.35,
       padding:
-          EdgeInsets.fromLTRB(screen.width * 0.03, 0,screen.width * 0.03, 0),
+          EdgeInsets.fromLTRB(screen.width * 0.03, 0, screen.width * 0.03, 0),
       child: ListView.builder(
         
         itemCount: areacodeModel.length,
