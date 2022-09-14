@@ -139,10 +139,10 @@ class _RootState extends State<Root> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    width: isWeb ? (size.width * 0.2) : (size.width * 0),
+                    width: isWeb ? (size.width * 0.25) : (size.width * 0),
                   ),
                   Container(
-                    width: isWeb ? (size.width * 0.6) : (size.width * 1.0),
+                    width: isWeb ? (size.width * 0.5) : (size.width * 1.0),
                     child: IndexedStack(
                       index: _currentIndex,
                       children: _pages.map((page) {
@@ -164,7 +164,7 @@ class _RootState extends State<Root> {
                     ),
                   ),
                   SizedBox(
-                    width: isWeb ? (size.width * 0.2) : (size.width * 0),
+                    width: isWeb ? (size.width * 0.25) : (size.width * 0),
                   )
                 ],
               ),

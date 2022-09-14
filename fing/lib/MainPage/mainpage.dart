@@ -47,7 +47,7 @@ class _MainTopBottom extends State<MainTopBottom> {
                 height: 600,
               ),
               SizedBox(
-                height: size.height*0.3,
+                height: size.height*0.1,
               )
             ],
           ),
