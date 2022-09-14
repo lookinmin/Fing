@@ -51,6 +51,7 @@ dependencies:
   favorite_button: ^0.0.4
   auth_buttons: ^3.0.0
   cloud_firestore: ^3.1.17
+  responsive_framework: ^0.2.0
 
   #카카오네비꺼임
   kakao_flutter_sdk_user: ^1.2.1 # 카카오 로그인
