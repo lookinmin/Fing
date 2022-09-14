@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/FestivalPage/detail/detail.dart';
 import 'package:fing/MainPage/mainpage.dart';
-import 'package:fing/Mypage/favorite.dart';
+import 'package:fing/Map/locationList.dart';
 import 'package:fing/Mypage/mypage.dart';
 import 'package:fing/Mypage/notice.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,7 +60,16 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       debugShowMaterialGrid: false,
       routes: {
-        '/': (context) => Intro(),
+        '/': (context) => ResponsiveWrapper(
+              child: Intro(),
+              maxWidth: 1200,
+              defaultScale: true,
+              breakpoints: [
+                ResponsiveBreakpoint.resize(480, name: MOBILE),
+                ResponsiveBreakpoint.autoScale(800, name: TABLET),
+                ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+              ],
+            )
       },
     );
   }
@@ -78,7 +87,7 @@ class _RootState extends State<Root> {
   final _pages = [
     MainTopBottom(),
     RegionPageMain(),
-    Container(),
+    LocationList(),
     // Favorite(), //LikePage -> Favorite
     LikedPage(),
     MyPageMain()
@@ -100,6 +109,9 @@ class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     return WillPopScope(
       onWillPop: () {
@@ -123,24 +135,38 @@ class _RootState extends State<Root> {
                 : Container()),
             Expanded(
               flex: 8,
-              child: IndexedStack(
-                index: _currentIndex,
-                children: _pages.map((page) {
-                  int index = _pages.indexOf(page);
-                  return Navigator(
-                    key: _navigatorKeyList[index],
-                    onGenerateRoute: _currentIndex == 3
-                        ? (_) {
-                            return MaterialPageRoute(
-                                builder: (context) => LikedPage(),
-                                maintainState: true);
-                          }
-                        : (_) {
-                            return MaterialPageRoute(
-                                builder: (context) => page);
-                          },
-                  );
-                }).toList(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: isWeb ? (size.width * 0.25) : (size.width * 0),
+                  ),
+                  Container(
+                    width: isWeb ? (size.width * 0.5) : (size.width * 1.0),
+                    child: IndexedStack(
+                      index: _currentIndex,
+                      children: _pages.map((page) {
+                        int index = _pages.indexOf(page);
+                        return Navigator(
+                          key: _navigatorKeyList[index],
+                          onGenerateRoute: _currentIndex == 3
+                              ? (_) {
+                                  return MaterialPageRoute(
+                                      builder: (context) => LikedPage(),
+                                      maintainState: true);
+                                }
+                              : (_) {
+                                  return MaterialPageRoute(
+                                      builder: (context) => page);
+                                },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  SizedBox(
+                    width: isWeb ? (size.width * 0.25) : (size.width * 0),
+                  )
+                ],
               ),
             )
           ],
@@ -266,11 +292,15 @@ class FestivalSearch extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => SearchList()));
                         },
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            '페스티벌을 검색하세요',
-                            style: TextStyle(color: Colors.grey),
+                        child: Container(
+                          height: 40,
+                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              '페스티벌을 검색하세요',
+                              style: TextStyle(color: Colors.grey),
+                            ),
                           ),
                         )),
                     Icon(

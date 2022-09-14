@@ -144,6 +144,10 @@ class CategoryBtn extends StatelessWidget {
 class GoodsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
       padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
       child: OutlinedButton(
@@ -157,8 +161,8 @@ class GoodsButton extends StatelessWidget {
         },
         // ignore: sort_child_properties_last
         child: SizedBox(
-          width: 400,
-          height: 50,
+          width: isWeb ? (size.width*0.5) : 400,
+          height: 80,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

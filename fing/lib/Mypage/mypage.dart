@@ -1,10 +1,10 @@
 import 'package:fing/Firebase/fing_db.dart';
+import 'package:fing/LikedPage/likedpage.dart';
 import 'package:fing/Mypage/recent.dart';
 import 'package:fing/google_ads.dart';
 import 'package:fing/google_ads_inline.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fing/Mypage/favorite.dart';
 import 'package:fing/Mypage/notice.dart';
 import 'package:fing/Mypage/FAQ.dart';
 import 'package:fing/Mypage/personal.dart';
@@ -28,7 +28,6 @@ class MyPageMain extends StatelessWidget {
       routes: {
         '/': (context) => MyPage(),
         '/recent': (context) => Recent(),
-        '/favorite': (context) => Favorite(),
         '/notice': (context) => NoticePage(),
         '/service': (context) => ServicePage(),
         '/personal': (context) => PersonalPage(),
@@ -48,8 +47,8 @@ class _MyPageState extends State<MyPage> {
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     //  나중에 풀기
-    // String nickname = fing_db_user[0].name;
-    // String email = fing_db_user[0].email;
+    String nickname = fing_db_user[0].name;
+    String email = fing_db_user[0].email;
     // String whtlogin = fing_db_user[0].whtlogin;
 
     //print('nickname'+nickname);
@@ -95,10 +94,10 @@ class _MyPageState extends State<MyPage> {
                       iconColor: Colors.white,
                       leading: Icon(Icons.account_circle, size: 40),
                       title: Text(
-                        "asdf",
+                        nickname,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text("Asdf"),
+                      subtitle: Text(email),
                     ),
                   ),
                   ListTile(
@@ -249,14 +248,14 @@ class _MyPageState extends State<MyPage> {
                       fing_db_user.clear();
 
                       //if(whtlogin == "kakao"){
-                      try {
-                        await UserApi.instance.logout();
+                      // try {
+                      //   await UserApi.instance.logout();
 
-                        // Restart.restartApp(webOrigin: '/loginSNS()');
-                        print("Success");
-                      } catch (e) {
-                        print("faile${e.toString()}");
-                      }
+                      //   // Restart.restartApp(webOrigin: '/loginSNS()');
+                      //   print("Success");
+                      // } catch (e) {
+                      //   print("faile${e.toString()}");
+                      // }
                       //}
 
                       try {

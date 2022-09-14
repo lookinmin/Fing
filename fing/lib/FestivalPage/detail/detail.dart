@@ -72,7 +72,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
     bool heartcheck = false;
 
     // 임시 로그인
-    String curuser = "wjdtpdus828@naver.com";
+    String curuser = fing_db_user[0].email;
 
     // FireBase 에서 찜 목록 확인
     FirebaseFirestore.instance
@@ -150,7 +150,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                               //좋아요
                               if (isFavorite) {
                                 //최종때 밑에꺼 없애줘
-                                String curuser = "wjdtpdus828@naver.com";
+                                String curuser = fing_db_user[0].email;
                                 await FirebaseFirestore.instance
                                     .collection('User')
                                     .doc(curuser)
@@ -173,7 +173,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                               //안좋아요
                               else {
                                 //최종때 밑에꺼 없애줘
-                                String curuser = "wjdtpdus828@naver.com";
+                                String curuser = fing_db_user[0].email;
                                 await FirebaseFirestore.instance
                                     .collection('User')
                                     .doc(curuser)
