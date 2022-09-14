@@ -81,46 +81,62 @@ class _FestivalListState extends State<FestivalList> {
   }
 
   Widget build(BuildContext context) {
-    return FutureBuilder<List<SearchFestival>>(
-        future: futureSearchFestival,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (snapshot.data![0].response == null) {
-              return Center(
-                child: Text('예정중인 페스티벌이 없습니다'),
-              );
-            }
-            List<Item> searchfestival_model =
-                snapshot.data![0].response!.body!.items!.item!;
+    var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
+    return Row(children: [
+      SizedBox(
+        width: isWeb ? (size.width * 0.25) : 0,
+      ),
+      Container(
+        width: isWeb ? (size.width * 0.5) : (size.width * 1.0),
+        child: FutureBuilder<List<SearchFestival>>(
+            future: futureSearchFestival,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data![0].response == null) {
+                  return Center(
+                    child: Text('예정중인 페스티벌이 없습니다'),
+                  );
+                }
+                List<Item> searchfestival_model =
+                    snapshot.data![0].response!.body!.items!.item!;
 
-            List<Item> category_festival_model = [];
+                List<Item> category_festival_model = [];
 
-            for (int i = 0; i < searchfestival_model.length; i++) {
-              if (searchfestival_model[i].cat3 == widget.code) {
-                category_festival_model.add(searchfestival_model[i]);
+                for (int i = 0; i < searchfestival_model.length; i++) {
+                  if (searchfestival_model[i].cat3 == widget.code) {
+                    category_festival_model.add(searchfestival_model[i]);
+                  }
+                }
+
+                if (category_festival_model.length == 0) {
+                  return Center(
+                    child: Text('예정중인 페스티벌이 없습니다'),
+                  );
+                } else {
+                  return Container(
+                    margin: EdgeInsets.all(5),
+                    child: ListView.builder(
+                      itemCount: category_festival_model.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return FestivalItem(
+                            item: category_festival_model[index]);
+                      },
+                    ),
+                  );
+                }
+              } else if (snapshot.hasError) {
+                return Text('error${snapshot.error}');
               }
-            }
-
-            if (category_festival_model.length == 0) {
-              return Center(
-                child: Text('예정중인 페스티벌이 없습니다'),
-              );
-            } else {
-              return Container(
-                margin: EdgeInsets.all(5),
-                child: ListView.builder(
-                  itemCount: category_festival_model.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return FestivalItem(item: category_festival_model[index]);
-                  },
-                ),
-              );
-            }
-          } else if (snapshot.hasError) {
-            return Text('error${snapshot.error}');
-          }
-          return Center(child: CupertinoActivityIndicator());
-        });
+              return Center(child: CupertinoActivityIndicator());
+            }),
+      ),
+      SizedBox(
+        width: isWeb ? (size.width * 0.25) : 0,
+      ),
+    ]);
   }
 }
 
@@ -152,19 +168,35 @@ class FestivalItem extends StatefulWidget {
 class _FestivalItemState extends State<FestivalItem> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     return InkWell(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailPage(
-                      firstimage: widget.item.firstimage,
-                      title: widget.item.title,
-                      addr1: widget.item.addr1,
-                      contentid: widget.item.contentid,
-                      mapx: widget.item.mapx,
-                      mapy: widget.item.mapy,
-                    )));
+                builder: (context) =>
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      SizedBox(
+                        width: isWeb ? (size.width * 0.25) : (0),
+                      ),
+                      Container(
+                        width: isWeb ? (size.width * 0.5) : (size.width * 1.0),
+                        child: DetailPage(
+                          firstimage: widget.item.firstimage,
+                          title: widget.item.title,
+                          addr1: widget.item.addr1,
+                          contentid: widget.item.contentid,
+                          mapx: widget.item.mapx,
+                          mapy: widget.item.mapy,
+                        ),
+                      ),
+                      SizedBox(
+                        width: isWeb ? (size.width * 0.25) : (0),
+                      )
+                    ])));
         //큐를 기반으로한 최근 본 축제
         bool flag = true;
         for (int i = 0; i < current_fast.length; i++) {
@@ -278,46 +310,22 @@ class _FestivalItemState extends State<FestivalItem> {
     );
   }
 
-  Row location() {
+  Container location() {
     var size = MediaQuery.of(context).size;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          padding: EdgeInsets.only(left: 10, top: 2),
-          width: size.width * 0.65,
-          child: Text(
-            widget.item.addr1,
-            style: TextStyle(
-              fontSize: 15,
-              color: Colors.grey,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
+    return Container(
+      padding: EdgeInsets.only(left: 10, top: 2),
+      width: isWeb ? size.width * 0.55 : size.width * 0.65,
+      child: Text(
+        widget.item.addr1,
+        style: TextStyle(
+          fontSize: 15,
+          color: Colors.grey,
+          overflow: TextOverflow.ellipsis,
         ),
-        Container(
-          width: size.width * 0.3,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  child: Icon(
-                    Icons.visibility,
-                    color: Color.fromRGBO(255, 126, 0, 1),
-                    size: 17,
-                  ),
-                ),
-                Container(
-                    padding: EdgeInsets.only(right: 10, top: 2),
-                    child: Text(
-                      widget.item.readcount.toString(),
-                      style: TextStyle(fontSize: 15),
-                      overflow: TextOverflow.ellipsis,
-                    )),
-              ]),
-        )
-      ],
+      ),
     );
   }
 }
