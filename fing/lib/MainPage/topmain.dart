@@ -216,7 +216,7 @@ class FestivalCarousel extends StatelessWidget {
           border: Border(bottom: BorderSide(color: Colors.black))),
       child: CarouselSlider(
         options: CarouselOptions(
-          height: 400.0,
+          height: 250.0,
           autoPlay: true,
           autoPlayInterval: Duration(seconds: 3),
           autoPlayAnimationDuration: Duration(milliseconds: 1000),

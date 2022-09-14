@@ -32,19 +32,17 @@ class _MainTopBottom extends State<MainTopBottom> {
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Expanded(
-          child: Column(
-            children: [
-              Container(
-                child: TopMain(),
-                height: size.height * 0.4,
-              ),
-              Container(
-                constraints: BoxConstraints(maxHeight: double.infinity),
-                child: BottomMain(),
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            Container(
+              child: TopMain(),
+              height: size.height * 0.4,
+            ),
+            Container(
+              child: BottomMain(),
+              height: 600,
+            ),
+          ],
         ),
       ),
     );
