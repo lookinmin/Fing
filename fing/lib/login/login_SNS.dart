@@ -176,12 +176,12 @@ class Login_SNS extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    signInWithGoogle();
+                    //signInWithGoogle();
 
-                    // Navigator.push(
-                    //     //화면전환
-                    //     context,
-                    //     MaterialPageRoute(builder: (context) => Root()));
+                    Navigator.push(
+                        //화면전환
+                        context,
+                        MaterialPageRoute(builder: (context) => Root()));
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.white,

@@ -29,12 +29,16 @@ class HomeMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Expanded(
       child: Column(
           children: [
             Expanded(
               flex: 5,
               child: CategoryBtn(),
+            ),
+            SizedBox(
+              height: size.height*0.03,
             ),
             Flexible(
               flex: 1,
@@ -197,6 +201,9 @@ class GoodsButton extends StatelessWidget {
 
 Widget CatBtn(int id, BuildContext context, type) {
   var size = MediaQuery.of(context).size;
+  var mobileWidth = 700;
+  bool isWeb = true;
+  size.width > mobileWidth ? isWeb = true : isWeb = false;
   switch (id) {
     case 1:
       return Column(
@@ -223,7 +230,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -252,7 +259,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -281,7 +288,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -310,7 +317,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -339,7 +346,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -368,7 +375,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -397,7 +404,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -426,7 +433,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -455,7 +462,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -484,7 +491,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -513,7 +520,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -544,7 +551,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -573,7 +580,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -604,7 +611,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -632,7 +639,7 @@ Widget CatBtn(int id, BuildContext context, type) {
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 105, 105, 105),
-                fontSize: 11),
+                fontSize: isWeb ?  20 : 11),
           )
         ],
       );
@@ -654,9 +661,9 @@ Widget CatBtn(int id, BuildContext context, type) {
 Widget imgSet(int id) {
   switch (id) {
     case 1:
-      return Image.asset('assets/images/garland.png');
+      return Image.asset('assets/images/garland.png',);
     case 2:
-      return Image.asset('assets/images/fireworks.png');
+      return Image.asset('assets/images/fireworks.png',);
     case 3:
       return Image.asset('assets/images/buk.png');
     case 4:

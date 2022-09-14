@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import '../API/areacode.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -14,13 +18,27 @@ class RegionPageMain extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "FING",
-      initialRoute: '/',
-      routes: {
-        '/': (context) => RegionPage(),
-      },
-    );
+    return 
+          RegionPage();
+    //       MaterialApp(
+    //   builder: (context, child) => ResponsiveWrapper.builder(
+    //       child,
+    //       maxWidth: 1200,
+    //       minWidth: 480,
+    //       defaultScale: true,
+    //       breakpoints: [
+    //         ResponsiveBreakpoint.resize(480, name: MOBILE),
+    //         ResponsiveBreakpoint.autoScale(800, name: TABLET),
+    //         ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+    //       ],
+    //       // background: Container(color: Color.fromARGB(255, 245, 245, 245))
+    //       ),
+    //   title: "FING",
+    //   initialRoute: '/',
+    //   routes: {
+    //     '/': (context) => RegionPage(),
+    //   },
+    // ); 
   }
 }
 
@@ -33,13 +51,17 @@ class RegionPage extends StatefulWidget {
 
 class _RegionPageState extends State<RegionPage> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) {  
+    var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
+    return Scaffold(     
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           '지역',
           style: TextStyle(
-            fontSize: 18.0,
+            fontSize: isWeb ?  30 : 18,
             letterSpacing: 1.0,
             fontWeight: FontWeight.bold,
             color: Colors.black,
@@ -52,6 +74,7 @@ class _RegionPageState extends State<RegionPage> {
         elevation: 1.0, // 그림자 제거
         toolbarHeight: 50.0,
       ),
+      resizeToAvoidBottomInset : false,
       body: Region(),
     );
   }
@@ -90,14 +113,18 @@ class _RegionState extends State<Region> {
     var screen = MediaQuery.of(context).size;
     return SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            //도
-            futureBuilderRegion(screen),
-            //도시
-            futureBuilderCity(screen),
-          ],
+        height: double.infinity,
+        child: Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              
+              //도
+              futureBuilderRegion(screen),
+              //도시
+              futureBuilderCity(screen),
+            ],
+          ),
         ));
   }
 
@@ -135,11 +162,19 @@ class _RegionState extends State<Region> {
   }
 
   Container city(Size screen, List<Item> areadetailcode_model) {
+    final size=MediaQuery.of(context).size.width;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    screen.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
+      constraints: BoxConstraints(
+        maxWidth: double.infinity,
+        maxHeight: double.infinity
+      ),
       color: Colors.white,
-      width: screen.width * 0.65,
+      width: isWeb? size* 0.65 :screen.width * 0.65,
       padding:
-          EdgeInsets.fromLTRB(screen.width * 0.05, 0, screen.width * 0.05, 0),
+          EdgeInsets.fromLTRB(screen.width * 0.05, 0,screen.width * 0.05, 0),
       child: ListView.builder(
         itemCount: areadetailcode_model.length,
         itemBuilder: (BuildContext context, index) => InkWell(
@@ -156,39 +191,52 @@ class _RegionState extends State<Region> {
                         region: regionCode,
                         city: cityCode)));
           },
-          child: Container(
-              width: double.infinity,
-              height: screen.height * 0.07,
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                color: Colors.grey,
-                width: 1,
-              ))),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    areadetailcode_model[index].name.toString(),
-                    style: TextStyle(
-                      fontSize: 15,
+          child: Expanded(
+            child: Container(
+                width: double.infinity,
+                height: isWeb? screen.height * 0.1:screen.height * 0.07,
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(
+                  color: Colors.grey,
+                  width: 1,
+                ))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      areadetailcode_model[index].name.toString(),
+                      style: TextStyle(
+                        fontSize: isWeb ?  27 : 15,
+                      ),
                     ),
-                  ),
-                ],
-              )),
+                  ],
+                )),
+          ),
         ),
       ),
     );
   }
 
   Container region(Size screen, List<Item> areacodeModel) {
+    final size=MediaQuery.of(context).size.width;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    screen.width > mobileWidth ? isWeb = true : isWeb = false;
+
     return Container(
+      constraints: BoxConstraints(
+        maxWidth: double.infinity,
+        maxHeight: double.infinity
+      ),
+      height: double.infinity,
       color: Colors.grey[100],
-      width: screen.width * 0.35,
+      width: isWeb? size * 0.35: screen.width * 0.35,
       padding:
-          EdgeInsets.fromLTRB(screen.width * 0.03, 0, screen.width * 0.03, 0),
+          EdgeInsets.fromLTRB(screen.width * 0.03, 0,screen.width * 0.03, 0),
       child: ListView.builder(
+        
         itemCount: areacodeModel.length,
         itemBuilder: (BuildContext context, index) => InkWell(
           onTap: () => {
@@ -202,7 +250,7 @@ class _RegionState extends State<Region> {
           },
           child: Container(
             width: double.infinity,
-            height: screen.height * 0.07,
+            height: isWeb? screen.height * 0.1:screen.height * 0.07,
             decoration: BoxDecoration(
                 border: Border(
                     bottom: BorderSide(
@@ -212,7 +260,7 @@ class _RegionState extends State<Region> {
             child: Center(
               child: Text(areacodeModel[index].name.toString(),
                   style: TextStyle(
-                      fontSize: 15,
+                      fontSize: isWeb ?  27 : 15,
                       fontWeight: FontWeight.w600,
                       color: Colors.grey[700]),
                   textAlign: TextAlign.center),

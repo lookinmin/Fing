@@ -1,21 +1,16 @@
 import 'package:fing/Firebase/fing_db.dart';
 import 'package:fing/LikedPage/likedpage.dart';
 import 'package:fing/Mypage/recent.dart';
-import 'package:fing/google_ads.dart';
-import 'package:fing/google_ads_inline.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fing/Mypage/notice.dart';
 import 'package:fing/Mypage/FAQ.dart';
 import 'package:fing/Mypage/personal.dart';
 import 'package:fing/Mypage/service.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_talk/kakao_flutter_sdk_talk.dart';
 
 void main() {
-  MobileAds.instance.initialize();
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyPageMain());
 }
 
@@ -184,12 +179,6 @@ class _MyPageState extends State<MyPage> {
                       }
                     },
                   ),
-                  Container(
-                    constraints: BoxConstraints(
-                        maxHeight: MediaQuery.of(context).size.height * 0.3),
-                    alignment: Alignment.center,
-                    child: GoogleInline(),
-                  ),
                   Divider(
                     height: 50,
                     color: Colors.grey[500],
@@ -247,17 +236,6 @@ class _MyPageState extends State<MyPage> {
                     onTap: () async {
                       fing_db_user.clear();
 
-                      //if(whtlogin == "kakao"){
-                      // try {
-                      //   await UserApi.instance.logout();
-
-                      //   // Restart.restartApp(webOrigin: '/loginSNS()');
-                      //   print("Success");
-                      // } catch (e) {
-                      //   print("faile${e.toString()}");
-                      // }
-                      //}
-
                       try {
                         await GoogleSignIn().signOut();
                         // Restart.restartApp(webOrigin: '/loginSNS()');
@@ -274,10 +252,6 @@ class _MyPageState extends State<MyPage> {
                         print("faile${e.toString()}");
                       }
                     },
-                  ),
-                  Container(
-                    height: 50,
-                    child: GoogleAds(),
                   ),
                 ],
               )
