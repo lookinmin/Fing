@@ -44,11 +44,7 @@ class _MainTopBottom extends State<MainTopBottom> {
                   maxHeight: double.infinity
                 ),
                 child: BottomMain(),
-                height: 600,
               ),
-              SizedBox(
-                height: size.height*0.1,
-              )
             ],
           ),
         ),

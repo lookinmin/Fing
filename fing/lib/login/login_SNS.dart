@@ -63,6 +63,7 @@ class Login_SNS extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+
                   SizedBox(
                     width: 10.0,
                   ),
