@@ -177,7 +177,7 @@ class _FestivalItemState extends State<FestivalItem> {
           current_fast.add(widget.item.title.toString());
         }
         print(current_fast);
-        String curuser = "wjdtpdus828@naver.com";
+        String curuser = fing_db_user[0].email;
         FirebaseFirestore.instance
             .collection('User')
             .doc(curuser)

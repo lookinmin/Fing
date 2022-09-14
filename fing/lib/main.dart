@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/FestivalPage/detail/detail.dart';
 import 'package:fing/MainPage/mainpage.dart';
-import 'package:fing/Mypage/favorite.dart';
+import 'package:fing/Map/locationList.dart';
 import 'package:fing/Mypage/mypage.dart';
 import 'package:fing/Mypage/notice.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,7 +60,16 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       debugShowMaterialGrid: false,
       routes: {
-        '/': (context) => Intro(),
+        '/': (context) => ResponsiveWrapper(
+              child: Intro(),
+              maxWidth: 1200,
+              defaultScale: true,
+              breakpoints: [
+                ResponsiveBreakpoint.resize(480, name: MOBILE),
+                ResponsiveBreakpoint.autoScale(800, name: TABLET),
+                ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+              ],
+            )
       },
     );
   }
@@ -78,7 +87,7 @@ class _RootState extends State<Root> {
   final _pages = [
     MainTopBottom(),
     RegionPageMain(),
-    Container(),
+    LocationList(),
     // Favorite(), //LikePage -> Favorite
     LikedPage(),
     MyPageMain()
@@ -100,6 +109,9 @@ class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     return WillPopScope(
       onWillPop: () {
@@ -123,24 +135,38 @@ class _RootState extends State<Root> {
                 : Container()),
             Expanded(
               flex: 8,
-              child: IndexedStack(
-                index: _currentIndex,
-                children: _pages.map((page) {
-                  int index = _pages.indexOf(page);
-                  return Navigator(
-                    key: _navigatorKeyList[index],
-                    onGenerateRoute: _currentIndex == 3
-                        ? (_) {
-                            return MaterialPageRoute(
-                                builder: (context) => LikedPage(),
-                                maintainState: true);
-                          }
-                        : (_) {
-                            return MaterialPageRoute(
-                                builder: (context) => page);
-                          },
-                  );
-                }).toList(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: isWeb ? (size.width * 0.25) : (size.width * 0),
+                  ),
+                  Container(
+                    width: isWeb ? (size.width * 0.5) : (size.width * 1.0),
+                    child: IndexedStack(
+                      index: _currentIndex,
+                      children: _pages.map((page) {
+                        int index = _pages.indexOf(page);
+                        return Navigator(
+                          key: _navigatorKeyList[index],
+                          onGenerateRoute: _currentIndex == 3
+                              ? (_) {
+                                  return MaterialPageRoute(
+                                      builder: (context) => LikedPage(),
+                                      maintainState: true);
+                                }
+                              : (_) {
+                                  return MaterialPageRoute(
+                                      builder: (context) => page);
+                                },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  SizedBox(
+                    width: isWeb ? (size.width * 0.25) : (size.width * 0),
+                  )
+                ],
               ),
             )
           ],
@@ -149,20 +175,27 @@ class _RootState extends State<Root> {
           currentIndex: _currentIndex,
           type: BottomNavigationBarType.fixed,
           onTap: (index) {
-            setState(() async {
+            setState(() {
               if (index == 0) {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Root()));
-              } else if (index == 2) {
-                bool serviceEnabled;
-                LocationPermission permission;
-                serviceEnabled = await Geolocator.isLocationServiceEnabled();
-                permission = await Geolocator.checkPermission();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MyLocation(permission)));
-              } else {
+              }
+              // 안됨
+              // else if (index == 2) {
+              //   bool serviceEnabled;
+              //   LocationPermission permission;
+              //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+              //   permission = await Geolocator.checkPermission();
+              //   Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) => MyLocation(permission)));
+              // }
+              // else if (index == 3) {
+              //   Navigator.push(context,
+              //       MaterialPageRoute(builder: (context) => LikedPage()));
+              // }
+              else {
                 _currentIndex = index;
               }
             });
@@ -214,6 +247,10 @@ class FestivalSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
       decoration: BoxDecoration(
@@ -222,58 +259,66 @@ class FestivalSearch extends StatelessWidget {
         color: Colors.grey,
         width: 2.0,
       ))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Expanded(
-              flex: 1,
-              child: InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Root()));
-                  },
-                  child: logo())), //여기에 로고 들어감
-          Expanded(
-              flex: 5,
-              child: Container(
-                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.4),
-                        spreadRadius: 0,
-                        blurRadius: 2,
-                        offset: Offset(0, 7), // changes position of shadow
+      child: Padding(
+        padding:
+            isWeb ? EdgeInsets.fromLTRB(200, 0, 200, 0) : EdgeInsets.all(0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+                flex: 1,
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Root()));
+                    },
+                    child: logo())), //여기에 로고 들어감
+            Expanded(
+                flex: 5,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.4),
+                          spreadRadius: 0,
+                          blurRadius: 2,
+                          offset: Offset(0, 7), // changes position of shadow
+                        )
+                      ]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SearchList()));
+                          },
+                          child: Container(
+                            height: 40,
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                '페스티벌을 검색하세요',
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ),
+                          )),
+                      Icon(
+                        Icons.search,
+                        color: Color.fromRGBO(255, 126, 0, 1.0),
                       )
-                    ]),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SearchList()));
-                        },
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            '페스티벌을 검색하세요',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        )),
-                    Icon(
-                      Icons.search,
-                      color: Color.fromRGBO(255, 126, 0, 1.0),
-                    )
-                  ],
-                ),
-              ))
-        ],
+                    ],
+                  ),
+                ))
+          ],
+        ),
       ),
     );
   }
