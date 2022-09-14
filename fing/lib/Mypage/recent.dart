@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/FestivalPage/RecentFestival.dart';
+import 'package:fing/Firebase/fing_db.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../FestivalPage/festivalist.dart';
@@ -88,8 +89,9 @@ class _RecentFestivalListState extends State<RecentFestivalList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    curuser = "wjdtpdus828@naver.com";
-
+    
+    String email = fing_db_user[0].email;
+    curuser = email;
     recentList = readData();
   }
 

@@ -48,8 +48,8 @@ class _MyPageState extends State<MyPage> {
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     //  나중에 풀기
-    // String nickname = fing_db_user[0].name;
-    // String email = fing_db_user[0].email;
+    String nickname = fing_db_user[0].name;
+    String email = fing_db_user[0].email;
     // String whtlogin = fing_db_user[0].whtlogin;
 
     //print('nickname'+nickname);
@@ -95,10 +95,10 @@ class _MyPageState extends State<MyPage> {
                       iconColor: Colors.white,
                       leading: Icon(Icons.account_circle, size: 40),
                       title: Text(
-                        "asdf",
+                        nickname,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text("Asdf"),
+                      subtitle: Text(email),
                     ),
                   ),
                   ListTile(
@@ -249,14 +249,14 @@ class _MyPageState extends State<MyPage> {
                       fing_db_user.clear();
 
                       //if(whtlogin == "kakao"){
-                      try {
-                        await UserApi.instance.logout();
+                      // try {
+                      //   await UserApi.instance.logout();
 
-                        // Restart.restartApp(webOrigin: '/loginSNS()');
-                        print("Success");
-                      } catch (e) {
-                        print("faile${e.toString()}");
-                      }
+                      //   // Restart.restartApp(webOrigin: '/loginSNS()');
+                      //   print("Success");
+                      // } catch (e) {
+                      //   print("faile${e.toString()}");
+                      // }
                       //}
 
                       try {

@@ -44,6 +44,7 @@ class Login_SNS extends StatelessWidget {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+
   void _get_user_info() async {
     try {
       kakao.User user = await kakao.UserApi.instance.me();
@@ -175,12 +176,12 @@ class Login_SNS extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // signInWithGoogle();
+                    signInWithGoogle();
 
-                    Navigator.push(
-                        //화면전환
-                        context,
-                        MaterialPageRoute(builder: (context) => Root()));
+                    // Navigator.push(
+                    //     //화면전환
+                    //     context,
+                    //     MaterialPageRoute(builder: (context) => Root()));
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.white,
