@@ -66,6 +66,9 @@ dependencies:
   cached_network_image: ^3.2.0
   #구글 광고
   google_mobile_ads: ^2.0.1
+  build_runner: ^2.1.0
+  build_test: ^2.1.0
+  build_web_compilers: ^3.0.0
 
 dev_dependencies:
   flutter_test:
