@@ -1,10 +1,10 @@
 import 'package:fing/Firebase/fing_db.dart';
+import 'package:fing/LikedPage/likedpage.dart';
 import 'package:fing/Mypage/recent.dart';
 import 'package:fing/google_ads.dart';
 import 'package:fing/google_ads_inline.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fing/Mypage/favorite.dart';
 import 'package:fing/Mypage/notice.dart';
 import 'package:fing/Mypage/FAQ.dart';
 import 'package:fing/Mypage/personal.dart';
@@ -28,7 +28,6 @@ class MyPageMain extends StatelessWidget {
       routes: {
         '/': (context) => MyPage(),
         '/recent': (context) => Recent(),
-        '/favorite': (context) => Favorite(),
         '/notice': (context) => NoticePage(),
         '/service': (context) => ServicePage(),
         '/personal': (context) => PersonalPage(),

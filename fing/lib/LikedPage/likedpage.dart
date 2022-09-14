@@ -202,8 +202,8 @@ class _LikedListState extends State<LikedList> {
 
   SizedBox favoriteImg(var size, List<FireModel> list, int index) {
     return SizedBox(
-      width: size.width * 0.23,
-      height: size.height * 0.13,
+        width: size.width * 0.23,
+        height: size.height * 0.13,
         child: CachedNetworkImage(
           placeholder: (context, url) => CircularProgressIndicator(),
           imageUrl: list[index].firstimage.toString(),
@@ -212,7 +212,7 @@ class _LikedListState extends State<LikedList> {
           fit: BoxFit.fill,
         )
         // child: Image.network(list[index].firstimage.toString(), fit: BoxFit.fill),
-    );
+        );
   }
 
   Container favoriteInfo(var size, List<FireModel> list, int index) {
