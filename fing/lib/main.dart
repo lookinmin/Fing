@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/FestivalPage/detail/detail.dart';
 import 'package:fing/MainPage/mainpage.dart';
+import 'package:fing/Map/locationList.dart';
 import 'package:fing/Mypage/favorite.dart';
 import 'package:fing/Mypage/mypage.dart';
 import 'package:fing/Mypage/notice.dart';
@@ -78,7 +79,7 @@ class _RootState extends State<Root> {
   final _pages = [
     MainTopBottom(),
     RegionPageMain(),
-    Container(),
+    LocationList(),
     // Favorite(), //LikePage -> Favorite
     LikedPage(),
     MyPageMain()
