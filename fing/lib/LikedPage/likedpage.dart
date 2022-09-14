@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/FestivalPage/detail/detail.dart';
+import 'package:fing/Firebase/fing_db.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:favorite_button/favorite_button.dart'; //favorite_button package사용
@@ -85,7 +86,7 @@ class LikedList extends StatefulWidget {
 
 class _LikedListState extends State<LikedList> {
   late Future<List<FireModel>> favoritelist;
-  String curuser = "wjdtpdus828@naver.com";
+  String curuser = fing_db_user[0].email;
 
   @override
   void initState() {

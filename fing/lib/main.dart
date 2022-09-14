@@ -4,6 +4,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/FestivalPage/detail/detail.dart';
 import 'package:fing/MainPage/mainpage.dart';
+import 'package:fing/Map/locationList.dart';
 import 'package:fing/Mypage/mypage.dart';
 import 'package:fing/Mypage/notice.dart';
 import 'package:flutter/cupertino.dart';
@@ -86,7 +87,7 @@ class _RootState extends State<Root> {
   final _pages = [
     MainTopBottom(),
     RegionPageMain(),
-    Container(),
+    LocationList(),
     // Favorite(), //LikePage -> Favorite
     LikedPage(),
     MyPageMain()
@@ -138,10 +139,10 @@ class _RootState extends State<Root> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    width: isWeb ? (size.width * 0.2) : (size.width * 0),
+                    width: isWeb ? (size.width * 0.25) : (size.width * 0),
                   ),
                   Container(
-                    width: isWeb ? (size.width * 0.6) : (size.width * 1.0),
+                    width: isWeb ? (size.width * 0.5) : (size.width * 1.0),
                     child: IndexedStack(
                       index: _currentIndex,
                       children: _pages.map((page) {
@@ -163,7 +164,7 @@ class _RootState extends State<Root> {
                     ),
                   ),
                   SizedBox(
-                    width: isWeb ? (size.width * 0.2) : (size.width * 0),
+                    width: isWeb ? (size.width * 0.25) : (size.width * 0),
                   )
                 ],
               ),
