@@ -151,6 +151,9 @@ class _LikedListState extends State<LikedList> {
                                 mapy: list[index].mapy)));
                   },
                   child: Container(
+                    padding: isWeb
+                        ? EdgeInsets.only(left: 0)
+                        : EdgeInsets.only(left: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -213,7 +216,7 @@ class _LikedListState extends State<LikedList> {
     bool isWeb = true;
     size.width > mobileWidth ? isWeb = true : isWeb = false;
     return SizedBox(
-        width: isWeb ? size.width * 0.13 : size.width * 0.23,
+        width: isWeb ? size.width * 0.13 : size.width * 0.13,
         height: size.height * 0.13,
         child: CachedNetworkImage(
           placeholder: (context, url) => CircularProgressIndicator(),
@@ -232,8 +235,10 @@ class _LikedListState extends State<LikedList> {
     bool isWeb = true;
     size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
-        width: isWeb ? size.width * 0.32 : size.width * 0.52,
-        padding: EdgeInsets.only(left: 13, right: 15),
+        width: isWeb ? size.width * 0.32 : size.width * 0.72,
+        padding: isWeb
+            ? EdgeInsets.only(left: 13, right: 15)
+            : EdgeInsets.only(left: 20, right: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

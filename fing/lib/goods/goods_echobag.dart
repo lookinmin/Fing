@@ -43,6 +43,10 @@ class GoodsShow extends State<state> {
   int price = 15000;
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     var screen = MediaQuery.of(context).size;
     return Container(
       width: screen.width,
@@ -168,7 +172,9 @@ class GoodsShow extends State<state> {
                   print('hi');
                 },
                 style: ElevatedButton.styleFrom(
-                    minimumSize: Size(screen.width * 0.8, screen.height * 0.07),
+                    minimumSize: isWeb
+                        ? Size(screen.width * 0.3, screen.height * 0.07)
+                        : Size(screen.width * 0.8, screen.height * 0.07),
                     primary: Color.fromRGBO(255, 126, 0, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.5),
