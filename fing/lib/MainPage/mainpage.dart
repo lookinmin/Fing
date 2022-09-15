@@ -29,6 +29,9 @@ class _MainTopBottom extends State<MainTopBottom> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var mobileWidth = 500;
+  bool isWeb = true;
+  size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -40,8 +43,9 @@ class _MainTopBottom extends State<MainTopBottom> {
             ),
             Container(
               child: BottomMain(),
-              height: 600,
+              height: isWeb? size.height * 1:600,
             ),
+
           ],
         ),
       ),
