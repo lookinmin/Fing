@@ -135,9 +135,13 @@ class _RegionState extends State<Region> {
   }
 
   Container city(Size screen, List<Item> areadetailcode_model) {
+    var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
       color: Colors.white,
-      width: screen.width * 0.35,
+      width: isWeb ? screen.width * 0.65 : screen.width * 0.35,
       padding:
           EdgeInsets.fromLTRB(screen.width * 0.05, 0, screen.width * 0.05, 0),
       child: ListView.builder(
@@ -183,9 +187,13 @@ class _RegionState extends State<Region> {
   }
 
   Container region(Size screen, List<Item> areacodeModel) {
+    var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
       color: Colors.grey[100],
-      width: screen.width * 0.15,
+      width: isWeb ? screen.width * 0.35 : screen.width * 0.15,
       padding:
           EdgeInsets.fromLTRB(screen.width * 0.03, 0, screen.width * 0.03, 0),
       child: ListView.builder(
