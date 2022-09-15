@@ -75,6 +75,12 @@ class GoodsMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    var desktopWidth = 850;
+    bool isWeb = true;
+    bool isDesktop = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
+    size.width > desktopWidth ? isDesktop = true : isDesktop = false;
     return Container(
       width: size.width,
       child: ListView.builder(
@@ -87,14 +93,18 @@ class GoodsMenu extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        width: size.width * 0.5,
+                        width: isWeb ? size.width * 0.25 : size.width * 0.5,
+                        constraints:
+                            BoxConstraints(maxHeight: size.height * 0.3),
                         padding: EdgeInsets.all(5),
                         child: Image.asset(
                           productList[index].imageUrl,
                         ),
                       ),
                       Container(
-                        width: size.width * 0.5,
+                        // constraints:
+                        //     BoxConstraints(maxHeight: size.height * 0.3),
+                        width: isWeb ? size.width * 0.25 : size.width * 0.5,
                         padding: EdgeInsets.all(10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +114,8 @@ class GoodsMenu extends StatelessWidget {
                               child: Text(
                                 productList[index].title,
                                 style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
+                                    fontSize: isDesktop? 18 : 16,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                             Container(
@@ -112,38 +123,46 @@ class GoodsMenu extends StatelessWidget {
                               child: Text(
                                 productList[index].desc1,
                                 style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize:isDesktop? 18 : 16,
                                 ),
                               ),
                             ),
                             Container(
                               padding: EdgeInsets.only(top: 20),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          //화면전환
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  productList[index].router1));
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Color.fromRGBO(255, 126, 0, 1),
-                                      // 테두리 모서리
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.5),
+                              child: Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            //화면전환
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    productList[index]
+                                                        .router1));
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Color.fromRGBO(255, 126, 0, 1),
+                                        // 테두리 모서리
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.5),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        "구매하기",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: isWeb ? 17 : 15),
                                       ),
                                     ),
-                                    child: Text(
-                                      "구매하기",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  )
-                                ],
+                                    SizedBox(
+                                      width: isDesktop ? 20 : (isWeb ? 3 : 0),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ],

@@ -7,11 +7,7 @@ void main() => runApp(BottomMain());
 class BottomMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var mobileWidth = 700;
-    bool isWeb = true;
-    size.width > mobileWidth ? isWeb = true : isWeb = false;
-
+  
     return Column(
       children: [
         Expanded(
@@ -52,6 +48,9 @@ class CategoryBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var mobileWidth = 500;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
       constraints: BoxConstraints(maxHeight: double.infinity),
       padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
@@ -174,8 +173,11 @@ class GoodsButton extends StatelessWidget {
 
 Widget CatBtn(int id, BuildContext context, type) {
   var size = MediaQuery.of(context).size;
+  var phoneWidth = 500;
   var mobileWidth = 700;
   bool isWeb = true;
+  bool isPhone = true;
+  size.width > phoneWidth ? isPhone = true : isPhone = false;
   size.width > mobileWidth ? isWeb = true : isWeb = false;
   switch (id) {
     case 1:
@@ -190,8 +192,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(4),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -219,8 +221,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(5),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -248,8 +250,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(5),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -277,8 +279,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(5),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -306,8 +308,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(6),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -335,8 +337,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(7),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -364,8 +366,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(5),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -393,8 +395,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(6),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -422,8 +424,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(4),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -451,8 +453,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(5),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -480,8 +482,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(6),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -511,8 +513,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(7),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -540,8 +542,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               padding: EdgeInsets.all(8),
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -571,8 +573,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             child: Container(
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
               padding: EdgeInsets.all(5),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -599,8 +601,8 @@ Widget CatBtn(int id, BuildContext context, type) {
             },
             child: Container(
               margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-              width: isWeb ? size.width * 0.04 : size.width * 0.13,
-              height: isWeb ? size.width * 0.04 : size.width * 0.13,
+              width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+              height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 240, 246, 255),
                   borderRadius: BorderRadius.circular(100)),
@@ -621,8 +623,8 @@ Widget CatBtn(int id, BuildContext context, type) {
         children: [
           Container(
             margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
-            width: isWeb ? size.width * 0.04 : size.width * 0.13,
-            height: isWeb ? size.width * 0.04 : size.width * 0.13,
+            width: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
+            height: isWeb ? size.width * 0.05 : (isPhone?size.width*0.1 :size.width * 0.13),
           ),
         ],
       );
