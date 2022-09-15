@@ -18,13 +18,13 @@ class BottomMain extends StatelessWidget {
           flex: 5,
           child: CategoryBtn(),
         ),
-        SizedBox(
-          height: isWeb ? size.height * 0.2 : 0,
-        ),
+        // SizedBox(
+        //   height: isWeb ? size.height * 0.2 : 0,
+        // ),
         Flexible(
           flex: 1,
           child: GoodsButton(),
-        )
+        ),
       ],
     );
   }
