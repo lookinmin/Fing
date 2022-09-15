@@ -17,7 +17,7 @@ export const Footer = () => {
         window.open('https://www.instagram.com/festival_ing/');
         break;
       case 3:
-        window.open('https://play.google.com/store/apps/details?id=com.PingPong.fing');
+        window.open('http://www.festival-ing.org');
         break;
       case 4:
         window.open('https://github.com/lookinmin/Fing');

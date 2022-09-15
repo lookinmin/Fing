@@ -52,7 +52,7 @@ export const Home = () => {
 
   function handleClick(e) {
     if(e===1){
-      window.open('https://play.google.com/store/apps/details?id=com.PingPong.fing');
+      window.open('http://www.festival-ing.org');
     }
   }
 
