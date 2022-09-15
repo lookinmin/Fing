@@ -141,9 +141,9 @@ class _RegionState extends State<Region> {
     size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
       color: Colors.white,
-      width: isWeb ? screen.width * 0.65 : screen.width * 0.35,
+      width: isWeb ? screen.width * 0.35 : screen.width * 0.65,
       padding:
-          EdgeInsets.fromLTRB(screen.width * 0.05, 0, screen.width * 0.05, 0),
+          EdgeInsets.fromLTRB(isWeb ? screen.width * 0.01 :screen.width * 0.03, 0, isWeb ? screen.width * 0.01 :screen.width * 0.03, 0),
       child: ListView.builder(
         itemCount: areadetailcode_model.length,
         itemBuilder: (BuildContext context, index) => InkWell(
@@ -193,9 +193,9 @@ class _RegionState extends State<Region> {
     size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
       color: Colors.grey[100],
-      width: isWeb ? screen.width * 0.35 : screen.width * 0.15,
+      width: isWeb ? screen.width * 0.15 : screen.width * 0.35,
       padding:
-          EdgeInsets.fromLTRB(screen.width * 0.03, 0, screen.width * 0.03, 0),
+          EdgeInsets.fromLTRB(isWeb ? screen.width * 0.01 :screen.width * 0.03, 0, isWeb ? screen.width * 0.01 :screen.width * 0.03, 0),
       child: ListView.builder(
         itemCount: areacodeModel.length,
         itemBuilder: (BuildContext context, index) => InkWell(
