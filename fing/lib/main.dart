@@ -247,8 +247,11 @@ class FestivalSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var mobileWidth = 700;
+    var desktopWidth = 1000;
     bool isWeb = true;
+    bool isDesktop = true;
     size.width > mobileWidth ? isWeb = true : isWeb = false;
+    size.width > desktopWidth ? isDesktop = true : isDesktop = false;
     return Container(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
       decoration: BoxDecoration(
@@ -305,7 +308,7 @@ class FestivalSearch extends StatelessWidget {
                               fit: BoxFit.fitWidth,
                               child: Text(
                                 '페스티벌을 검색하세요',
-                                style: TextStyle(color: Colors.grey),
+                                style: TextStyle(color: Colors.grey,fontSize: isDesktop? 18 : 16,),
                               ),
                             ),
                           )),

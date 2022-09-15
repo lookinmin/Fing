@@ -75,18 +75,18 @@ class GoodsMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    var mobileWidth = 700;
+    var mobileWidth = 500;
     var desktopWidth = 850;
     bool isWeb = true;
     bool isDesktop = true;
     size.width > mobileWidth ? isWeb = true : isWeb = false;
     size.width > desktopWidth ? isDesktop = true : isDesktop = false;
-    return Container(
+    return SizedBox(
       width: size.width,
       child: ListView.builder(
           itemCount: productList.length,
           itemBuilder: (BuildContext context, int index) {
-            return Container(
+            return SizedBox(
               width: size.width,
               child: Column(
                 children: [
@@ -129,40 +129,35 @@ class GoodsMenu extends StatelessWidget {
                             ),
                             Container(
                               padding: EdgeInsets.only(top: 20),
-                              child: Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            //화면전환
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    productList[index]
-                                                        .router1));
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Color.fromRGBO(255, 126, 0, 1),
-                                        // 테두리 모서리
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.5),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        "구매하기",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: isWeb ? 17 : 15),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          //화면전환
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  productList[index]
+                                                      .router1));
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color.fromRGBO(255, 126, 0, 1),
+                                      // 테두리 모서리
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.5),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: isDesktop ? 20 : (isWeb ? 3 : 0),
-                                    )
-                                  ],
-                                ),
+                                    child: Text(
+                                      "구매하기",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: isWeb ? 17 : 15),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],

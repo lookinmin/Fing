@@ -223,7 +223,7 @@ class _LikedListState extends State<LikedList> {
           imageUrl: list[index].firstimage.toString(),
           errorWidget: ((context, url, error) =>
               Image(image: AssetImage('assets/images/DefaultImage.png'))),
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         )
         // child: Image.network(list[index].firstimage.toString(), fit: BoxFit.fill),
         );
