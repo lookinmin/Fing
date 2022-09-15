@@ -16,9 +16,14 @@ class _NoticeState extends State<NoticePage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-                  onPressed:() {Navigator.push(context, MaterialPageRoute(builder: (context) => MyPage()));},
-                  icon: Icon(Icons.arrow_back,color: Colors.black ,)
-                  ),
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => MyPage()));
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            )),
         title: Text(
           '공지사항',
           style: TextStyle(
@@ -71,7 +76,8 @@ class NoticeList extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Container(
-                          constraints: BoxConstraints(maxWidth: double.infinity),
+                          constraints:
+                              BoxConstraints(maxWidth: double.infinity),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -122,13 +128,19 @@ class NoticeModel {
 }
 
 const Noticeitem = [
-   NoticeModel("긴급점검 안내 (9/05 18:00 ~ 23:00)", "2022-09-03", "작성자 : Fing-관리자",
-      '''
+  NoticeModel("정식출시 안내 (9/15 13:00)", "2022-09-03", "작성자 : Fing-관리자", '''
+안녕하세요 Fing입니다.
+9월 15일부터 Fing(Festival-ing)의 정식 서비스가 개시되었습니다.
+많은 관심 부탁드리며 이용 시 에로사항은 'www.festival-ing.com'의 
+1:1문의로 문의주시면 감사하겠습니다.
+      '''),
+  NoticeModel(
+      "긴급점검 안내 (9/05 18:00 ~ 23:00)", "2022-09-03", "작성자 : Fing-관리자", '''
 안녕하세요 Fing입니다.
 치명적인 기술적 결함이 발견되어 9월 5일 18:00시 부터 23:00시까지 긴급정검이 있겠습니다.
 서비스 이용에 불편을 드려 심심한 사과의 말씀드리며 더욱 발전하는 fing이 되겠습니다.
       '''),
- NoticeModel("정기점검 안내 (9/01 06:00 ~ 11:00)", "2022-08-30", "작성자 : Fing-관리자",
+  NoticeModel("정기점검 안내 (9/01 06:00 ~ 11:00)", "2022-08-30", "작성자 : Fing-관리자",
       "안녕하세요 Fing입니다.\n더욱 안정적인 서비스 제공을 위하여 9월 1일 06:00시 부터 11:00시까지 정기점검이 있겠습니다.\n서비스 이용에 불편을 드려 죄송합니다.\n"),
   NoticeModel("정기점검 안내 (8/25 06:00 ~ 11:00)", "2022-08-23", "작성자 : Fing-관리자",
       "안녕하세요 Fing입니다.\n더욱 안정적인 서비스 제공을 위한 8월 25일 06:00시 부터 11:00시까지 정기점검이 있겠습니다.\n서비스 이용에 불편을 드려 죄송합니다.\n"),

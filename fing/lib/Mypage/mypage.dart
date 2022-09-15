@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:fing/Mypage/notice.dart';
 import 'package:fing/Mypage/FAQ.dart';
 import 'package:fing/Mypage/personal.dart';
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:fing/Mypage/service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_talk/kakao_flutter_sdk_talk.dart';
@@ -202,10 +204,35 @@ class _MyPageState extends State<MyPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('앱 버전'),
-                        Text('v1.0 (최신버전)',
+                        Text('v1.0.3 (최신버전)',
                             style: TextStyle(color: Colors.grey))
                       ],
                     ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    minLeadingWidth: 0,
+                    leading: Icon(Icons.language, size: 17),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('웹 소개페이지'),
+                        Text('www.festival-ing.com',
+                            style: TextStyle(color: Colors.grey))
+                      ],
+                    ),
+                    onTap: () async {
+                      final url = Uri.parse(
+                        'http://www.festival-ing.com/',
+                      );
+                      if (await canLaunchUrl(url)) {
+                        launchUrl(url);
+                      } else {
+                        // ignore: avoid_print
+                        print("Can't launch $url");
+                      }
+                    },
+                    trailing: Icon(Icons.chevron_right),
                   ),
                   ListTile(
                     dense: true,

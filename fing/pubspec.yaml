@@ -71,6 +71,7 @@ dependencies:
   build_web_compilers: ^3.0.0
   flutter_js: ^0.0.3+2
   js: ^0.6.4
+  url_launcher: ^6.1.5
 
 dev_dependencies:
   flutter_test:

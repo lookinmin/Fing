@@ -60,5 +60,10 @@
 	<string>kakakompassauth</string>
 	<string>kakaonavi-sdk</string>
 </array>
+<key>LSApplicationQueriesSchemes</key>
+  <array>
+    <string>https</string>
+    <string>http</string>
+  </array>
 </dict>
 </plist>
