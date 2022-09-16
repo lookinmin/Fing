@@ -173,14 +173,14 @@ class _MyPageState extends State<MyPage> {
                     title: Text('1:1 카카오 문의'),
                     trailing: Icon(Icons.chevron_right),
                     onTap: () async {
-                      Uri url =
-                          await TalkApi.instance.channelChatUrl('_jMfVxj');
-
-                      // 디바이스 브라우저 열기
-                      try {
-                        await launchBrowserTab(url);
-                      } catch (e) {
-                        print('카카오톡 채널 채팅 실패 $e');
+                      final url = Uri.parse(
+                        'http://pf.kakao.com/_jMfVxj',
+                      );
+                      if (await canLaunchUrl(url)) {
+                        launchUrl(url);
+                      } else {
+                        // ignore: avoid_print
+                        print("Can't launch $url");
                       }
                     },
                   ),
