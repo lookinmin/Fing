@@ -115,7 +115,7 @@ class GoodsMenu extends StatelessWidget {
                               child: Text(
                                 productList[index].title,
                                 style: TextStyle(
-                                    fontSize: isDesktop ? 18 : 16,
+                                    fontSize: isDesktop? 18 : 16,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -124,7 +124,7 @@ class GoodsMenu extends StatelessWidget {
                               child: Text(
                                 productList[index].desc1,
                                 style: TextStyle(
-                                  fontSize: isDesktop ? 18 : 16,
+                                  fontSize:isDesktop? 18 : 16,
                                 ),
                               ),
                             ),
@@ -140,7 +140,8 @@ class GoodsMenu extends StatelessWidget {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  productList[index].router1));
+                                                  productList[index]
+                                                      .router1));
                                     },
                                     style: ElevatedButton.styleFrom(
                                       primary: Color.fromRGBO(255, 126, 0, 1),
