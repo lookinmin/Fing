@@ -91,7 +91,7 @@ class _MyPageState extends State<MyPage> {
                       iconColor: Colors.white,
                       leading: Icon(Icons.account_circle, size: 40),
                       title: Text(
-                        'fingcbnu',
+                        nickname,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(email),
