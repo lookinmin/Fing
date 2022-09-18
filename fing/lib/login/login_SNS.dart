@@ -25,6 +25,33 @@ class Login_SNS extends StatelessWidget {
     bool isWeb = true;
     size.width > mobileWidth ? isWeb = true : isWeb = false;
 
+    Future<UserCredential> signInWithGoogle() async {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      fing_db_user.add(fing_db(googleUser?.displayName.toString(),
+          googleUser!.email.toString(), "google"));
+      print("login추가됨됨됨" + fing_db_user.length.toString());
+      print(googleUser!.email.toString());
+
+      await FirebaseFirestore.instance
+          .collection('User')
+          .doc(googleUser!.email.toString())
+          .collection("Privacy")
+          .doc("Main")
+          .set({
+        "name": googleUser?.displayName.toString(),
+        "email": googleUser!.email.toString()
+      });
+
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    }
+
     final _firebaseAuth = FirebaseAuth.instance;
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
@@ -156,6 +183,39 @@ class Login_SNS extends StatelessWidget {
                           obscureText: true,
                           enableSuggestions: false,
                           autocorrect: false,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            signInWithGoogle();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            minimumSize: Size.fromHeight(50), // 높이만 55로 설정
+                            // elevation: 1.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.5)),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                  child: Image.asset(
+                                'assets/images/GoogleLogo.png',
+                                width: size.width * 0.07,
+                              )),
+                              Container(
+                                width: size.width * 0.4,
+                                child: Text(
+                                  'Google 로그인',
+                                  style: TextStyle(
+                                      color: Colors.black87, fontSize: 16.0),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: 20,
