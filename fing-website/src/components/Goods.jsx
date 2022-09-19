@@ -38,7 +38,7 @@ export const Goods = () => {
                   <span className="icon arrow"></span>
                 </span>
                 <span className="button-text" onClick={()=>{
-                          window.open('http://www.festival-ing.org');
+                          window.open('https://www.festival-ing.org');
                 }}>구매하러 앱으로 이동하기</span>
               </button>
             </div>
@@ -65,7 +65,7 @@ export const Goods = () => {
                   <span class="icon arrow"></span>
                 </span>
                 <span class="button-text" onClick={()=>{
-                          window.open('http://www.festival-ing.org');
+                          window.open('https://www.festival-ing.org');
                 }}>구매하러 앱으로 이동하기</span>
               </button>
             </div>
@@ -97,7 +97,7 @@ export const Goods = () => {
                   <span className="icon arrow"></span>
                 </span>
                 <span className="button-text" onClick={()=>{
-                          window.open('http://www.festival-ing.org');
+                          window.open('https://www.festival-ing.org');
                 }}>구매하러 앱으로 이동하기</span>
               </button>
             </div>
@@ -124,7 +124,7 @@ export const Goods = () => {
                   <span class="icon arrow"></span>
                 </span>
                 <span class="button-text" onClick={()=>{
-                         window.open('http://www.festival-ing.org');
+                         window.open('https://www.festival-ing.org');
                 }}>구매하러 앱으로 이동하기</span>
               </button>
             </div>
@@ -138,7 +138,7 @@ export const Goods = () => {
         <div className="toDownload" >
           <img src="./img/fingLogo.png" alt="fing" height="70px"/>
           <h2 style={{paddingRight : "15px"}}onClick={()=>{
-          window.open('http://www.festival-ing.org');
+          window.open('https://www.festival-ing.org');
         }}>Fing Download</h2>
           <IoLogoGooglePlaystore color='#fff' size={40} />
         </div>
@@ -147,7 +147,7 @@ export const Goods = () => {
         <div className="toDownload" >
           <img src="./img/fingLogo.png" alt="fing" height="50px"/>
           <h2 style={{paddingRight : "10px", fontSize: "1.3rem"}}onClick={()=>{
-          window.open('http://www.festival-ing.org');
+          window.open('https://www.festival-ing.org');
         }}>Fing Download</h2>
           <IoLogoGooglePlaystore color='#fff' size={30} />
         </div>
@@ -156,7 +156,7 @@ export const Goods = () => {
         <div className="toDownload" >
           <img src="./img/fingLogo.png" alt="fing" height="50px"/>
           <h2 style={{paddingRight : "10px", fontSize: "1.3rem"}}onClick={()=>{
-          window.open('http://www.festival-ing.org');
+          window.open('https://www.festival-ing.org');
         }}>Download</h2>
           <IoLogoGooglePlaystore color='#fff' size={25} />
         </div>

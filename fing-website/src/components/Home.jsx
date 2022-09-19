@@ -52,7 +52,7 @@ export const Home = () => {
 
   function handleClick(e) {
     if(e===1){
-      window.open('http://www.festival-ing.org');
+      window.open('https://www.festival-ing.org');
     }
   }
 
