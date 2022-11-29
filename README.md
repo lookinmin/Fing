@@ -1,6 +1,12 @@
 # Fing(Festival -ing)
 2022년 관광데이터 활용 공모전 Tour API 4.0
 
+
+[✨ 웹페이지 바로가기 ✨](http://www.festival-ing.com)
+
+
+[✨ 어플리케이션 바로가기 ✨](https://www.festival-ing.org/#/)
+
 <br>
 
 ## 🖥 프로젝트 소개
