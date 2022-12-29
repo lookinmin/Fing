@@ -41,7 +41,7 @@
 ### Web Application
 - Front-End : React, Flutter
 - Development Environment : VS Code
-- Language : Javascript, Dart
+- Language : Javascript, Typescript, Dart
 
 
 <br>
