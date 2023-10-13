@@ -7,6 +7,9 @@
 
 [✨ 어플리케이션 바로가기 ✨](https://www.festival-ing.org/#/)
 
+
+[✨ 수상내역 확인 바로가기 ✨]([https://www.festival-ing.org/#/](https://api.visitkorea.or.kr/#/cntBoardDetail?no=2))
+
 <br>
 
 ## 🖥 프로젝트 소개
