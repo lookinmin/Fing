@@ -66,6 +66,11 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
+
+
     final regionText = widget.addr1.toString();
     final reg1 = regionText.split(" ")[0];
     final reg2 = regionText.split(" ")[1];
@@ -131,8 +136,9 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          SizedBox(width: isWeb ? size.width*0.005: 0,),
                           SizedBox(
-                            width: size.width * 0.75,
+                            width: isWeb ? size.width*0.35 : size.width*0.75,
                             child: Text(
                               widget.title,
                               style: TextStyle(
@@ -184,6 +190,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             },
                             iconSize: 40,
                           ),
+                          SizedBox(width: isWeb ? size.width*0.005 : 0),
                         ],
                       ),
                       Divider(
@@ -205,32 +212,38 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                           Padding(
                             padding: const EdgeInsets.only(top: 5, bottom: 5),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Icon(
-                                  Icons.play_arrow,
-                                  size: 16.0,
-                                  color: const Color(0xffff7e00),
-                                ),
-                                Container(
-                                  width: size.width * 0.27,
-                                  child: Text(
-                                    ' 이용요금',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color:
-                                            Color.fromARGB(255, 112, 112, 112)),
-                                  ),
-                                ),
-                                Container(
-                                  width: size.width * 0.6,
-                                  child: Text(
-                                    detailfestival_modal.usetimefestival
-                                        .toString()
-                                        .replaceAll('<br>', ' '),
-                                    style: TextStyle(
-                                        fontSize: 16, color: Colors.black),
+                                SizedBox(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.play_arrow,
+                                        size: 16.0,
+                                        color: const Color(0xffff7e00),
+                                      ),
+                                      Container(
+                                        width: isWeb ? size.width*0.1: size.width*0.27,
+                                        child: Text(
+                                          ' 이용요금',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color:
+                                                  Color.fromARGB(255, 112, 112, 112)),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: isWeb ? size.width*0.2: size.width*0.6,
+                                        child: Text(
+                                          detailfestival_modal.usetimefestival
+                                              .toString()
+                                              .replaceAll('<br>', ' '),
+                                          style: TextStyle(
+                                              fontSize: 16, color: Colors.black),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -252,7 +265,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                       color: const Color(0xffff7e00),
                                     ),
                                     Container(
-                                      width: size.width * 0.27,
+                                      width: isWeb ? size.width*0.1: size.width*0.27,
                                       child: Text(
                                         ' 개요',
                                         style: TextStyle(
@@ -264,7 +277,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   ],
                                 ),
                                 Container(
-                                  width: size.width * 0.6,
+                                  width: isWeb ? size.width*0.3: size.width*0.6,
                                   child: Text(
                                     detailfestival_modal.infotext
                                         .toString()
@@ -288,7 +301,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   color: const Color(0xffff7e00),
                                 ),
                                 Container(
-                                  width: size.width * 0.27,
+                                  width: isWeb ? size.width*0.1: size.width*0.7,
                                   child: Text(
                                     ' 주소',
                                     style: TextStyle(
@@ -298,7 +311,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 Container(
-                                  width: size.width * 0.6,
+                                  width: isWeb ? size.width*0.2: size.width*0.6,
                                   child: Text(
                                     widget.addr1,
                                     style: TextStyle(
@@ -320,7 +333,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   color: const Color(0xffff7e00),
                                 ),
                                 Container(
-                                  width: size.width * 0.27,
+                                 width: isWeb ? size.width*0.1: size.width*0.27,
                                   child: Text(
                                     ' 행사 장소',
                                     style: TextStyle(
@@ -330,7 +343,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 Container(
-                                  width: size.width * 0.6,
+                                  width: isWeb ? size.width*0.2: size.width*0.6,
                                   child: Text(
                                     detailfestival_modal.eventplace.toString(),
                                     style: TextStyle(
@@ -352,7 +365,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   color: const Color(0xffff7e00),
                                 ),
                                 Container(
-                                  width: size.width * 0.27,
+                                   width: isWeb ? size.width*0.1: size.width*0.27,
                                   child: Text(
                                     ' 행사 시작일',
                                     style: TextStyle(
@@ -362,7 +375,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 Container(
-                                  width: size.width * 0.6,
+                                  width: isWeb ? size.width*0.2: size.width*0.6,
                                   child: Text(
                                     strToDate(
                                         detailfestival_modal.eventstartdate),
@@ -385,7 +398,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   color: const Color(0xffff7e00),
                                 ),
                                 Container(
-                                  width: size.width * 0.27,
+                                   width: isWeb ? size.width*0.1: size.width*0.27,
                                   child: Text(
                                     ' 행사 종료일',
                                     style: TextStyle(
@@ -395,7 +408,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 Container(
-                                  width: size.width * 0.6,
+                                  width: isWeb ? size.width*0.2: size.width*0.6,
                                   child: Text(
                                     strToDate(
                                         detailfestival_modal.eventenddate),
@@ -596,6 +609,9 @@ class _ListItemState extends State<ListItem> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     return InkWell(
       onTap: () async {
         bool result = await NaviApi.instance.isKakaoNaviInstalled();
@@ -620,8 +636,9 @@ class _ListItemState extends State<ListItem> {
             Row(
               children: [
                 Container(
+                  
                     padding: EdgeInsets.only(top: 10),
-                    width: size.width * 0.22,
+                    width: isWeb ? size.width*0.1: size.width*0.22,
                     height: size.height * 0.15,
                     child: CachedNetworkImage(
                       placeholder: (context, url) =>
@@ -632,7 +649,7 @@ class _ListItemState extends State<ListItem> {
                       fit: BoxFit.contain,
                     )),
                 Container(
-                  width: size.width * 0.6,
+                  width: isWeb ? size.width*0.2: size.width*0.6,
                   padding: EdgeInsets.only(left: 15, right: 10, top: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -727,6 +744,9 @@ class _MarketItemState extends State<MarketItem> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     print("마켓아이템");
     print(widget.item);
     return InkWell(
@@ -765,7 +785,7 @@ class _MarketItemState extends State<MarketItem> {
                     width: 4,
                   ),
                   Container(
-                    width: size.width * 0.6,
+                   width: isWeb ? size.width*0.2: size.width*0.6,
                     child: Text(
                       widget.item.mrktNm,
                       style: TextStyle(
@@ -782,8 +802,8 @@ class _MarketItemState extends State<MarketItem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(                    
-                    width: size.width * 0.35,
+                  Container(                  
+                   width: isWeb ? size.width*0.1: size.width*0.35,
                     padding: EdgeInsets.only(top: 7, left: 10),
                     child: Text(
                       ' 도로명주소',
@@ -793,7 +813,7 @@ class _MarketItemState extends State<MarketItem> {
                     ),
                   ),
                   Container(
-                    width: size.width * 0.53,
+                   width: isWeb ? size.width*0.1: size.width*0.53,
                     padding: EdgeInsets.only(top: 7),
                     child: Container(
                       child: Text(
@@ -816,7 +836,7 @@ class _MarketItemState extends State<MarketItem> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: size.width * 0.35,
+                   width: isWeb ? size.width*0.1: size.width*0.35,
                     padding: EdgeInsets.only(top: 7, left: 10),
                     child: Text(
                       ' 개설주기',
@@ -826,7 +846,7 @@ class _MarketItemState extends State<MarketItem> {
                     ),
                   ),
                   Container(
-                    width: size.width * 0.53,
+                   width: isWeb ? size.width*0.1: size.width*0.53,
                     padding: EdgeInsets.only(top: 7, right: 3),
                     child: Text(
                       widget.item.mrktEstblCycle,
@@ -842,7 +862,7 @@ class _MarketItemState extends State<MarketItem> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: size.width * 0.35,
+                   width: isWeb ? size.width*0.1: size.width*0.35,
                     padding: EdgeInsets.only(top: 7, left: 10),
                     child: Text(
                       ' 주차장여부',

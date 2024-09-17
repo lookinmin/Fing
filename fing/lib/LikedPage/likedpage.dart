@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fing/FestivalPage/detail/detail.dart';
-import 'package:fing/Mypage/favorite.dart';
+import 'package:fing/Firebase/fing_db.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:favorite_button/favorite_button.dart'; //favorite_button package사용
@@ -86,7 +86,7 @@ class LikedList extends StatefulWidget {
 
 class _LikedListState extends State<LikedList> {
   late Future<List<FireModel>> favoritelist;
-  String curuser = "wjdtpdus828@naver.com";
+  String curuser = fing_db_user[0].email;
 
   @override
   void initState() {
@@ -125,17 +125,22 @@ class _LikedListState extends State<LikedList> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
-        margin: EdgeInsets.all(5),
+        
         child: FutureBuilder<List<FireModel>>(
           future: favoritelist,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<FireModel> list = snapshot.data!;
               return ListView.builder(
+                
                   itemCount: list.length,
                   itemBuilder: ((context, index) {
                     return InkWell(
+                      
                       onTap: () {
                         Navigator.push(
                             context,
@@ -149,35 +154,45 @@ class _LikedListState extends State<LikedList> {
                                     mapy: list[index].mapy)));
                       },
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(20, 10, 10, 10),
+                      
                         child: Column(
+                          
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
+                              
                               children: [
                                 favoriteImg(size, list, index),
                                 favoriteInfo(size, list, index),
-                                FavoriteButton(
-                                  isFavorite: true,
-                                  iconDisabledColor: Colors.red,
-                                  valueChanged: (isFavorite) async {
-                                    if (!isFavorite) {
-                                      // isFavorite = true;
-                                      await FirebaseFirestore.instance
-                                          .collection('User')
-                                          .doc(curuser)
-                                          .collection("MyFavorite")
-                                          .doc(list[index].title.toString())
-                                          .delete();
+                                Container(
+                                  //  width: isWeb ? (size.width*0.1) : (size.width*0.3),
+                                  //   padding: isWeb
+                                  //         ? EdgeInsets.fromLTRB(80.0, 100.0, 80.0, 100.0)
+                                  //         : EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                                  //   margin: EdgeInsets.all(5),
+                                  child: FavoriteButton(
+                                    
+                                    isFavorite: true,
+                                    iconDisabledColor: Colors.red,
+                                    valueChanged: (isFavorite) async {
+                                      if (!isFavorite) {
+                                        // isFavorite = true;
+                                        await FirebaseFirestore.instance
+                                            .collection('User')
+                                            .doc(curuser)
+                                            .collection("MyFavorite")
+                                            .doc(list[index].title.toString())
+                                            .delete();
 
-                                      setState(() {
-                                        list.remove(list[index]);
-                                        // change_zzim(
-                                        //     isFavorite, list[index].title);
-                                      });
-                                    }
-                                  },
-                                  iconSize: 50,
+                                        setState(() {
+                                          list.remove(list[index]);
+                                          // change_zzim(
+                                          //     isFavorite, list[index].title);
+                                        });
+                                      }
+                                    },
+                                    iconSize: 50,
+                                  ),
                                 )
                               ],
                             ),
@@ -201,8 +216,8 @@ class _LikedListState extends State<LikedList> {
 
   SizedBox favoriteImg(var size, List<FireModel> list, int index) {
     return SizedBox(
-      width: size.width * 0.23,
-      height: size.height * 0.13,
+        width: size.width * 0.13,
+        height: size.height * 0.13,
         child: CachedNetworkImage(
           placeholder: (context, url) => CircularProgressIndicator(),
           imageUrl: list[index].firstimage.toString(),
@@ -211,12 +226,12 @@ class _LikedListState extends State<LikedList> {
           fit: BoxFit.fill,
         )
         // child: Image.network(list[index].firstimage.toString(), fit: BoxFit.fill),
-    );
+        );
   }
 
   Container favoriteInfo(var size, List<FireModel> list, int index) {
     return Container(
-        width: size.width * 0.52,
+        width: size.width * 0.32,
         padding: EdgeInsets.only(left: 13, right: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

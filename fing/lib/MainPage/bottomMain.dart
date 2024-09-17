@@ -1,23 +1,47 @@
 import 'package:fing/goods/goods.dart';
 import 'package:flutter/material.dart';
 import 'package:fing/FestivalPage/festivallist_category.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 void main() => runApp(BottomMain());
 
 class BottomMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          flex: 5,
-          child: CategoryBtn(),
+    return ResponsiveWrapper.builder(
+          HomeMain(),
+          maxWidth: 1200,
+          minWidth: 480,
+          defaultScale: true,
+          breakpoints: [
+            ResponsiveBreakpoint.resize(480, name: MOBILE),
+            ResponsiveBreakpoint.autoScale(800, name: TABLET),
+            ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+            ResponsiveBreakpoint.autoScale(2460, name: '4K'),
+          ],
+          );
+
+  }
+}
+
+class HomeMain extends StatelessWidget {
+  const HomeMain({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+          children: [
+            Expanded(
+              flex: 5,
+              child: CategoryBtn(),
+            ),
+            Flexible(
+              flex: 1,
+              child: GoodsButton(),
+            )
+          ],
         ),
-        Flexible(
-          flex: 1,
-          child: GoodsButton(),
-        )
-      ],
     );
   }
 }
@@ -55,57 +79,63 @@ class CategoryBtn extends StatelessWidget {
                 color: Colors.grey,
                 width: 1.0,
               ))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 0, 0, size.height * 0.02),
-            child: Row(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, size.height * 0.01),
+              child: Expanded(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CatBtn(1, context, type[0]),
+                      CatBtn(2, context, type[1]),
+                      CatBtn(3, context, type[2]),
+                      CatBtn(4, context, type[3])
+                    ]),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, size.height * 0.01),
+              child: Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CatBtn(5, context, type[4]),
+                    CatBtn(6, context, type[5]),
+                    CatBtn(7, context, type[6]),
+                    CatBtn(8, context, type[7])
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, size.height * 0.01),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CatBtn(1, context, type[0]),
-                  CatBtn(2, context, type[1]),
-                  CatBtn(3, context, type[2]),
-                  CatBtn(4, context, type[3])
-                ]),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 0, 0, size.height * 0.02),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CatBtn(5, context, type[4]),
-                CatBtn(6, context, type[5]),
-                CatBtn(7, context, type[6]),
-                CatBtn(8, context, type[7])
-              ],
+                  CatBtn(9, context, type[8]),
+                  CatBtn(10, context, type[9]),
+                  CatBtn(11, context, type[10]),
+                  CatBtn(12, context, type[11])
+                ],
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 0, 0, size.height * 0.02),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CatBtn(9, context, type[8]),
-                CatBtn(10, context, type[9]),
-                CatBtn(11, context, type[10]),
-                CatBtn(12, context, type[11])
-              ],
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, size.height * 0.01),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CatBtn(13, context, type[12]),
+                  CatBtn(14, context, type[13]),
+                  CatBtn(15, context, type[14]),
+                  CatBtn(16, context, type[15])
+                ],
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 0, 0, size.height * 0.02),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CatBtn(13, context, type[12]),
-                CatBtn(14, context, type[13]),
-                CatBtn(15, context, type[14]),
-                CatBtn(16, context, type[15])
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -114,6 +144,10 @@ class CategoryBtn extends StatelessWidget {
 class GoodsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     return Container(
       padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
       child: OutlinedButton(
@@ -127,8 +161,8 @@ class GoodsButton extends StatelessWidget {
         },
         // ignore: sort_child_properties_last
         child: SizedBox(
-          width: 400,
-          height: 50,
+          width: isWeb ? (size.width*0.5) : 400,
+          height: 80,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

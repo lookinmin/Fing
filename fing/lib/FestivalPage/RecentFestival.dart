@@ -24,6 +24,9 @@ class _RecentFestivalItemState extends State<RecentFestivalItem> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var mobileWidth = 700;
+    bool isWeb = true;
+    size.width > mobileWidth ? isWeb = true : isWeb = false;
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -44,7 +47,7 @@ class _RecentFestivalItemState extends State<RecentFestivalItem> {
           Row(
             children: [
               Container(
-                  width: size.width * 0.3,
+                  width: isWeb ? 140 : (size.width * 0.3),
                   height: size.height * 0.15,
                   padding: EdgeInsets.all(12),
                   child: Stack(
@@ -58,16 +61,17 @@ class _RecentFestivalItemState extends State<RecentFestivalItem> {
                           errorWidget: ((context, url, error) => Image(
                               image: AssetImage(
                                   'assets/images/DefaultImage.png'))),
-                          fit: BoxFit.contain,
+                          fit: BoxFit.fitHeight,
                         ),
                       ),
                       dDay()
                     ],
                   )),
               Container(
-                padding: EdgeInsets.only(left: 5, right: 10),
-                width: size.width * 0.65,
-                // padding: EdgeInsets.only(left: 13, right: 15),
+                padding: isWeb
+                    ? EdgeInsets.only(left: 5)
+                    : EdgeInsets.only(left: 5, right: 10),
+                width: isWeb ? (size.width * 0.35) : (size.width * 0.65),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
